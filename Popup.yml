@@ -1,0 +1,123 @@
+ComponentDefinitions:
+  Popups:
+    DefinitionType: CanvasComponent
+    CustomProperties:
+      PopupText:
+        PropertyKind: Input
+        DisplayName: Popup Text
+        Description: The main message displayed in the popup dialog to prompt user action or confirmation.
+        RaiseOnReset: true
+        DataType: Text
+        Default: ="Are you sure you want to update the data?"
+      onNo:
+        PropertyKind: Event
+        DisplayName: On No
+        Description: Event triggered when the user selects 'No' or 'Cancel' in the popup dialog.
+        ReturnType: None
+        Default: =
+      onYes:
+        PropertyKind: Event
+        DisplayName: On Yes
+        Description: Event triggered when the user selects 'Yes' in the popup dialog.
+        ReturnType: None
+        Default: =
+      onCancel:
+        PropertyKind: Event
+        DisplayName: On Cancel
+        Description: Event triggered when the user selects 'Cancel' in the popup dialog.
+        ReturnType: None
+        Default: =
+    Properties:
+      Height: =Max(App.Height)
+      OnReset: =false
+      Width: =Max(App.Width)
+    Children:
+      - Overlay:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            Fill: =RGBA(0, 0, 0, 0.50)
+            Height: =Max(App.Height)
+            Width: =Max(App.Width)
+          Children:
+            - DialogBox:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  Fill: =RGBA(214, 221, 224, 1)
+                  Height: =YesButton.Y+YesButton.Height+35-Self.Y
+                  Width: =PopupMessage.Width+IconContainer.Width+30
+                  X: =IconContainer.X-10
+                  Y: =PopupMessage.Y-35
+            - PopupMessage:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  AutoHeight: =true
+                  Font: =Font.Arial
+                  Size: =12
+                  Text: =Popups.PopupText
+                  Width: =350
+                  X: =(Overlay.Width-(Self.Width-IconContainer.Width))/2
+                  Y: =(Overlay.Height-Self.Height)/2-100
+            - YesButton:
+                Control: Button@0.0.45
+                Properties:
+                  Font: =Font.Arial
+                  FontSize: =12
+                  OnSelect: =Popups.onYes();
+                  Text: ="Yes"
+                  VerticalAlign: =VerticalAlign.Middle
+                  Width: =120
+                  X: =DialogBox.X+(DialogBox.Width-CancelButton.Width-YesButton.Width-NoButton.Width)/4
+                  Y: =IconContainer.Y+IconContainer.Height+50
+            - NoButton:
+                Control: Button@0.0.45
+                Properties:
+                  Font: =Font.Arial
+                  FontSize: =12
+                  OnSelect: =Popups.onNo();
+                  Text: ="No"
+                  VerticalAlign: =VerticalAlign.Middle
+                  Width: =120
+                  X: =DialogBox.X+(2*(DialogBox.Width-CancelButton.Width-YesButton.Width-NoButton.Width)/4)+YesButton.Width
+                  Y: =IconContainer.Y+IconContainer.Height+50
+            - CancelButton:
+                Control: Button@0.0.45
+                Properties:
+                  Font: =Font.Arial
+                  FontSize: =12
+                  OnSelect: =Popups.onCancel();
+                  Text: ="Cancel"
+                  VerticalAlign: =VerticalAlign.Middle
+                  Width: =120
+                  X: =DialogBox.X+3*(DialogBox.Width-CancelButton.Width-YesButton.Width-NoButton.Width)/4+NoButton.Width+YesButton.Width
+                  Y: =IconContainer.Y+IconContainer.Height+50
+            - IconContainer:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  Fill: =RGBA(214, 221, 224, 1)
+                  Height: =PopupIcon.Height
+                  RadiusBottomLeft: =90
+                  RadiusBottomRight: =90
+                  RadiusTopLeft: =90
+                  RadiusTopRight: =90
+                  Width: =PopupIcon.Width
+                  X: =(Overlay.Width-Self.Width-PopupMessage.Width)/2-10
+                  Y: =PopupMessage.Y-(Self.Height-PopupMessage.Height)/2
+                Children:
+                  - PopupIcon:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.View
+                        Fill: =App.Theme.Colors.Primary
+                        Height: =50
+                        Icon: =Switch(true,Lower("revert") in Popups.PopupText,Icon.Reload,Lower("reset") in Popups.PopupText,Icon.Reload,Lower("save") in Popups.PopupText,Icon.Save,Icon.Error)
+                        PaddingBottom: =10
+                        PaddingLeft: =10
+                        PaddingRight: =10
+                        PaddingTop: =10
+                        Rotation: =Switch(true,Lower("revert") in Popups.PopupText,90,Lower("reset") in Popups.PopupText,90,Lower("save") in Popups.PopupText,0,0)
+                        Width: =50

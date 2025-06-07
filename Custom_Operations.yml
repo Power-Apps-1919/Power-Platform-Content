@@ -1,0 +1,864 @@
+ComponentDefinitions:
+  Custom_Operations:
+    DefinitionType: CanvasComponent
+    Description: 'A Power Apps custom component providing advanced data operations, including record management, bulk updates, filtering, and utility functions for MUID-related tables and business logic.'
+    AccessAppScope: true
+    CustomProperties:
+      AddNewChildRecords:
+        PropertyKind: Action
+        DisplayName: Add New Child Records
+        Description: Triggers a flow to add new child records using a provided JSON array.
+        ReturnType: Record
+        Parameters:
+          - Json_Array:
+              Description: JSON array of child records to add.
+              DataType: Text
+              Default: ="Text"
+      BulkChangeMUIDUpdate:
+        PropertyKind: Action
+        DisplayName: Bulk Change MUID Update
+        Description: Updates multiple records by changing their MUID values in bulk.
+        ReturnType: Record
+        Parameters:
+          - old_muid:
+              Description: The original MUID value to be replaced.
+              DataType: Text
+              Default: ="Text"
+          - new_muid:
+              Description: The new MUID value to assign.
+              DataType: Text
+              Default: ="Text"
+      ConvertToTimestamp:
+        PropertyKind: OutputFunction
+        DisplayName: Convert To Timestamp
+        Description: Converts a string or numeric timestamp to a DateTime value, handling various formats.
+        DataType: DateAndTime
+        Parameters:
+          - Timestamp_String:
+              Description: The timestamp string or number to convert.
+              DataType: Text
+              Default: ="Text"
+      GetAccountOwnerDistinctDataForMUIDACCOUNT:
+        PropertyKind: Action
+        DisplayName: Get Account Owner Distinct Data For MUID ACCOUNT
+        Description: Retrieves distinct account owner names and emails from the MUID ACCOUNT table.
+        ReturnType: Table
+      GetAccountOwnerDistinctDataForMUIDORG:
+        PropertyKind: Action
+        DisplayName: Get Account Owner Distinct Data For MUID ORG
+        Description: Retrieves distinct owner names and emails from the MUID ORG table.
+        ReturnType: Table
+      GetDataFromMMTSettings:
+        PropertyKind: Action
+        DisplayName: Get Data From MMT Settings
+        Description: Fetches application settings and configuration from the MMT_APP_SETTING table.
+        ReturnType: Table
+      GetDataFromMUIDROLEACCESS:
+        PropertyKind: Action
+        DisplayName: Get Data from MUIDROLEACCESS
+        Description: Retrieves user access roles and related information from the MUID_USER_ACCESS table.
+        ReturnType: Table
+      GetDataFromMUIDStats:
+        PropertyKind: Action
+        DisplayName: Get Data from MUID Stats
+        Description: Returns summary statistics and user data from the MUID Stats flow.
+        ReturnType: Record
+      GetFilteredDataFromMUIDACCOUNT:
+        PropertyKind: Action
+        DisplayName: Get Filtered Data From MUID ACCOUNT
+        Description: Retrieves filtered records from the MUID ACCOUNT table based on provided filters, range, and sorting.
+        ReturnType: Table
+        Parameters:
+          - Filters_Json:
+              Description: JSON string specifying filter criteria.
+              DataType: Text
+              Default: ="Text"
+          - Range_Limit:
+              Description: Optional range limit for the query.
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+          - Sort_Col:
+              Description: Optional column name to sort by.
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+          - Sort_Order:
+              Description: Optional sort order (ASC/DESC).
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+      GetFilteredDataFromMUIDORG:
+        PropertyKind: Action
+        DisplayName: Get Filtered Data From MUID ORG
+        Description: Retrieves filtered records from the MUID ORG table based on provided filters, range, and sorting.
+        ReturnType: Table
+        Parameters:
+          - Filters_Json:
+              Description: JSON string specifying filter criteria.
+              DataType: Text
+              Default: ="Text"
+          - Range_Limit:
+              Description: Optional range limit for the query.
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+          - Sort_Col:
+              Description: Optional column name to sort by.
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+          - Sort_Order:
+              Description: Optional sort order (ASC/DESC).
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+      GetFilteredTableCount:
+        PropertyKind: Action
+        DisplayName: Get Filtered Table Count
+        Description: Returns the count of records in a table matching the specified filters and sorting.
+        ReturnType: Table
+        Parameters:
+          - Table_Name:
+              Description: The name of the table to count records from.
+              DataType: Text
+              Default: ="Text"
+          - Filters_Json:
+              Description: JSON string specifying filter criteria.
+              DataType: Text
+              Default: ="Text"
+          - Sort_Col:
+              Description: Optional column name to sort by.
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+          - Sort_Order:
+              Description: Optional sort order (ASC/DESC).
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+      GetSingleColDistinctData:
+        PropertyKind: Action
+        DisplayName: Get Single Col Distinct Data
+        Description: Retrieves distinct values from a specified column in a table.
+        ReturnType: Table
+        Parameters:
+          - TableName:
+              Description: The name of the table (data source) to fetch from.
+              DataType: Text
+              Default: ="Text"
+          - ColumnName:
+              Description: The column from which to retrieve distinct values.
+              DataType: Text
+              Default: ="Text"
+      InsertNewMUIDRecord:
+        PropertyKind: Action
+        DisplayName: Insert New MUID Record
+        Description: Inserts a new record into the MUID table using the provided JSON input.
+        ReturnType: Table
+        Parameters:
+          - Input_Json:
+              Description: JSON string representing the new record to insert.
+              DataType: Text
+              Default: ="Text"
+      MaintenanceCheck:
+        PropertyKind: Action
+        DisplayName: Maintenance Check
+        Description: Checks if the application is currently in a scheduled or custom maintenance window.
+        ReturnType: Boolean
+      MultiMUIDStatusUpdate:
+        PropertyKind: Action
+        DisplayName: Multi MUID Status Update
+        Description: Updates the status of multiple MUID records in bulk using a JSON array.
+        ReturnType: Record
+        Parameters:
+          - Table_Name:
+              Description: The name of the table to update.
+              DataType: Text
+              Default: ="Text"
+          - Json_Array:
+              Description: JSON array of records to update.
+              DataType: Text
+              Default: ="Text"
+      RecalculateFirmographics:
+        PropertyKind: Action
+        DisplayName: Recalculate Firmographics
+        Description: Recalculates and updates firmographic data for a selected MUID organization.
+        ReturnType: Record
+        Parameters:
+          - Selected_Muid:
+              Description: The MUID value for which to recalculate firmographics.
+              DataType: Text
+              Default: ="Text"
+      SearchTermCountFromTable:
+        PropertyKind: Action
+        DisplayName: Search Term Count From Table
+        Description: Returns the count of records matching a search term and optional filters in a table.
+        ReturnType: Table
+        Parameters:
+          - Search_Term:
+              Description: The search term to match records.
+              DataType: Text
+              Default: ="Text"
+          - Table_Name:
+              Description: The name of the table to search.
+              DataType: Text
+              Default: ="Text"
+          - Range_Limit:
+              Description: Optional range limit for the query.
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+          - Sort_Col:
+              Description: Optional column name to sort by.
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+          - Sort_Order:
+              Description: Optional sort order (ASC/DESC).
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+          - filter_json:
+              Description: Optional JSON string specifying additional filter criteria.
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+      SearchTermGetDataFromMUIDACCOUNT:
+        PropertyKind: Action
+        DisplayName: Search Term Get Data From MUID ACCOUNT
+        Description: Retrieves records from the MUID ACCOUNT table matching a search term and optional filters.
+        ReturnType: Table
+        Parameters:
+          - Search_Term:
+              Description: The search term to match records.
+              DataType: Text
+              Default: ="Text"
+          - Range_Limit:
+              Description: Optional range limit for the query.
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+          - Sort_Col:
+              Description: Optional column name to sort by.
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+          - Sort_Order:
+              Description: Optional sort order (ASC/DESC).
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+          - filter_json:
+              Description: Optional JSON string specifying additional filter criteria.
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+      SearchTermGetDataFromMUIDORG:
+        PropertyKind: Action
+        DisplayName: Search Term Get Data From MUID ORG
+        Description: Retrieves records from the MUID ORG table matching a search term and optional filters.
+        ReturnType: Table
+        Parameters:
+          - Search_Term:
+              Description: The search term to match records.
+              DataType: Text
+              Default: ="Text"
+          - Range_Limit:
+              Description: Optional range limit for the query.
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+          - Sort_Col:
+              Description: Optional column name to sort by.
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+          - Sort_Order:
+              Description: Optional sort order (ASC/DESC).
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+          - filter_json:
+              Description: Optional JSON string specifying additional filter criteria.
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+      SingleMUIDStatusUpdate:
+        PropertyKind: Action
+        DisplayName: 'Single MUID Status Update '
+        Description: Updates the status of a single MUID record using a JSON array.
+        ReturnType: Record
+        Parameters:
+          - Table_Name:
+              Description: The name of the table to update.
+              DataType: Text
+              Default: ="Text"
+          - Json_Array:
+              Description: JSON array containing the record to update.
+              DataType: Text
+              Default: ="Text"
+      Transpose_Calculation:
+        PropertyKind: OutputFunction
+        DisplayName: Transpose_Calculation
+        Description: Converts a single-row JSON object into a table of key-value pairs for dynamic tabular rendering.
+        DataType: Table
+        Parameters:
+          - JSONDATA:
+              Description: Input JSON string representing a single row to transpose.
+              IsOptional: true
+              DataType: Text
+              Default: ="Text"
+      UTCNow:
+        PropertyKind: Output
+        DisplayName: UTC Now
+        Description: Returns the current UTC date and time.
+        DataType: DateAndTime
+    Properties:
+      AddNewChildRecords: |-
+        =With(
+            {
+                data: Table(
+                    ParseJSON(
+                        Power_Apps_Add_Child_Records_Table_Flow_v1_1.Run(
+                            Office365Users.MyProfileV2().mail,
+                            Json_Array
+                        ).result
+                    )
+                )
+            },
+            First(
+                ForAll(
+                    data,
+                    {
+                        MESSAGE: Text(ThisRecord.Value.MESSAGE),
+                        DATA: Text(ThisRecord.Value.DATA),
+                        NOTIFICATION: Text(ThisRecord.Value.NOTIFICATION)
+                    }
+                )
+            )
+        )
+      BulkChangeMUIDUpdate: |-
+        =With(
+            {
+                data: Table(
+                    ParseJSON(
+                        Power_Apps_Child_MUID_Update_Table_Flow_v1_1.Run(Office365Users.MyProfileV2().mail,old_muid,new_muid).result
+                    )
+                )
+            },
+            First(
+                ForAll(
+                    data,
+                    {
+                        MESSAGE: Text(ThisRecord.Value.MESSAGE),
+                        DATA: Text(ThisRecord.Value.DATA),
+                        NOTIFICATION: Text(ThisRecord.Value.NOTIFICATION)
+                    }
+                )
+            )
+        )
+      ConvertToTimestamp: |+
+        =IfError(
+            With(
+                {
+                    ConvertedDate:
+                        If(
+                            IsBlankOrError(Timestamp_String), 
+                            Date(1900, 1, 1),
+                            If(
+                                !IsNumeric(Timestamp_String) && !IsBlank(Timestamp_String), 
+                                DateValue(Timestamp_String),
+                                If(
+                                    IsNumeric(Timestamp_String), 
+                                    DateAdd(
+                                        DateTimeValue("1970-01-01T00:00:00"), 
+                                        RoundDown(Timestamp_String / 1000, 0), 
+                                        TimeUnit.Seconds
+                                    ),
+                                    Date(1900, 1, 1)
+                                )
+                            )
+                        )
+                },
+                // Additional condition: if date is 31-12-9999, return blank
+                If(
+                    ConvertedDate = Date(9999, 12, 31),
+                    Blank(),
+                    ConvertedDate
+                )
+            ),
+            Date(1900, 1, 1) // Fallback date if any error occurs
+        )
+      GetAccountOwnerDistinctDataForMUIDACCOUNT: |-
+        =IfError(
+        Table(
+            ForAll(
+                Table(
+                    ParseJSON(
+                        Power_Apps_Distinct_Column_Values_Flow.Run(MUID_CHILD_TABLE_NAME, "ACCOUNT_OWNER_NAME, ACCOUNT_OWNER_EMAIL",Office365Users.MyProfileV2().mail).output_data
+                    )
+                ),
+                {
+                    ACCOUNT_OWNER_NAME: Text(ThisRecord.Value.ACCOUNT_OWNER_NAME),
+                    ACCOUNT_OWNER_EMAIL: Text(ThisRecord.Value.ACCOUNT_OWNER_EMAIL)
+                }
+            )
+        ),Notify("Error in Processing the request",NotificationType.Error))
+      GetAccountOwnerDistinctDataForMUIDORG: |-
+        =IfError(
+        Table(
+            ForAll(
+                Table(
+                    ParseJSON(
+                        Power_Apps_Distinct_Column_Values_Flow.Run(MUID_ORG_TABLE_NAME, "MUID_OWNER_NAME, MUID_OWNER_EMAIL",Office365Users.MyProfileV2().mail).output_data
+                    )
+                ),
+                {
+                    MUID_OWNER_NAME: Text(ThisRecord.Value.MUID_OWNER_NAME),
+                    MUID_OWNER_EMAIL: Text(ThisRecord.Value.MUID_OWNER_EMAIL)
+                }
+            )
+        ),Notify("Error in Processing the request",NotificationType.Error))
+      GetDataFromMMTSettings: |-
+        =IfError(
+            With(
+                {
+                    data: Table(
+                        ParseJSON(
+                            Power_Apps_Filter_Table_Flow_v1.Run(
+                                "0 AND 1000","MMT_APP_SETTING","{}","Get Data",Office365Users.MyProfileV2().mail,"MUID_APP_FIELD_ORDER","ASC"
+                            ).result
+                        )
+                    )
+                },
+                ForAll(
+                    data.Value,
+                    {
+                        ROW_INDEX:Value(ThisRecord.Value.ROW_INDEX),
+                        SNOWFLAKE_COLUMN_NAME : Text(ThisRecord.Value.SNOWFLAKE_COLUMN_NAME),
+                        TABLE_NAME : Text(ThisRecord.Value.TABLE_NAME),
+                        MUID_APP_COLUMN_NAME : Text(ThisRecord.Value.MUID_APP_COLUMN_NAME),
+                        FUNCTIONALITY : Text(ThisRecord.Value.FUNCTIONALITY),
+                        SEARCH_FLAG : Text(ThisRecord.Value.SEARCH_FLAG),
+                        DATA_TYPE : Text(ThisRecord.Value.DATA_TYPE),
+                        FILTER_FLAG : Text(ThisRecord.Value.FILTER_FLAG),
+                        APP_REQUIRED_FLAG : Text(ThisRecord.Value.APP_REQUIRED_FLAG),
+                        MUID_REQUIRED_FLAG : Text(ThisRecord.Value.MUID_REQUIRED_FLAG),
+                        MUID_APP_FIELD_ORDER : Value(ThisRecord.Value.MUID_APP_FIELD_ORDER),
+                        COMBINED_NAME_KEY : Text(ThisRecord.Value.COMBINED_NAME_KEY),
+                        BACKEND_FUNCTIONALITY : Text(ThisRecord.Value.BACKEND_FUNCTIONALITY)
+                    }
+                )
+            ),
+            Notify("Error in Processing the request",NotificationType.Error)
+        )
+      GetDataFromMUIDROLEACCESS: |-
+        =IfError(
+            With(
+                {
+                    data: Table(
+                        ParseJSON(
+                            Power_Apps_Filter_Table_Flow_v1.Run(
+                                "0 AND 1000","MUID_USER_ACCESS","{}","Get Data",Office365Users.MyProfileV2().mail,"USER_EMAIL","ASC"
+                            ).result
+                        )
+                    )
+                },
+                ForAll(
+                    data.Value,
+                    {
+                        ROW_INDEX:Value(ThisRecord.Value.ROW_INDEX),
+                        USER_NAME : Text(ThisRecord.Value.USER_NAME),
+                        USER_EMAIL : Text(ThisRecord.Value.USER_EMAIL),
+                        USER_ROLE_TYPE : Text(ThisRecord.Value.USER_ROLE_TYPE),
+                        APP_USER_ROLE_TYPE : Text(ThisRecord.Value.APP_USER_ROLE_TYPE),
+                        FILTER_COUNTRY_VALUE : Text(ThisRecord.Value.FILTER_COUNTRY_VALUE)
+                    }
+                )
+            ),
+            Notify("Error in Processing the request",NotificationType.Error)
+        )
+      GetDataFromMUIDStats: "=With(\r\n    {\r\n        \r\n        main: First(Table(\r\n            ParseJSON(Power_Apps_MUID_Stats_Flow_v1.Run().result)\r\n        )).Value\r\n    },\r\n    {\r\n        // Root-level fields\r\n        NOTIFICATION: Coalesce(Text(main.NOTIFICATION), \"success\"),\r\n        TOTAL_USERS: Value(main.TOTAL_USERS),\r\n        \r\n        // ACCOUNT_DATA\r\n        REVIEW_ACCOUNTS: Value(main.ACCOUNT_DATA.REVIEW_ACCOUNTS),\r\n        TOTAL_ACCOUNTS: Value(main.ACCOUNT_DATA.TOTAL_ACCOUNTS),\r\n        UNVALIDATED_ACCOUNTS: Value(main.ACCOUNT_DATA.UNVALIDATED_ACCOUNTS),\r\n        VALIDATED_ACCOUNTS: Value(main.ACCOUNT_DATA.VALIDATED_ACCOUNTS),\r\n\r\n        // ORG_DATA\r\n        REVIEW_MUIDS: Value(main.ORG_DATA.REVIEW_MUIDS),\r\n        TOTAL_MUIDS: Value(main.ORG_DATA.TOTAL_MUIDS),\r\n        UNVALIDATED_MUIDS: Value(main.ORG_DATA.UNVALIDATED_MUIDS),\r\n        VALIDATED_MUIDS: Value(main.ORG_DATA.VALIDATED_MUIDS),\r\n\r\n        // DATA: Parsed as a table you can use in a Gallery\r\n        USERS:\r\n            ForAll(\r\n                main.DATA,\r\n                {\r\n                    USER_EMAIL: Text(ThisRecord.USER_EMAIL),\r\n                    USER_NAME: Text(ThisRecord.USER_NAME),\r\n                    MUID_ACCOUNT_VALIDATED: Value(ThisRecord.MUID_ACCOUNT_VALIDATED),\r\n                    MUID_CREATED: Value(ThisRecord.MUID_CREATED),\r\n                    MUID_ORG_VALIDATED: Value(ThisRecord.MUID_ORG_VALIDATED)\r\n                }\r\n            )\r\n    }\r\n)\r\n"
+      GetFilteredDataFromMUIDACCOUNT: |-
+        =IfError(
+        With(
+            {
+                data: Table(
+                    ParseJSON(
+                        Power_Apps_Filter_Table_Flow_v1.Run(Range_Limit,MUID_CHILD_TABLE_NAME,Filters_Json,"Get Data",Office365Users.MyProfileV2().mail,Coalesce(Sort_Col,"MUID"),Coalesce(Sort_Order,"ASC")).result
+                    )
+                )
+            },
+            If(CountRows(data)>=0,
+            ForAll(
+                data.Value,
+                {
+                    ROW_INDEX : Text(ThisRecord.Value.ROW_INDEX),
+                    MUID : Text(ThisRecord.Value.MUID),
+                    SFDC_ID : Text(ThisRecord.Value.SFDC_ID),
+                    SFDC_ID_UNIFY : Text(ThisRecord.Value.SFDC_ID_UNIFY),
+                    MITEL_ID : Text(ThisRecord.Value.MITEL_ID),
+                    MUID_CHILD_COUNTRY : Text(ThisRecord.Value.MUID_CHILD_COUNTRY),
+                    AUTO_MATCH_METHOD : Text(ThisRecord.Value.AUTO_MATCH_METHOD),
+                    PARENT_SAP_NUMBER : Text(ThisRecord.Value.PARENT_SAP_NUMBER),
+                    PARENT_SAP_NAME : Text(ThisRecord.Value.PARENT_SAP_NAME),
+                    MUID_CHILD_VERTICAL_SFDC : Text(ThisRecord.Value.MUID_CHILD_VERTICAL_SFDC),
+                    MUID_CHILD_VERTICAL_SFDC_6SENSE : Text(ThisRecord.Value.MUID_CHILD_VERTICAL_SFDC_6SENSE),
+                    DUNS : Text(ThisRecord.Value.DUNS),
+                    DUNS_MATCH_GRADE : Text(ThisRecord.Value.DUNS_MATCH_GRADE),
+                    DUNS_MATCH_SCORE : Text(ThisRecord.Value.DUNS_MATCH_SCORE),
+                    EMPLOYEES_DUNS : Text(ThisRecord.Value.EMPLOYEES_DUNS),
+                    EMPLOYEES_LG : Text(ThisRecord.Value.EMPLOYEES_LG),
+                    EMPLOYEES_6SENSE : Text(ThisRecord.Value.EMPLOYEES_6SENSE),
+                    CHANNEL : Text(ThisRecord.Value.CHANNEL),
+                    STATUS : Text(ThisRecord.Value.STATUS),
+                    ENTITY : Text(ThisRecord.Value.ENTITY),
+                    ACCOUNT_OWNER_NAME : Text(ThisRecord.Value.ACCOUNT_OWNER_NAME),
+                    ACCOUNT_OWNER_EMAIL : Text(ThisRecord.Value.ACCOUNT_OWNER_EMAIL),
+                    NOTE : Text(ThisRecord.Value.NOTE),
+                    CREATED_BY : Text(ThisRecord.Value.CREATED_BY),
+                    MODIFIED_BY : Text(ThisRecord.Value.MODIFIED_BY),
+                    MUID_CHILD_RECORD_ID : Text(ThisRecord.Value.MUID_CHILD_RECORD_ID),
+                    MUID_CHILD_RECORD_NAME : Text(ThisRecord.Value.MUID_CHILD_RECORD_NAME),
+                    MUID_CHILD_VERTICAL : Text(ThisRecord.Value.MUID_CHILD_VERTICAL),
+                    MUID_CHILD_ACCOUNT_CREATE_DATE : With({timestamp:Text(ThisRecord.Value.MUID_CHILD_ACCOUNT_CREATE_DATE)},If(IsBlankOrError(timestamp),Blank(),Self.ConvertToTimestamp(timestamp))),
+                    MATCH_DOMAIN : Text(ThisRecord.Value.MATCH_DOMAIN),
+                    CREATED_DATE : Text(ThisRecord.Value.CREATED_DATE),
+                    MODIFIED_DATE : Text(ThisRecord.Value.MODIFIED_DATE),
+                    MUID_COMPANY_NAME : Text(ThisRecord.Value.MUID_COMPANY_NAME),
+                    MMT_COMPANY_NAME : Text(ThisRecord.Value.MMT_COMPANY_NAME),
+                    MUID_CHILD_COUNT:Value(ThisRecord.Value.MUID_CHILD_COUNT),
+                    CHILD_SAP_NUMBER : Text(ThisRecord.Value.CHILD_SAP_NUMBER),
+                    LAST_BILLED_DATE : Text(ThisRecord.Value.LAST_BILLED_DATE),
+                    BILLINGS_SINCE_2023 : Text(ThisRecord.Value.BILLINGS_SINCE_2023),
+                    END_CUSTOMER_LOCATION_NUMBER : Text(ThisRecord.Value.END_CUSTOMER_LOCATION_NUMBER),
+                    DUNS_EMPLOYEE_COUNT : Text(ThisRecord.Value.DUNS_EMPLOYEE_COUNT),
+                    SFDC_BOOKINGS : Text(ThisRecord.Value.SFDC_BOOKINGS)
+                }
+                ),Notify("Error in Processing the request",NotificationType.Error);
+                    [
+                        { ROW_INDEX: Blank(), MUID: Blank(), SFDC_ID: Blank(), SFDC_ID_UNIFY: Blank(), MITEL_ID: Blank(),
+                          MUID_CHILD_COUNTRY: Blank(), AUTO_MATCH_METHOD: Blank(), PARENT_SAP_NUMBER: Blank(), 
+                          PARENT_SAP_NAME: Blank(), MUID_CHILD_VERTICAL_SFDC: Blank(), MUID_CHILD_VERTICAL_SFDC_6SENSE: Blank(),
+                          DUNS: Blank(), DUNS_MATCH_GRADE: Blank(), DUNS_MATCH_SCORE: Blank(), EMPLOYEES_DUNS: Blank(),
+                          EMPLOYEES_LG: Blank(), EMPLOYEES_6SENSE: Blank(), CHANNEL: Blank(), STATUS: Blank(), ENTITY: Blank(),
+                          ACCOUNT_OWNER_NAME: Blank(), ACCOUNT_OWNER_EMAIL: Blank(), NOTE: Blank(), CREATED_BY: Blank(),
+                          MODIFIED_BY: Blank(), MUID_CHILD_RECORD_ID: Blank(), MUID_CHILD_RECORD_NAME: Blank(),
+                          MUID_CHILD_VERTICAL: Blank(), MUID_CHILD_ACCOUNT_CREATE_DATE: Blank(), MATCH_DOMAIN: Blank(),
+                          CREATED_DATE: Blank(), MODIFIED_DATE: Blank(),MUID_COMPANY_NAME:Blank(), MMT_COMPANY_NAME: Blank(), CHILD_SAP_NUMBER: Blank(),
+                          LAST_BILLED_DATE: Blank(), BILLINGS_SINCE_2023: Blank(), END_CUSTOMER_LOCATION_NUMBER: Blank(),
+                          DUNS_EMPLOYEE_COUNT: Blank(), SFDC_BOOKINGS: Blank(),MUID_CHILD_COUNT:Blank() }
+                    ]
+            )
+        ),Notify("Error in Processing the request",NotificationType.Error))
+      GetFilteredDataFromMUIDORG: "=IfError(\r\n    With(\r\n        {data: Table(ParseJSON(Power_Apps_Filter_Table_Flow_v1.Run(Range_Limit, MUID_ORG_TABLE_NAME, Filters_Json, \"Get Data\", Office365Users.MyProfileV2().mail, Coalesce(Sort_Col, \"MUID\"), Coalesce(Sort_Order, \"ASC\")).result))},\r\n        If(\r\n            CountRows(data) >= 0,\r\n            ForAll(\r\n                data.Value,\r\n                {\r\n                    ROW_INDEX: Text(ThisRecord.Value.ROW_INDEX),\r\n                    MUID: Text(ThisRecord.Value.MUID),\r\n                    MUID_EMPLOYEE_SEGMENT: Text(ThisRecord.Value.MUID_EMPLOYEE_SEGMENT),\r\n                    PARENT_MUID: Text(ThisRecord.Value.PARENT_MUID),\r\n                    STATUS: Text(ThisRecord.Value.STATUS),\r\n                    NOTE: Text(ThisRecord.Value.NOTE),\r\n                    CREATED_BY: Text(ThisRecord.Value.CREATED_BY),\r\n                    MODIFIED_BY: Text(ThisRecord.Value.MODIFIED_BY),\r\n                    MUID_COUNTRY: Text(ThisRecord.Value.MUID_COUNTRY),\r\n                    MUID_VERTICAL: Text(ThisRecord.Value.MUID_VERTICAL),\r\n                    MUID_COMPANY_NAME: Text(ThisRecord.Value.MUID_COMPANY_NAME),\r\n                    MUID_ENTERPRISE_SEGMENT: Text(ThisRecord.Value.MUID_ENTERPRISE_SEGMENT),\r\n                    MUID_FIRST_CREATE_DATE: With({timestamp: Text(ThisRecord.Value.MUID_FIRST_CREATE_DATE)}, If(IsBlankOrError(Trim(timestamp)), Blank(), Self.ConvertToTimestamp(timestamp))),\r\n                    IS_DIRECT_CUSTOMER: Text(ThisRecord.Value.IS_DIRECT_CUSTOMER),\r\n                    CREATED_DATE: With({timestamp: Text(ThisRecord.Value.CREATED_DATE)}, If(IsBlankOrError(Trim(timestamp)), Blank(), Self.ConvertToTimestamp(timestamp))),\r\n                    MODIFIED_DATE: With({timestamp: Text(ThisRecord.Value.MODIFIED_DATE)}, If(IsBlankOrError(Trim(timestamp)), Blank(), Self.ConvertToTimestamp(timestamp))),\r\n                    MUID_CHANNEL: Text(ThisRecord.Value.MUID_CHANNEL),\r\n                    MUID_OWNER_NAME: Text(ThisRecord.Value.MUID_OWNER_NAME),\r\n                    MUID_OWNER_EMAIL: Text(ThisRecord.Value.MUID_OWNER_EMAIL),\r\n                    MUID_SEAT_BUCKET: Text(ThisRecord.Value.MUID_SEAT_BUCKET),\r\n                    MMT_COMPANY_NAME: Text(ThisRecord.Value.MMT_COMPANY_NAME),\r\n                    MUID_CHILD_COUNT:Value(ThisRecord.Value.MUID_CHILD_COUNT)\r\n                }\r\n            ),\r\n            Notify(\"Error in Processing the request\", NotificationType.Error);[{ROW_INDEX: Blank(), MUID: Blank(), MUID_EMPLOYEE_SEGMENT: Blank(), PARENT_MUID: Blank(), STATUS: Blank(), NOTE: Blank(), CREATED_BY: Blank(), MODIFIED_BY: Blank(), MUID_COUNTRY: Blank(), MUID_VERTICAL: Blank(), MUID_COMPANY_NAME: Blank(), MUID_ENTERPRISE_SEGMENT: Blank(), MUID_FIRST_CREATE_DATE: Blank(), IS_DIRECT_CUSTOMER: Blank(), CREATED_DATE: Blank(), MODIFIED_DATE: Blank(), MUID_CHANNEL: Blank(), MUID_OWNER_NAME: Blank(), MUID_OWNER_EMAIL: Blank(), MUID_SEAT_BUCKET: Blank(), MMT_COMPANY_NAME: Blank(),MUID_CHILD_COUNT:Blank()}]\r\n        )\r\n        \r\n    ),\r\n    Notify(\"Error in Processing the request\", NotificationType.Error)\r\n)\r\n"
+      GetFilteredTableCount: |-
+        =IfError(With(
+            {
+                data: Value(
+                    First(
+                        Table(
+                            ParseJSON(
+                                Power_Apps_Filter_Table_Flow_v1.Run(
+                                    "0 AND 200",
+                                    Table_Name,
+                                    Filters_Json,
+                                    "Get Count",
+                                    Office365Users.MyProfileV2().mail,
+                                    Coalesce(Sort_Col,"MUID"),
+                                    Coalesce(Sort_Order,"ASC")
+                                ).result
+                            )
+                        )
+                    ).Value.NO_OF_RECORDS
+                )
+            },
+            Table({Value: data})
+        ),Notify("Error in Processing the request",NotificationType.Error))
+      GetSingleColDistinctData: |-
+        =IfError(
+        Table(
+            ForAll(
+                Table(
+                    ParseJSON(
+                        Power_Apps_Distinct_Column_Values_Flow.Run(TableName, ColumnName,Office365Users.MyProfileV2().mail).output_data
+                    )
+                ),
+                {
+                    Value: Text(
+                        Column(ThisRecord.Value, ColumnName)
+                    )
+                }
+            )
+        ),Notify("Error in Processing the request",NotificationType.Error))
+      Height: =1
+      InsertNewMUIDRecord: |
+        =IfError(
+            With(
+                {
+                    data: Table(
+                        ParseJSON(
+                            Power_Apps_Insert_New_Muid_Flow_v1.Run(
+                                Office365Users.MyProfileV2().mail,
+                                Input_Json
+                            ).result
+                        )
+                    )
+                },
+                If(
+                    CountRows(data) > 0,
+                    ForAll(
+                        data,
+                        {
+                            MESSAGE: Text(ThisRecord.Value.MESSAGE),
+                            MUID: Text(ThisRecord.Value.MUID)
+                        }
+                    ),
+                    Notify("Error in Processing the request", NotificationType.Error);[{MESSAGE:Blank(),MUID:Blank()}]
+                )
+            ),
+            Notify("Error in Processing the request", NotificationType.Error)
+        )
+      MaintenanceCheck: |+
+        =With(
+            {
+                currentUTC: DateAdd(Now(), -TimeZoneOffset(), TimeUnit.Minutes),
+                maintenanceStart: 290,   // 4:50 AM
+                maintenanceEnd: 330,     // 5:30 AM
+                // maintenanceStart: 1410, // 11:30 PM
+                // maintenanceEnd: 120,    // 2:00 AM
+                customMaint: Boolean(Power_Apps_Get_App_Variables_v1.Run().custom_maintenance)
+            },
+            With(
+                { utcMinutes: Hour(currentUTC) * 60 + Minute(currentUTC) },
+                customMaint
+                ||
+                (
+                    maintenanceStart < maintenanceEnd &&
+                    utcMinutes >= maintenanceStart && utcMinutes <= maintenanceEnd
+                )
+                ||
+                (
+                    maintenanceStart > maintenanceEnd &&
+                    (utcMinutes >= maintenanceStart || utcMinutes <= maintenanceEnd)
+                )
+            )
+        )
+      MultiMUIDStatusUpdate: |-
+        =With(
+            {
+                data: Table(
+                    ParseJSON(
+                        Power_Apps_Update_Table_Flow_v1_1.Run(
+                            Table_Name,
+                            Office365Users.MyProfileV2().mail,
+                            Json_Array
+                        ).result
+                    )
+                )
+            },
+            First(
+                ForAll(
+                    data,
+                    {
+                        MESSAGE: Text(ThisRecord.Value.MESSAGE),
+                        DATA: Text(ThisRecord.Value.DATA),
+                        NOTIFICATION: Text(ThisRecord.Value.NOTIFICATION)
+                    }
+                )
+            )
+        )
+      RecalculateFirmographics: |+
+        =With(
+            {
+                data: Table(
+                    ParseJSON(
+                        Power_Apps_ReCalculate_Firmographics_Flow_v1_1.Run(
+                            MUID_ORG_TABLE_NAME,
+                            Office365Users.MyProfileV2().mail,
+                            Selected_Muid
+                        ).result
+                    )
+                )
+            },
+            First(
+                ForAll(
+                    data,
+                    With(
+                        {
+                            record: ThisRecord.Value,
+                            parsedData: ThisRecord.Value
+                        },
+                        {
+                            MESSAGE: Text(record.MESSAGE),
+                            NOTIFICATION: Coalesce(Text(record.NOTIFICATION), "success"),
+
+                            // Now access nested fields inside parsedData
+                            MUID: Value(parsedData.MUID),
+                            MUID_COUNTRY: Text(parsedData.MUID_COUNTRY),
+                            MUID_CHANNEL: Text(parsedData.MUID_CHANNEL),
+                            MUID_EMPLOYEE_SEGMENT: Text(parsedData.MUID_EMPLOYEE_SEGMENT),
+                            MUID_ENTERPRISE_SEGMENT: Text(parsedData.MUID_ENTERPRISE_SEGMENT),
+                            MUID_OWNER_EMAIL: Text(parsedData.MUID_OWNER_EMAIL),
+                            MUID_OWNER_NAME: Text(parsedData.MUID_OWNER_NAME),
+                            MUID_VERTICAL: Text(parsedData.MUID_VERTICAL)
+                        }
+                    )
+                )
+            )
+        )
+      SearchTermCountFromTable: |-
+        =IfError(
+        With(
+            {
+                data: Value(
+                    First(
+                        Table(
+                            ParseJSON(
+                                Power_Apps_Search_Table_Flow_v1_1.Run(
+                                    Range_Limit,
+                                    Table_Name,
+                                    Search_Term,
+                                    "Get Count",
+                                    Office365Users.MyProfileV2().mail,
+                                    Coalesce(Sort_Col,"MUID"),
+                                    Coalesce(Sort_Order,"ASC"),
+                                    Coalesce(filter_json,"{}")
+                                ).result
+                            )
+                        )
+                    ).Value.NO_OF_RECORDS
+                )
+            },
+            Table({Value: data})
+        ),Notify("Error in Processing the request",NotificationType.Error))
+      SearchTermGetDataFromMUIDACCOUNT: |-
+        =IfError(
+        With(
+            {
+                data: Table(
+                    ParseJSON(
+                        Power_Apps_Search_Table_Flow_v1_1.Run(
+                            Range_Limit,
+                            MUID_CHILD_TABLE_NAME,
+                            Search_Term,
+                            "Get Data",
+                            Office365Users.MyProfileV2().mail,
+                            Coalesce(Sort_Col,"MUID_CHILD_RECORD_ID"),
+                            Coalesce(Sort_Order,"ASC"),
+                            Coalesce(filter_json,"{}")
+                        ).result
+                    )
+                )
+            },
+            If(CountRows(data)>=0,
+            ForAll(
+                data.Value,
+                {
+                    ROW_INDEX : Text(ThisRecord.Value.ROW_INDEX),
+                    MUID : Text(ThisRecord.Value.MUID),
+                    SFDC_ID : Text(ThisRecord.Value.SFDC_ID),
+                    SFDC_ID_UNIFY : Text(ThisRecord.Value.SFDC_ID_UNIFY),
+                    MITEL_ID : Text(ThisRecord.Value.MITEL_ID),
+                    MUID_CHILD_COUNTRY : Text(ThisRecord.Value.MUID_CHILD_COUNTRY),
+                    AUTO_MATCH_METHOD : Text(ThisRecord.Value.AUTO_MATCH_METHOD),
+                    PARENT_SAP_NUMBER : Text(ThisRecord.Value.PARENT_SAP_NUMBER),
+                    PARENT_SAP_NAME : Text(ThisRecord.Value.PARENT_SAP_NAME),
+                    MUID_CHILD_VERTICAL_SFDC : Text(ThisRecord.Value.MUID_CHILD_VERTICAL_SFDC),
+                    MUID_CHILD_VERTICAL_SFDC_6SENSE : Text(ThisRecord.Value.MUID_CHILD_VERTICAL_SFDC_6SENSE),
+                    DUNS : Text(ThisRecord.Value.DUNS),
+                    DUNS_MATCH_GRADE : Text(ThisRecord.Value.DUNS_MATCH_GRADE),
+                    DUNS_MATCH_SCORE : Text(ThisRecord.Value.DUNS_MATCH_SCORE),
+                    EMPLOYEES_DUNS : Text(ThisRecord.Value.EMPLOYEES_DUNS),
+                    EMPLOYEES_LG : Text(ThisRecord.Value.EMPLOYEES_LG),
+                    EMPLOYEES_6SENSE : Text(ThisRecord.Value.EMPLOYEES_6SENSE),
+                    CHANNEL : Text(ThisRecord.Value.CHANNEL),
+                    STATUS : Text(ThisRecord.Value.STATUS),
+                    ENTITY : Text(ThisRecord.Value.ENTITY),
+                    ACCOUNT_OWNER_NAME : Text(ThisRecord.Value.ACCOUNT_OWNER_NAME),
+                    ACCOUNT_OWNER_EMAIL : Text(ThisRecord.Value.ACCOUNT_OWNER_EMAIL),
+                    NOTE : Text(ThisRecord.Value.NOTE),
+                    CREATED_BY : Text(ThisRecord.Value.CREATED_BY),
+                    MODIFIED_BY : Text(ThisRecord.Value.MODIFIED_BY),
+                    MUID_CHILD_RECORD_ID : Text(ThisRecord.Value.MUID_CHILD_RECORD_ID),
+                    MUID_CHILD_RECORD_NAME : Text(ThisRecord.Value.MUID_CHILD_RECORD_NAME),
+                    MUID_CHILD_VERTICAL : Text(ThisRecord.Value.MUID_CHILD_VERTICAL),
+                    MUID_CHILD_ACCOUNT_CREATE_DATE : With({timestamp:Text(ThisRecord.Value.MUID_CHILD_ACCOUNT_CREATE_DATE)},If(IsBlankOrError(timestamp),Blank(),Self.ConvertToTimestamp(timestamp))),
+                    MATCH_DOMAIN : Text(ThisRecord.Value.MATCH_DOMAIN),
+                    CREATED_DATE : Text(ThisRecord.Value.CREATED_DATE),
+                    MODIFIED_DATE : Text(ThisRecord.Value.MODIFIED_DATE),
+                    MUID_COMPANY_NAME : Text(ThisRecord.Value.MUID_COMPANY_NAME),
+                    MMT_COMPANY_NAME : Text(ThisRecord.Value.MMT_COMPANY_NAME),
+                    MUID_CHILD_COUNT:Value(ThisRecord.Value.MUID_CHILD_COUNT),
+                    CHILD_SAP_NUMBER : Text(ThisRecord.Value.CHILD_SAP_NUMBER),
+                    LAST_BILLED_DATE : Text(ThisRecord.Value.LAST_BILLED_DATE),
+                    BILLINGS_SINCE_2023 : Text(ThisRecord.Value.BILLINGS_SINCE_2023),
+                    END_CUSTOMER_LOCATION_NUMBER : Text(ThisRecord.Value.END_CUSTOMER_LOCATION_NUMBER),
+                    DUNS_EMPLOYEE_COUNT : Text(ThisRecord.Value.DUNS_EMPLOYEE_COUNT),
+                    SFDC_BOOKINGS : Text(ThisRecord.Value.SFDC_BOOKINGS)
+                }
+                ),Notify("Error in Processing the request",NotificationType.Error);
+                    [
+                        { ROW_INDEX: Blank(), MUID: Blank(), SFDC_ID: Blank(), SFDC_ID_UNIFY: Blank(), MITEL_ID: Blank(),
+                          MUID_CHILD_COUNTRY: Blank(), AUTO_MATCH_METHOD: Blank(), PARENT_SAP_NUMBER: Blank(), 
+                          PARENT_SAP_NAME: Blank(), MUID_CHILD_VERTICAL_SFDC: Blank(), MUID_CHILD_VERTICAL_SFDC_6SENSE: Blank(),
+                          DUNS: Blank(), DUNS_MATCH_GRADE: Blank(), DUNS_MATCH_SCORE: Blank(), EMPLOYEES_DUNS: Blank(),
+                          EMPLOYEES_LG: Blank(), EMPLOYEES_6SENSE: Blank(), CHANNEL: Blank(), STATUS: Blank(), ENTITY: Blank(),
+                          ACCOUNT_OWNER_NAME: Blank(), ACCOUNT_OWNER_EMAIL: Blank(), NOTE: Blank(), CREATED_BY: Blank(),
+                          MODIFIED_BY: Blank(), MUID_CHILD_RECORD_ID: Blank(), MUID_CHILD_RECORD_NAME: Blank(),
+                          MUID_CHILD_VERTICAL: Blank(), MUID_CHILD_ACCOUNT_CREATE_DATE: Blank(), MATCH_DOMAIN: Blank(),
+                          CREATED_DATE: Blank(), MODIFIED_DATE: Blank(),MUID_COMPANY_NAME:Blank(), MMT_COMPANY_NAME: Blank(), CHILD_SAP_NUMBER: Blank(),
+                          LAST_BILLED_DATE: Blank(), BILLINGS_SINCE_2023: Blank(), END_CUSTOMER_LOCATION_NUMBER: Blank(),
+                          DUNS_EMPLOYEE_COUNT: Blank(), SFDC_BOOKINGS: Blank(),MUID_CHILD_COUNT:Blank() }
+                    ]
+            )
+        ),Notify("Error in Processing the request",NotificationType.Error))
+      SearchTermGetDataFromMUIDORG: "=IfError(\n    With(\n        {\n            data: Table(\n                ParseJSON(\n                    Power_Apps_Search_Table_Flow_v1_1.Run(\n                        Range_Limit,\n                        MUID_ORG_TABLE_NAME,\n                        Search_Term,\n                        \"Get Data\",\n                        Office365Users.MyProfileV2().mail,\n                        Coalesce(Sort_Col,\"MUID\"),\n                        Coalesce(Sort_Order,\"ASC\"),\n                        Coalesce(filter_json,\"{}\")\n                    ).result\n                )\n            )\n        },\n        If(\n            CountRows(data) >= 0,\n            ForAll(\n                data.Value,\n                {\n                    ROW_INDEX: Text(ThisRecord.Value.ROW_INDEX),\n                    MUID: Text(ThisRecord.Value.MUID),\n                    MUID_EMPLOYEE_SEGMENT: Text(ThisRecord.Value.MUID_EMPLOYEE_SEGMENT),\n                    PARENT_MUID: Text(ThisRecord.Value.PARENT_MUID),\n                    STATUS: Text(ThisRecord.Value.STATUS),\n                    NOTE: Text(ThisRecord.Value.NOTE),\n                    CREATED_BY: Text(ThisRecord.Value.CREATED_BY),\n                    MODIFIED_BY: Text(ThisRecord.Value.MODIFIED_BY),\n                    MUID_COUNTRY: Text(ThisRecord.Value.MUID_COUNTRY),\n                    MUID_VERTICAL: Text(ThisRecord.Value.MUID_VERTICAL),\n                    MUID_COMPANY_NAME: Text(ThisRecord.Value.MUID_COMPANY_NAME),\n                    MUID_ENTERPRISE_SEGMENT: Text(ThisRecord.Value.MUID_ENTERPRISE_SEGMENT),\n                    MUID_FIRST_CREATE_DATE: With({timestamp: Text(ThisRecord.Value.MUID_FIRST_CREATE_DATE)}, If(IsBlankOrError(Trim(timestamp)), Blank(), Self.ConvertToTimestamp(timestamp))),\n                    IS_DIRECT_CUSTOMER: Text(ThisRecord.Value.IS_DIRECT_CUSTOMER),\n                    CREATED_DATE: With({timestamp: Text(ThisRecord.Value.CREATED_DATE)}, If(IsBlankOrError(Trim(timestamp)), Blank(), Self.ConvertToTimestamp(timestamp))),\n                    MODIFIED_DATE: With({timestamp: Text(ThisRecord.Value.MODIFIED_DATE)}, If(IsBlankOrError(Trim(timestamp)), Blank(), Self.ConvertToTimestamp(timestamp))),\n                    MUID_CHANNEL: Text(ThisRecord.Value.MUID_CHANNEL),\n                    MUID_OWNER_NAME: Text(ThisRecord.Value.MUID_OWNER_NAME),\n                    MUID_OWNER_EMAIL: Text(ThisRecord.Value.MUID_OWNER_EMAIL),\n                    MUID_SEAT_BUCKET: Text(ThisRecord.Value.MUID_SEAT_BUCKET),\n                    MMT_COMPANY_NAME: Text(ThisRecord.Value.MMT_COMPANY_NAME),\n                    MUID_CHILD_COUNT:Value(ThisRecord.Value.MUID_CHILD_COUNT)\n                }\n            ),\n            Notify(\"Error in Processing the request\", NotificationType.Error);[{ROW_INDEX: Blank(), MUID: Blank(), MUID_EMPLOYEE_SEGMENT: Blank(), PARENT_MUID: Blank(), STATUS: Blank(), NOTE: Blank(), CREATED_BY: Blank(), MODIFIED_BY: Blank(), MUID_COUNTRY: Blank(), MUID_VERTICAL: Blank(), MUID_COMPANY_NAME: Blank(), MUID_ENTERPRISE_SEGMENT: Blank(), MUID_FIRST_CREATE_DATE: Blank(), IS_DIRECT_CUSTOMER: Blank(), CREATED_DATE: Blank(), MODIFIED_DATE: Blank(), MUID_CHANNEL: Blank(), MUID_OWNER_NAME: Blank(), MUID_OWNER_EMAIL: Blank(), MUID_SEAT_BUCKET: Blank(), MMT_COMPANY_NAME: Blank(),MUID_CHILD_COUNT:Blank()}]\n        )\n        \n    ),\n    Notify(\"Error in Processing the request\", NotificationType.Error)\n)\n"
+      SingleMUIDStatusUpdate: |-
+        =With(
+            {
+                data: Table(
+                    ParseJSON(
+                        Power_Apps_Update_Table_Flow_v1_1.Run(
+                            Table_Name,
+                            Office365Users.MyProfileV2().mail,
+                            Json_Array
+                        ).result
+                    )
+                )
+            },
+            First(
+                ForAll(
+                    data,
+                    {
+                        MESSAGE: Text(ThisRecord.Value.MESSAGE),
+                        DATA: Text(ThisRecord.Value.DATA),
+                        NOTIFICATION: Text(ThisRecord.Value.NOTIFICATION)
+                    }
+                )
+            )
+        )
+      Transpose_Calculation: |-
+        =Table(
+            ForAll(
+                ColumnNames(IfError(ParseJSON(JSONDATA), ParseJSON(JSON({})))),
+                {
+                    Key: ThisRecord.Value,
+                    Value_: Text(
+                        Column(
+                            IfError(ParseJSON(JSONDATA), ParseJSON(JSON({}))),
+                            ThisRecord.Value
+                        )
+                    )
+                }
+            )
+        )
+      UTCNow: |
+        =With(
+            {
+                utcData: DateAdd(Now(), TimeZoneOffset(), TimeUnit.Minutes)  // Convert local time to UTC
+            },
+            utcData
+        )
+      Width: =1
