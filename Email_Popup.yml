@@ -1,0 +1,951 @@
+ComponentDefinitions:
+  Email_Popups:
+    DefinitionType: CanvasComponent
+    AccessAppScope: true
+    CustomProperties:
+      CC_List:
+        PropertyKind: Input
+        DisplayName: CC_List
+        Description: List of users to be included in the CC field of the email.
+        RaiseOnReset: true
+        DataType: Table
+        Default: =Table({DisplayName:User().FullName,UserPrincipalName:User().Email})
+      EmailEventFrom:
+        PropertyKind: Input
+        DisplayName: Email Event From
+        Description: Source table or context from which the email event is triggered.
+        RaiseOnReset: true
+        DataType: Text
+        Default: =MUID_ORG_TABLE_NAME
+      OnClose:
+        PropertyKind: Event
+        DisplayName: OnClose
+        Description: Event triggered when the email popup is closed.
+        ReturnType: None
+        Default: =
+      OnNo:
+        PropertyKind: Event
+        DisplayName: OnNo
+        Description: Event triggered when the user cancels or declines sending the email.
+        ReturnType: None
+        Default: =
+      OnYes:
+        PropertyKind: Event
+        DisplayName: OnYes
+        Description: Event triggered when the user confirms sending the email.
+        ReturnType: None
+        Default: =
+      ParameterizedPart:
+        PropertyKind: Input
+        DisplayName: Parameterized Part
+        Description: Dynamic content or links to be included in the email body.
+        RaiseOnReset: true
+        DataType: Text
+        Default: ="Text"
+      PopupText:
+        PropertyKind: Input
+        DisplayName: Popup Text
+        Description: The main message displayed in the email confirmation popup.
+        RaiseOnReset: true
+        DataType: Text
+        Default: ="Are you sure you want to send the mail?"
+      Subject:
+        PropertyKind: Input
+        DisplayName: Subject
+        Description: Subject line of the email.
+        DataType: Text
+        Default: ="Text"
+      To_List:
+        PropertyKind: Input
+        DisplayName: To_List
+        Description: List of users to be included in the To field of the email.
+        DataType: Table
+        Default: =Table({DisplayName:User().FullName,UserPrincipalName:User().Email})
+      onResetAll:
+        PropertyKind: Action
+        DisplayName: on Reset All
+        Description: Action to reset all fields and toggles in the email popup.
+        ReturnType: None
+    Properties:
+      Fill: =RGBA(0, 0, 0, 0.57)
+      Height: =Max(App.Height)
+      OnReset: =Self.onResetAll()
+      Width: =Max(App.Width)
+      onResetAll: |-
+        =Select(ResetAllButton);
+        Set(
+            toggle_object,
+            {
+                APP_LINK: true,
+                TABLEAU_LINK: true,
+                SALESFORCE: true,
+                UNIFY_SALESFORCE: true
+            }
+        );
+    Children:
+      - MainContainer:
+          Control: GroupContainer@1.3.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height-2*Self.Y
+            LayoutDirection: =LayoutDirection.Vertical
+            Width: =Parent.Width-2*Self.X
+            X: =100
+            Y: =40
+          Children:
+            - RecipientRow:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  FillPortions: =0
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =10
+                  LayoutWrap: =true
+                  PaddingBottom: =20
+                  PaddingLeft: =20
+                  PaddingRight: =20
+                  PaddingTop: =20
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - ToLabel:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        FillPortions: =1
+                        Font: =Font.'Open Sans'
+                        Text: |+
+                          =$"* To ({If(
+                              IsBlankOrError(First(ToComboBox.SelectedItems).DisplayName),
+                              0,
+                              Coalesce(CountRows(ToComboBox.SelectedItems), 0)
+                          )}) : "
+                  - ToComboBox:
+                      Control: Classic/ComboBox@2.4.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DefaultSelectedItems: =Email_Popups.To_List
+                        DisplayFields: =["DisplayName","Mail"]
+                        Font: =Font.'Open Sans'
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        InputTextPlaceholder: ="Find Users"
+                        Items: |-
+                          =Filter(
+                              Office365Users.SearchUserV2({
+                                  searchTerm: Self.SearchText,
+                                  isSearchTermRequired: true
+                              }).value,
+                              EndsWith(UserPrincipalName, "@mitel.com")
+                          )
+                        MultiValueDelimiter: ="; "
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SearchFields: =["DisplayName","Mail"]
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Width: =Parent.Width*3/4
+                  - CCLabel:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        FillPortions: =1
+                        Font: =Font.'Open Sans'
+                        Text: |+
+                          =$"* CC ({If(
+                              IsBlankOrError(First(CCComboBox.SelectedItems).DisplayName),
+                              0,
+                              Coalesce(CountRows(CCComboBox.SelectedItems), 0)
+                          )}) : "
+                  - CCComboBox:
+                      Control: Classic/ComboBox@2.4.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DefaultSelectedItems: =Email_Popups.CC_List
+                        DisplayFields: =["DisplayName","Mail"]
+                        Font: =Font.'Open Sans'
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        InputTextPlaceholder: ="Find Users"
+                        Items: |-
+                          =Filter(
+                              Office365Users.SearchUserV2({
+                                  searchTerm: Self.SearchText,
+                                  isSearchTermRequired: true
+                              }).value,
+                              EndsWith(UserPrincipalName, "@mitel.com")
+                          )
+                        MultiValueDelimiter: ="; "
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SearchFields: =["DisplayName","Mail"]
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Width: =Parent.Width*3/4
+                        X: =272
+                        Y: =80
+                  - BCCLabel:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        FillPortions: =1
+                        Font: =Font.'Open Sans'
+                        Text: |+
+                          =$"* BCC ({If(
+                              IsBlankOrError(First(BCCComboBox.SelectedItems).DisplayName),
+                              0,
+                              Coalesce(CountRows(BCCComboBox.SelectedItems), 0)
+                          )}) : "
+                  - BCCComboBox:
+                      Control: Classic/ComboBox@2.4.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        ChevronBackground: =RGBA(56, 96, 178, 1)
+                        ChevronFill: =RGBA(255, 255, 255, 1)
+                        ChevronHoverBackground: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+                        ChevronHoverFill: =RGBA(255, 255, 255, 1)
+                        DisplayFields: =["DisplayName","Mail"]
+                        Font: =Font.'Open Sans'
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        InputTextPlaceholder: ="Find Users"
+                        Items: |-
+                          =Filter(
+                              Office365Users.SearchUserV2({
+                                  searchTerm: Self.SearchText,
+                                  isSearchTermRequired: true
+                              }).value,
+                              EndsWith(UserPrincipalName, "@mitel.com")
+                          )
+                        MultiValueDelimiter: ="; "
+                        PressedColor: =RGBA(255, 255, 255, 1)
+                        PressedFill: =RGBA(0, 18, 107, 1)
+                        SearchFields: =["DisplayName","Mail"]
+                        SelectionColor: =RGBA(255, 255, 255, 1)
+                        SelectionFill: =RGBA(56, 96, 178, 1)
+                        Width: =Parent.Width*3/4
+            - SubjectRow:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  FillPortions: =0
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =10
+                  LayoutWrap: =true
+                  PaddingBottom: =20
+                  PaddingLeft: =20
+                  PaddingRight: =20
+                  PaddingTop: =20
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - SubjectLabel:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        AlignInContainer: =AlignInContainer.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        FillPortions: =1
+                        Font: =Font.'Open Sans'
+                        Text: |-
+                          =$"* Subject : "
+                  - SubjectInput:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Default: =Email_Popups.Subject
+                        Font: =Font.'Open Sans'
+                        Height: =80
+                        HintText: ="Please Enter Email Subject"
+                        HoverBorderColor: =RGBA(0, 18, 107, 1)
+                        HoverFill: =RGBA(186, 202, 226, 1)
+                        Mode: =TextMode.MultiLine
+                        Width: =Parent.Width*3/4
+                  - ParameterizedLinksContainer:
+                      Control: GroupContainer@1.3.0
+                      Variant: AutoLayout
+                      Properties:
+                        AlignInContainer: =AlignInContainer.SetByContainer
+                        DropShadow: =DropShadow.None
+                        Height: =80
+                        LayoutAlignItems: =LayoutAlignItems.Center
+                        LayoutDirection: =LayoutDirection.Horizontal
+                        LayoutGap: =10
+                        LayoutMinHeight: =80
+                        LayoutWrap: =true
+                        PaddingBottom: =20
+                        PaddingTop: =20
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =0
+                        RadiusTopRight: =0
+                      Children:
+                        - ParameterizedLinksLabel:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Center
+                              BorderColor: =RGBA(0, 18, 107, 1)
+                              Font: =Font.'Open Sans'
+                              LayoutMinHeight: =Parent.LayoutMinHeight
+                              Text: |-
+                                =$"* Include parameterized links : "
+                              Width: =SubjectLabel.Width
+                        - AppLinkToggleContainer:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              DropShadow: =DropShadow.None
+                              Height: =Parent.Height
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutJustifyContent: =LayoutJustifyContent.Center
+                              LayoutMinHeight: =1
+                              LayoutMinWidth: =200
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - AppLinkLabel:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    LayoutMinHeight: =Parent.LayoutMinHeight
+                                    Text: =$"App Link"
+                                    Width: =SubjectLabel.Width
+                              - AppLinkToggle:
+                                  Control: Classic/Toggle@2.1.0
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =true
+                                    Font: =Font.'Open Sans'
+                                    LayoutMinHeight: =Parent.LayoutMinHeight
+                                    OnChange: |-
+                                      =Set(
+                                          toggle_object,
+                                          {
+                                              APP_LINK: AppLinkToggle.Value,
+                                              TABLEAU_LINK: TableauToggle.Value,
+                                              SALESFORCE: SalesforceToggle.Value,
+                                              UNIFY_SALESFORCE: UnifySalesforceToggle.Value
+                                          }
+                                      )
+                                    Reset: =reset_all
+                                    TextPosition: =TextPosition.Left
+                                    TrueFill: =RGBA(56, 96, 178, 1)
+                        - TableauToggleContainer:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              DropShadow: =DropShadow.None
+                              Height: =Parent.Height
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutJustifyContent: =LayoutJustifyContent.Center
+                              LayoutMinHeight: =1
+                              LayoutMinWidth: =200
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                            Children:
+                              - TableauLabel:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    LayoutMinHeight: =Parent.LayoutMinHeight
+                                    Text: =$"Tableau Report"
+                                    Width: =SubjectLabel.Width
+                              - TableauToggle:
+                                  Control: Classic/Toggle@2.1.0
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =true
+                                    Font: =Font.'Open Sans'
+                                    LayoutMinHeight: =Parent.LayoutMinHeight
+                                    OnChange: |-
+                                      =Set(
+                                          toggle_object,
+                                          {
+                                              APP_LINK: AppLinkToggle.Value,
+                                              TABLEAU_LINK: TableauToggle.Value,
+                                              SALESFORCE: SalesforceToggle.Value,
+                                              UNIFY_SALESFORCE: UnifySalesforceToggle.Value
+                                          }
+                                      )
+                                    Reset: =reset_all
+                                    TextPosition: =TextPosition.Left
+                                    TrueFill: =RGBA(56, 96, 178, 1)
+                        - SalesforceToggleContainer:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              DropShadow: =DropShadow.None
+                              Height: =Parent.Height
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutJustifyContent: =LayoutJustifyContent.Center
+                              LayoutMinHeight: =1
+                              LayoutMinWidth: =200
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Visible: =If(Email_Popups.EmailEventFrom = MUID_ORG_TABLE_NAME,false,true)
+                            Children:
+                              - SalesforceLabel:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    LayoutMinHeight: =Parent.LayoutMinHeight
+                                    Text: =$"Salesforce Report"
+                                    Width: =SubjectLabel.Width
+                              - SalesforceToggle:
+                                  Control: Classic/Toggle@2.1.0
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =true
+                                    Font: =Font.'Open Sans'
+                                    LayoutMinHeight: =Parent.LayoutMinHeight
+                                    OnChange: |-
+                                      =Set(
+                                          toggle_object,
+                                          {
+                                              APP_LINK: AppLinkToggle.Value,
+                                              TABLEAU_LINK: TableauToggle.Value,
+                                              SALESFORCE: SalesforceToggle.Value,
+                                              UNIFY_SALESFORCE: UnifySalesforceToggle.Value
+                                          }
+                                      )
+                                    Reset: =reset_all
+                                    TextPosition: =TextPosition.Left
+                                    TrueFill: =RGBA(56, 96, 178, 1)
+                        - UnifySalesforceToggleContainer:
+                            Control: GroupContainer@1.3.0
+                            Variant: AutoLayout
+                            Properties:
+                              AlignInContainer: =AlignInContainer.SetByContainer
+                              DropShadow: =DropShadow.None
+                              Height: =Parent.Height
+                              LayoutAlignItems: =LayoutAlignItems.Stretch
+                              LayoutDirection: =LayoutDirection.Vertical
+                              LayoutJustifyContent: =LayoutJustifyContent.Center
+                              LayoutMinHeight: =1
+                              LayoutMinWidth: =200
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Visible: =If(Email_Popups.EmailEventFrom = MUID_ORG_TABLE_NAME,false,true)
+                            Children:
+                              - UnifySalesforceLabel:
+                                  Control: Label@2.5.1
+                                  Properties:
+                                    Align: =Align.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Font: =Font.'Open Sans'
+                                    LayoutMinHeight: =Parent.LayoutMinHeight
+                                    Text: =$"Unify Salesforce Report"
+                                    Width: =SubjectLabel.Width
+                              - UnifySalesforceToggle:
+                                  Control: Classic/Toggle@2.1.0
+                                  Properties:
+                                    AlignInContainer: =AlignInContainer.Center
+                                    BorderColor: =RGBA(0, 18, 107, 1)
+                                    Default: =true
+                                    Font: =Font.'Open Sans'
+                                    LayoutMinHeight: =Parent.LayoutMinHeight
+                                    OnChange: |-
+                                      =Set(
+                                          toggle_object,
+                                          {
+                                              APP_LINK: AppLinkToggle.Value,
+                                              TABLEAU_LINK: TableauToggle.Value,
+                                              SALESFORCE: SalesforceToggle.Value,
+                                              UNIFY_SALESFORCE: UnifySalesforceToggle.Value
+                                          }
+                                      )
+                                    Reset: =reset_all
+                                    TextPosition: =TextPosition.Left
+                                    TrueFill: =RGBA(56, 96, 178, 1)
+            - EmailBodyRow:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  FillPortions: =0
+                  Height: =220
+                  LayoutAlignItems: =LayoutAlignItems.Stretch
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =10
+                  LayoutWrap: =true
+                  PaddingBottom: =10
+                  PaddingLeft: =20
+                  PaddingRight: =20
+                  PaddingTop: =10
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - EmailBodyLabel:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        FillPortions: =1
+                        Font: =Font.'Open Sans'
+                        Text: |-
+                          =$"* Email Body : "
+                  - EmailBodyEditor:
+                      Control: RichTextEditor@2.7.0
+                      Properties:
+                        BorderColor: =RGBA(0, 18, 107, 1)
+                        Default: |-
+                          ="Please provide your inputs on the below : "
+                        FillPortions: =1
+                        LayoutMinHeight: =100
+                        LayoutMinWidth: =Parent.Width*3/4
+                        Size: =13
+            - ActionRow:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  DropShadow: =DropShadow.None
+                  FillPortions: =0
+                  Height: =60
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  LayoutGap: =30
+                  LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+                  LayoutMinHeight: =80
+                  PaddingBottom: =20
+                  PaddingLeft: =420
+                  PaddingRight: =420
+                  PaddingTop: =20
+                  RadiusBottomLeft: =0
+                  RadiusBottomRight: =0
+                  RadiusTopLeft: =0
+                  RadiusTopRight: =0
+                Children:
+                  - SendEmailButton:
+                      Control: Button@0.0.45
+                      Properties:
+                        Icon: ="Mail"
+                        Layout: ='ButtonCanvas.Layout'.IconAfter
+                        OnSelect: =Set(show_send_popup,true)
+                        Text: ="Send Email"
+                        Width: =160
+                  - ClosePopupButton:
+                      Control: Button@0.0.45
+                      Properties:
+                        Icon: ="Dismiss"
+                        Layout: ='ButtonCanvas.Layout'.IconAfter
+                        OnSelect: |-
+                          =Email_Popups.OnClose();
+                          Email_Popups.onResetAll();
+                        Text: ="Close Popup"
+                        Width: =160
+      - SendConfirmationOverlay:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            Fill: =RGBA(0, 0, 0, 0.50)
+            Height: =Max(App.Height)
+            Visible: =show_send_popup
+            Width: =Max(App.Width)
+          Children:
+            - SendConfirmationBox:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  Fill: =RGBA(214, 221, 224, 1)
+                  Height: =SendYesButton.Y+SendYesButton.Height+35-Self.Y
+                  Width: =SendPopupMessage.Width+SendPopupIconContainer.Width+30
+                  X: =SendPopupIconContainer.X-10
+                  Y: =SendPopupMessage.Y-35
+            - SendPopupIconContainer:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  Fill: =RGBA(214, 221, 224, 1)
+                  Height: =SendPopupIcon.Height
+                  RadiusBottomLeft: =90
+                  RadiusBottomRight: =90
+                  RadiusTopLeft: =90
+                  RadiusTopRight: =90
+                  Width: =SendPopupIcon.Width
+                  X: =(SendConfirmationOverlay.Width-Self.Width-SendPopupMessage.Width)/2-10
+                  Y: =SendPopupMessage.Y-(Self.Height-SendPopupMessage.Height)/2
+                Children:
+                  - SendPopupIcon:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.View
+                        Fill: =App.Theme.Colors.Primary
+                        Height: =50
+                        Icon: |
+                          =Switch(true,Lower("revert") in Email_Popups.PopupText,Icon.Reload,Lower("reset") in Email_Popups.PopupText,Icon.Reload,Lower("save") in Email_Popups.PopupText,Icon.Save,Icon.Error)
+                        PaddingBottom: =10
+                        PaddingLeft: =10
+                        PaddingRight: =10
+                        PaddingTop: =10
+                        Rotation: =Switch(true,Lower("revert") in Email_Popups.PopupText,90,Lower("reset") in Email_Popups.PopupText,90,Lower("save") in Email_Popups.PopupText,0,0)
+                        Width: =50
+            - SendPopupMessage:
+                Control: Label@2.5.1
+                Properties:
+                  Align: =Align.Center
+                  AutoHeight: =true
+                  Font: =Font.Arial
+                  Size: =12
+                  Text: =Email_Popups.PopupText
+                  Width: =350
+                  X: =(SendConfirmationOverlay.Width-(Self.Width-SendPopupIconContainer.Width))/2
+                  Y: =(SendConfirmationOverlay.Height-Self.Height)/2-100
+            - SendYesButton:
+                Control: Button@0.0.45
+                Properties:
+                  Font: =Font.Arial
+                  FontSize: =12
+                  OnSelect: |
+                    =If(
+                        Power_Apps_Send_an_Email_v1.Run(
+                            Coalesce(
+                                Concat(
+                                    ToComboBox.SelectedItems,
+                                    Mail,
+                                    ";"
+                                ),
+                                "-"
+                            ),
+                            Coalesce(
+                                SubjectInput.Text,
+                                "-"
+                            ),
+                            Coalesce(
+                                EmailBodyEditor.HtmlText,
+                                "-"
+                            ),
+                            Coalesce(
+                                Email_Popups.ParameterizedPart,
+                                ""
+                            ),
+                            Coalesce(
+                                JSON(toggle_object),
+                                "{}"
+                            ),
+                            {
+                                text_1: Coalesce(
+                                    Concat(
+                                        BCCComboBox.SelectedItems,
+                                        Mail,
+                                        ";"
+                                    ),
+                                    "-"
+                                ),
+                                text_2: Coalesce(
+                                    Concat(
+                                        CCComboBox.SelectedItems,
+                                        Mail,
+                                        ";"
+                                    ),
+                                    "-"
+                                )
+                            }
+                        ).email_status = Text(1),
+                        Set(var_NotificationType,"Email_Success");Set(var_NotificationMessage,$"Email Sent Successfully");Set(var_NotificationVisible,true);
+                        ,
+                        Set(var_NotificationType,"Email_Failure");Set(var_NotificationMessage,$"Error in Sending Email");Set(var_NotificationVisible,true);
+                    );
+                    Email_Popups.OnYes();
+                    Set(
+                        show_send_popup,
+                        false
+                    );
+                    Email_Popups.onResetAll();
+                    Email_Popups.OnClose();
+                  Text: ="Yes"
+                  VerticalAlign: =VerticalAlign.Middle
+                  Width: =120
+                  X: =SendConfirmationBox.X+(SendConfirmationBox.Width-SendCancelButton.Width-SendYesButton.Width-SendNoButton.Width)/4
+                  Y: =SendPopupIconContainer.Y+SendPopupIconContainer.Height+50
+            - SendNoButton:
+                Control: Button@0.0.45
+                Properties:
+                  Font: =Font.Arial
+                  FontSize: =12
+                  OnSelect: =Set(show_send_popup,false);    Email_Popups.OnNo();
+                  Text: ="No"
+                  VerticalAlign: =VerticalAlign.Middle
+                  Width: =120
+                  X: =SendConfirmationBox.X+(2*(SendConfirmationBox.Width-SendCancelButton.Width-SendYesButton.Width-SendNoButton.Width)/4)+SendYesButton.Width
+                  Y: =SendPopupIconContainer.Y+SendPopupIconContainer.Height+50
+            - SendCancelButton:
+                Control: Button@0.0.45
+                Properties:
+                  Font: =Font.Arial
+                  FontSize: =12
+                  OnSelect: =Set(show_send_popup,false);Email_Popups.OnNo();
+                  Text: ="Cancel"
+                  VerticalAlign: =VerticalAlign.Middle
+                  Width: =120
+                  X: =SendConfirmationBox.X+3*(SendConfirmationBox.Width-SendCancelButton.Width-SendYesButton.Width-SendNoButton.Width)/4+SendNoButton.Width+SendYesButton.Width
+                  Y: =SendPopupIconContainer.Y+SendPopupIconContainer.Height+50
+      - ResetAllButton:
+          Control: Button@0.0.45
+          Properties:
+            OnSelect: |+
+              =Set(reset_all,true);
+              Set(reset_all,false);
+              Set(var_NotificationDurationMilliseconds,5000);
+            Text: ="Reset All"
+            Visible: =false
+      - EmailNotificationContainer:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            DropShadow: =DropShadow.ExtraBold
+            Fill: "=Switch(\n    true,\n    \n    // ✅ Success types (light green)\n    Lower(var_NotificationType) in [\n        \"creation_success\",\n        \"update_success\",\n        \"update_muid_success\",\n        \"update_muid_child_success\",\n        \"update_multiple_muid_child_success\",\n        \"email_success\"\n    ],\n    RGBA(212, 237, 218, 1),  // Light green\n\n    // ❌ Failure types (light red)\n    Lower(var_NotificationType) in [\n        \"creation_failure\",\n        \"update_failure\",\n        \"update_muid_failure\",\n        \"update_muid_child_failure\",\n        \"update_multiple_muid_child_failure\",\n        \"email_failure\"\n    ],\n    RGBA(248, 215, 218, 1),  // Light red\n\n    // ℹ️ Info types (light blue)\n    Lower(var_NotificationType) in [\n        \"information\"\n    ],\n    RGBA(209, 236, 241, 1),  // Light blue\n\n    // Default\n    RGBA(0, 0, 0, 0)         // Transparent\n)\n"
+            Height: =180
+            Visible: =var_NotificationVisible
+            Width: =400
+            X: =(Email_Popups.X+Email_Popups.Width-Self.Width)/2
+            Y: =(Email_Popups.Y+Email_Popups.Height-Self.Height)/2
+          Children:
+            - EmailNotificationHeading:
+                Control: Label@2.5.1
+                Properties:
+                  Font: =Font.Arial
+                  FontWeight: =FontWeight.Bold
+                  Height: =50
+                  Size: =14
+                  Text: |
+                    =Switch(
+                        true,
+                        Lower("Creation_Success") in Lower(var_NotificationType),
+                        "New MUID created!",
+                        Lower("Creation_Failure") in Lower(var_NotificationType),
+                        "Failed to create MUID",
+                        Lower("Already_Exists") in Lower(var_NotificationType),
+                        "MUID already exists!",
+                        Lower("Update_Success") in Lower(var_NotificationType),
+                        "Data updated!",
+                        Lower("Update_Failure") in Lower(var_NotificationType),
+                        "Failed to update data!",
+                        Lower("Update_MUID_Success") in Lower(var_NotificationType),
+                        "Data updated successfully for MUID.",
+                        Lower("Update_MUID_Failure") in Lower(var_NotificationType),
+                        "Failed to update data for MUID.", 
+                        Lower("Update_MUID_Child_Success") in Lower(var_NotificationType),
+                        "Data updated for MUID Child.",
+                        Lower("Update_MUID_Child_Failure") in Lower(var_NotificationType),
+                        "Failed to update MUID Child.",
+                        Lower("Update_Multiple_MUID_Child_Success") in Lower(var_NotificationType),
+                        "Data updated for selected MUID Childs.",
+                        Lower("Update_Multiple_MUID_Child_Failure") in Lower(var_NotificationType),
+                        "Failed to update selected MUID Childs.",
+                        Lower("Information") in Lower(var_NotificationType),
+                        "Please review the information!",
+                        Lower("Email_Success") in Lower(var_NotificationType),
+                        "Email sent successfully.",
+                        Lower("Email_Failure") in Lower(var_NotificationType),
+                        "Failed to send email.",
+                        ""
+                    )
+                  Width: =300
+                  X: =10
+                  Y: =20
+            - EmailNotificationMessage:
+                Control: Label@2.5.1
+                Properties:
+                  Font: =Font.Arial
+                  Height: =60
+                  Size: =12
+                  Text: =Concatenate(var_NotificationMessage, ".")
+                  Width: =380
+                  X: =10
+                  Y: =70
+            - EmailNotificationOkButton:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  Color: =RGBA(255, 255, 255, 1)
+                  Fill: =RGBA(2, 145, 223, 1)
+                  Font: =Font.Arial
+                  FontWeight: =FontWeight.Normal
+                  Height: =32
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  OnSelect: =Set(var_NotificationVisible, false); Reset(NotificationTimer);
+                  RadiusBottomLeft: =4
+                  RadiusBottomRight: =4
+                  RadiusTopLeft: =4
+                  RadiusTopRight: =4
+                  Size: =12
+                  Text: ="Ok"
+                  Width: =80
+                  X: =300
+                  Y: =130
+            - EmailNotificationTimer:
+                Control: Timer@2.1.0
+                Properties:
+                  AutoPause: =false
+                  Color: =RGBA(255, 255, 255, 1)
+                  Duration: =var_NotificationDurationMilliseconds
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  OnTimerEnd: =Select(NotificationOkButton)
+                  Reset: =true
+                  Start: =var_NotificationVisible
+                  Visible: =false
+                  X: =10
+                  Y: =56
+            - EmailNotificationProgressBar:
+                Control: Classic/Slider@2.1.0
+                Properties:
+                  BorderColor: =Self.ValueFill
+                  Default: =NotificationTimer.Value
+                  DisplayMode: =DisplayMode.View
+                  HandleFill: =RGBA(214, 221, 224, 1)
+                  HandleSize: =10
+                  Height: =4
+                  Max: =NotificationTimer.Duration
+                  RailFill: =RGBA(0, 0, 0, 0)
+                  RailThickness: =4
+                  ShowValue: =false
+                  ValueFill: =RGBA(2, 145, 223, 1)
+                  Width: =EmailNotificationContainer.Width
+            - EmailDebugNotificationVisible:
+                Control: Text@0.0.51
+                Properties:
+                  Text: =var_NotificationVisible
+                  Visible: =false
+                  X: =40
+                  Y: =140
+            - EmailDebugTimerValue:
+                Control: Text@0.0.51
+                Properties:
+                  Text: =NotificationProgressBar.Value
+                  Visible: =false
+                  X: =153
+                  Y: =140
+            - EmailNotificationIconContainer:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  DropShadow: =DropShadow.Semibold
+                  Fill: =RGBA(214, 221, 224, 1)
+                  Height: =NotificationIcon.Height
+                  RadiusBottomLeft: =90
+                  RadiusBottomRight: =90
+                  RadiusTopLeft: =90
+                  RadiusTopRight: =90
+                  Width: =NotificationIcon.Width
+                  X: =NotificationHeading.X+NotificationHeading.Width+10
+                  Y: =NotificationHeading.Y-(Self.Height-NotificationHeading.Height)/2
+                Children:
+                  - EmailNotificationIcon:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.View
+                        Fill: |
+                          =Switch(
+                              true,
+                              Lower(var_NotificationType) in [
+                                  "success",
+                                  "creation_success",
+                                  "update_success",
+                                  "update_muid_success",
+                                  "update_muid_child_success",
+                                  "update_multiple_muid_child_success",
+                                  "email_success",
+                                  "validation_success",
+                                  "saved_changes"
+                              ],
+                              RGBA(63, 214, 133, 1),
+                              Lower(var_NotificationType) in [
+                                  "failure",
+                                  "creation_failure",
+                                  "update_failure",
+                                  "update_muid_failure",
+                                  "update_muid_child_failure",
+                                  "update_multiple_muid_child_failure",
+                                  "email_failure",
+                                  "validation_failure"
+                              ],
+                              RGBA(214, 116, 116, 1),
+                              Lower(var_NotificationType) in [
+                                  "information",
+                                  "validation_information"
+                              ],
+                              RGBA(217, 217, 217, 1),
+                              RGBA(0, 0, 0, 0)
+                          )
+                        Height: =50
+                        Icon: |
+                          =Switch(
+                              true,
+                              Lower(var_NotificationType) in [
+                                  "validation_success",
+                                  "creation_success",
+                                  "update_success",
+                                  "update_muid_success",
+                                  "update_muid_child_success",
+                                  "update_multiple_muid_child_success",
+                                  "email_success",
+                                  "saved_changes"
+                              ],
+                              Icon.CheckBadge,
+                              Lower(var_NotificationType) in [
+                                  "validation_failure",
+                                  "creation_failure",
+                                  "update_failure",
+                                  "update_muid_failure",
+                                  "update_muid_child_failure",
+                                  "update_multiple_muid_child_failure",
+                                  "email_failure"
+                              ],
+                              Icon.CancelBadge,
+                              Lower(var_NotificationType) in [
+                                  "validation_information",
+                                  "information"
+                              ],
+                              Icon.Information,
+                              Lower(var_NotificationType) = "saved_changes",
+                              Icon.Save,
+                              Icon.Error
+                          )
+                        PaddingBottom: =10
+                        PaddingLeft: =10
+                        PaddingRight: =10
+                        PaddingTop: =10
+                        Rotation: =Switch(true,Lower("revert") in var_NotificationType,90,Lower("reset") in var_NotificationType,90,Lower("save") in var_NotificationType,0,0)
+                        Width: =50
