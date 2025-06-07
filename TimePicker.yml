@@ -1,0 +1,223 @@
+ComponentDefinitions:
+  TimePicker:
+    DefinitionType: CanvasComponent
+    AccessAppScope: true
+    CustomProperties:
+      DefaultTime:
+        PropertyKind: Input
+        DisplayName: Default Time
+        Description: The default time value shown when the picker loads.
+        RaiseOnReset: true
+        DataType: DateAndTime
+        Default: =DateTimeValue(Time(10, 0, 0))
+      DependentControlTime:
+        PropertyKind: Input
+        DisplayName: Dependent Control Time
+        Description: The time value from a dependent control, used to adjust available time options.
+        RaiseOnReset: true
+        DataType: DateAndTime
+        Default: =DateTimeValue(Time(9, 0, 0))
+      EndTime:
+        PropertyKind: Input
+        DisplayName: End Time
+        Description: The latest selectable time in the picker.
+        RaiseOnReset: true
+        DataType: DateAndTime
+        Default: =DateTimeValue(Time(22, 0, 0))
+      Interval:
+        PropertyKind: Input
+        DisplayName: Time Interval (Minutes)
+        Description: The interval, in minutes, between selectable times.
+        RaiseOnReset: true
+        DataType: Number
+        Default: =30
+      OnChange:
+        PropertyKind: Event
+        DisplayName: OnChange
+        Description: Triggered when the selected time changes.
+        ReturnType: None
+        Default: =
+      Reset:
+        PropertyKind: Action
+        DisplayName: Reset
+        Description: Resets the selected time to the default value.
+        ReturnType: None
+      SelectedTime:
+        PropertyKind: Output
+        DisplayName: Selected Time
+        Description: The currently selected time value.
+        DataType: DateAndTime
+      StartTime:
+        PropertyKind: Input
+        DisplayName: Start Time
+        Description: The earliest selectable time in the picker.
+        RaiseOnReset: true
+        DataType: DateAndTime
+        Default: =DateTimeValue(Time(8, 0, 0))
+    Properties:
+      Height: =35
+      Reset: =Select(ResetIcon)
+      SelectedTime: =DateTimeValue(TimeComboBox.Selected.Value)
+      Width: =139
+    Children:
+      - TimeComboBox:
+          Control: ComboBox@0.0.51
+          Properties:
+            DefaultSelectedItems: |-
+              =If(
+                  Not IsBlankOrError(TimePicker.DefaultTime),
+                  [
+                      Text(
+                          TimeValue(TimePicker.DefaultTime),
+                          "[$-en-US]hh:mm AM/PM"
+                      )
+                  ].Value
+              )
+            Font: =Font.Arial
+            FontColor: =RGBA(0, 0, 0, 1)
+            FontSize: =14
+            FontWeight: =FontWeight.Normal
+            Height: =TimePicker.Height-5
+            InputTextPlaceholder: ="Select time"
+            Items: |
+              =With(
+                  {
+                      varTotalIntervals: Round(
+                          DateDiff(
+                              If(
+                                  IsBlankOrError(Parent.DependentControlTime),
+                                  If(
+                                      Or(
+                                          Minute(Parent.StartTime) = 0,
+                                          Minute(Parent.StartTime) = 30
+                                      ),
+                                      Parent.StartTime,
+                                      If(
+                                          Minute(Parent.StartTime) < 30,
+                                          DateAdd(
+                                              Parent.StartTime,
+                                              30 - Minute(Parent.StartTime),
+                                              TimeUnit.Minutes
+                                          ),
+                                          DateAdd(
+                                              Parent.StartTime,
+                                              60 - Minute(Parent.StartTime),
+                                              TimeUnit.Minutes
+                                          )
+                                      )
+                                  ),
+                                  If(
+                                      Or(
+                                          Minute(Parent.DependentControlTime) = 0,
+                                          Minute(Parent.DependentControlTime) = 30
+                                      ),
+                                      DateAdd(Parent.DependentControlTime, Parent.Interval, TimeUnit.Minutes),
+                                      If(
+                                          Minute(Parent.DependentControlTime) < 30,
+                                          DateAdd(
+                                              DateAdd(Parent.DependentControlTime, 30 - Minute(Parent.DependentControlTime), TimeUnit.Minutes),
+                                              Parent.Interval,
+                                              TimeUnit.Minutes
+                                          ),
+                                          DateAdd(
+                                              DateAdd(Parent.DependentControlTime, 60 - Minute(Parent.DependentControlTime), TimeUnit.Minutes),
+                                              Parent.Interval,
+                                              TimeUnit.Minutes
+                                          )
+                                      )
+                                  )
+                              ),
+                              Parent.EndTime,
+                              TimeUnit.Minutes
+                          ) / If(
+                              IsNumeric(Parent.Interval),
+                              Parent.Interval,
+                              1
+                          ),
+                          0
+                      )
+                  },
+                  ForAll(
+                      Sequence(
+                          IfError(
+                              If(
+                                  !IsBlankOrError(varTotalIntervals) && IsNumeric(varTotalIntervals),
+                                  varTotalIntervals,
+                                  1
+                              ),
+                              1
+                          ) + 1,
+                          0,
+                          If(
+                              IsNumeric(Parent.Interval),
+                              Parent.Interval,
+                              1
+                          )
+                      ),
+                      {
+                          Value: Text(
+                              DateAdd(
+                                  If(
+                                      IsBlankOrError(Parent.DependentControlTime),
+                                      If(
+                                          Or(
+                                              Minute(Parent.StartTime) = 0,
+                                              Minute(Parent.StartTime) = 30
+                                          ),
+                                          Parent.StartTime,
+                                          If(
+                                              Minute(Parent.StartTime) < 30,
+                                              DateAdd(
+                                                  Parent.StartTime,
+                                                  30 - Minute(Parent.StartTime),
+                                                  TimeUnit.Minutes
+                                              ),
+                                              DateAdd(
+                                                  Parent.StartTime,
+                                                  60 - Minute(Parent.StartTime),
+                                                  TimeUnit.Minutes
+                                              )
+                                          )
+                                      ),
+                                      If(
+                                          Or(
+                                              Minute(Parent.DependentControlTime) = 0,
+                                              Minute(Parent.DependentControlTime) = 30
+                                          ),
+                                          DateAdd(Parent.DependentControlTime,0,  TimeUnit.Minutes),
+                                          If(
+                                              Minute(Parent.DependentControlTime) < 30,
+                                              DateAdd(
+                                                  DateAdd(Parent.DependentControlTime, 30 - Minute(Parent.DependentControlTime), TimeUnit.Minutes),
+                                                  0,
+                                                  TimeUnit.Minutes
+                                              ),
+                                              DateAdd(
+                                                  DateAdd(Parent.DependentControlTime, 60 - Minute(Parent.DependentControlTime), TimeUnit.Minutes),
+                                                  0,
+                                                  TimeUnit.Minutes
+                                              )
+                                          )
+                                      )
+                                  ),
+                                  ThisRecord.Value,
+                                  TimeUnit.Minutes
+                              ),
+                              "[$-en-US]hh:mm AM/PM"
+                          )
+                      }
+                  ).Value
+              )
+            OnChange: =Parent.OnChange()
+            Width: =TimePicker.Width-5
+            X: =2.5
+            Y: =2.5
+      - ResetIcon:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            Height: =33
+            Icon: =Icon.Erase
+            OnSelect: =Reset(TimeComboBox)
+            Visible: =false
+            Width: =31
+            X: =106
