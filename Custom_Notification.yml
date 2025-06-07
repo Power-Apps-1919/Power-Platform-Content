@@ -1,0 +1,281 @@
+ComponentDefinitions:
+  Custom_Notification:
+    DefinitionType: CanvasComponent
+    CustomProperties:
+      NotificationDurationMilliseconds:
+        PropertyKind: Input
+        DisplayName: Notification Duration (milliseconds)
+        Description: Duration in milliseconds for which the notification is visible.
+        RaiseOnReset: true
+        DataType: Number
+        Default: =5000
+      NotificationMessage:
+        PropertyKind: Input
+        DisplayName: Notification Message
+        Description: The main message text displayed in the notification popup.
+        RaiseOnReset: true
+        DataType: Text
+        Default: =" Status Changes Saved for the MUID"
+      NotificationType:
+        PropertyKind: Input
+        DisplayName: Notification Type
+        Description: The type of notification (success, failure, info, upload, etc.) that determines the icon and color.
+        RaiseOnReset: true
+        DataType: Text
+        Default: ="Creation_Success"
+      OnOK:
+        PropertyKind: Event
+        DisplayName: OnOK
+        Description: Event triggered when the user clicks the OK button on the notification.
+        ReturnType: None
+        Default: =
+    Properties:
+      Height: =180
+      Width: =400
+    Children:
+      - NotificationContainer:
+          Control: GroupContainer@1.3.0
+          Variant: ManualLayout
+          Properties:
+            BorderThickness: =1
+            DropShadow: =DropShadow.ExtraBold
+            Fill: "=Switch(\n    true,\n    \n    // ✅ Success types (light green)\n    Lower(Custom_Notification.NotificationType) in [\n        \"creation_success\",\n        \"update_success\",\n        \"update_muid_success\",\n        \"update_muid_child_success\",\n        \"update_multiple_muid_child_success\",\n        \"email_success\",\n        \"upload_success\"\n    ],\n    RGBA(212, 237, 218, 1),  // Light green\n\n    // ❌ Failure types (light red)\n    Lower(Custom_Notification.NotificationType) in [\n        \"creation_failure\",\n        \"update_failure\",\n        \"update_muid_failure\",\n        \"update_muid_child_failure\",\n        \"update_multiple_muid_child_failure\",\n        \"email_failure\",\n        \"upload_failure\"\n    ],\n    RGBA(248, 215, 218, 1),  // Light red\n\n    // ℹ️ Info types (light blue)\n    Lower(Custom_Notification.NotificationType) in [\n        \"information\"\n    ],\n    RGBA(255, 255, 204, 1),  // Light blue\n\n    // Default\n    RGBA(0, 0, 0, 0)         // Transparent\n)\n"
+            Height: =Custom_Notification.Height-2
+            Width: =Custom_Notification.Width-2
+            X: =1
+            Y: =1
+          Children:
+            - NotificationHeading:
+                Control: Label@2.5.1
+                Properties:
+                  Font: =Font.Arial
+                  FontWeight: =FontWeight.Bold
+                  Height: =50
+                  Size: =14
+                  Text: |
+                    =Switch(
+                        true,
+                        Lower("Creation_Success") in Lower(Custom_Notification.NotificationType),
+                        "New MUID created!",
+                        Lower("Creation_Failure") in Lower(Custom_Notification.NotificationType),
+                        "Failed to create MUID",
+                        Lower("Already_Exists") in Lower(Custom_Notification.NotificationType),
+                        "MUID already exists!",
+                        Lower("Update_Success") in Lower(Custom_Notification.NotificationType),
+                        "Data updated!",
+                        Lower("Update_Failure") in Lower(Custom_Notification.NotificationType),
+                        "Failed to update data!",
+                        Lower("Update_MUID_Success") in Lower(Custom_Notification.NotificationType),
+                        "Data updated successfully for MUID.",
+                        Lower("Update_MUID_Failure") in Lower(Custom_Notification.NotificationType),
+                        "Failed to update data for MUID.", 
+                        Lower("Update_MUID_Child_Success") in Lower(Custom_Notification.NotificationType),
+                        "Data updated for MUID Child.",
+                        Lower("Update_MUID_Child_Failure") in Lower(Custom_Notification.NotificationType),
+                        "Failed to update MUID Child.",
+                        Lower("Update_Multiple_MUID_Child_Success") in Lower(Custom_Notification.NotificationType),
+                        "Data updated for selected MUID Childs.",
+                        Lower("Update_Multiple_MUID_Child_Failure") in Lower(Custom_Notification.NotificationType),
+                        "Failed to update selected MUID Childs.",
+                        Lower("Information") in Lower(Custom_Notification.NotificationType),
+                        "Please review the information!",
+                        Lower("Email_Success") in Lower(Custom_Notification.NotificationType),
+                        "Email sent successfully.",
+                        Lower("Email_Failure") in Lower(Custom_Notification.NotificationType),
+                        "Failed to send email.",
+                        Lower("Upload_Success") in Lower(Custom_Notification.NotificationType),
+                        "File uploaded successfully.",
+                        Lower("Upload_Failure") in Lower(Custom_Notification.NotificationType),
+                        "Failed to upload file.",
+                        ""
+                    )
+                  Width: =300
+                  X: =10
+                  Y: =20
+            - NotificationMessage:
+                Control: Label@2.5.1
+                Properties:
+                  Font: =Font.Arial
+                  Height: =60
+                  Size: =12
+                  Text: =Concatenate(Custom_Notification.NotificationMessage, ".")
+                  Width: =380
+                  X: =10
+                  Y: =70
+            - NotificationOkButton:
+                Control: Classic/Button@2.2.0
+                Properties:
+                  Color: =RGBA(255, 255, 255, 1)
+                  Fill: =RGBA(2, 145, 223, 1)
+                  Font: =Font.Arial
+                  FontWeight: =FontWeight.Normal
+                  Height: =32
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  OnSelect: =Custom_Notification.OnOK();Reset(NotificationTimer);
+                  RadiusBottomLeft: =4
+                  RadiusBottomRight: =4
+                  RadiusTopLeft: =4
+                  RadiusTopRight: =4
+                  Size: =12
+                  Text: ="Ok"
+                  Width: =80
+                  X: =300
+                  Y: =130
+            - NotificationTimer:
+                Control: Timer@2.1.0
+                Properties:
+                  AutoPause: =false
+                  Color: =RGBA(255, 255, 255, 1)
+                  Duration: =Custom_Notification.NotificationDurationMilliseconds
+                  HoverColor: =RGBA(255, 255, 255, 1)
+                  OnTimerEnd: =Select(NotificationOkButton)
+                  Reset: =true
+                  Start: =Custom_Notification.Visible
+                  Visible: =false
+                  X: =10
+                  Y: =56
+            - NotificationProgressBar:
+                Control: Classic/Slider@2.1.0
+                Properties:
+                  BorderColor: =Self.ValueFill
+                  Default: =NotificationTimer.Value
+                  DisplayMode: =DisplayMode.View
+                  HandleFill: =RGBA(214, 221, 224, 1)
+                  HandleSize: =10
+                  Height: =4
+                  Max: =NotificationTimer.Duration
+                  RailFill: =RGBA(0, 0, 0, 0)
+                  RailThickness: =4
+                  ShowValue: =false
+                  ValueFill: =RGBA(2, 145, 223, 1)
+                  Width: =NotificationContainer.Width
+            - DebugNotificationVisible:
+                Control: Text@0.0.51
+                Properties:
+                  Text: =Custom_Notification.Visible
+                  Visible: =false
+                  X: =40
+                  Y: =140
+            - DebugTimerValue:
+                Control: Text@0.0.51
+                Properties:
+                  Text: =NotificationProgressBar.Value
+                  Visible: =false
+                  X: =153
+                  Y: =140
+            - NotificationIconContainer:
+                Control: GroupContainer@1.3.0
+                Variant: ManualLayout
+                Properties:
+                  DropShadow: =DropShadow.Semibold
+                  Fill: =RGBA(214, 221, 224, 1)
+                  Height: =NotificationIcon.Height
+                  RadiusBottomLeft: =90
+                  RadiusBottomRight: =90
+                  RadiusTopLeft: =90
+                  RadiusTopRight: =90
+                  Width: =NotificationIcon.Width
+                  X: =NotificationHeading.X+NotificationHeading.Width+10
+                  Y: =NotificationHeading.Y-(Self.Height-NotificationHeading.Height)/2
+                Children:
+                  - NotificationIcon:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.View
+                        Fill: |
+                          =Switch(
+                              true,
+                              Lower(Custom_Notification.NotificationType) in [
+                                  "success",
+                                  "creation_success",
+                                  "update_success",
+                                  "update_muid_success",
+                                  "update_muid_child_success",
+                                  "update_multiple_muid_child_success",
+                                  "email_success",
+                                  "validation_success",
+                                  "saved_changes",
+                                  "upload_success"
+                              ],
+                              RGBA(63, 214, 133, 1),
+                              Lower(Custom_Notification.NotificationType) in [
+                                  "failure",
+                                  "creation_failure",
+                                  "update_failure",
+                                  "update_muid_failure",
+                                  "update_muid_child_failure",
+                                  "update_multiple_muid_child_failure",
+                                  "email_failure",
+                                  "validation_failure",
+                                  "upload_failure"
+                              ],
+                              RGBA(214, 116, 116, 1),
+                              Lower(Custom_Notification.NotificationType) in [
+                                  "information",
+                                  "validation_information"
+                              ],
+                              RGBA(173, 216, 230, 1),
+                              RGBA(0, 0, 0, 0)
+                          )
+                        Height: =50
+                        Icon: |
+                          =Switch(
+                              true,
+
+                              // 💾 Save icon for special case (wins over general success)
+                              Lower(Custom_Notification.NotificationType) = "saved_changes",
+                              Icon.Save,
+
+                              // ⬆️ Upload icons
+                              Lower(Custom_Notification.NotificationType) = "upload_success",
+                              Icon.Download,
+                              Lower(Custom_Notification.NotificationType) = "upload_failure",
+                              Icon.CancelBadge, // or Icon.Error
+
+                              // ⬇️ Download icons (if you use them)
+                              Lower(Custom_Notification.NotificationType) = "download_success",
+                              Icon.Download,
+                              Lower(Custom_Notification.NotificationType) = "download_failure",
+                              Icon.CancelBadge, // or Icon.Error
+
+                              // ✅ Success types
+                              Lower(Custom_Notification.NotificationType) in [
+                                  "validation_success",
+                                  "creation_success",
+                                  "update_success",
+                                  "update_muid_success",
+                                  "update_muid_child_success",
+                                  "update_multiple_muid_child_success",
+                                  "email_success"
+                              ],
+                              Icon.CheckBadge,
+
+                              // ❌ Failure types
+                              Lower(Custom_Notification.NotificationType) in [
+                                  "validation_failure",
+                                  "creation_failure",
+                                  "update_failure",
+                                  "update_muid_failure",
+                                  "update_muid_child_failure",
+                                  "update_multiple_muid_child_failure",
+                                  "email_failure"
+                              ],
+                              Icon.CancelBadge,
+
+                              // ℹ️ Info types
+                              Lower(Custom_Notification.NotificationType) in [
+                                  "validation_information",
+                                  "information"
+                              ],
+                              Icon.Information,
+
+                              // Default fallback icon
+                              Icon.Error
+                          )
+                        PaddingBottom: =10
+                        PaddingLeft: =10
+                        PaddingRight: =10
+                        PaddingTop: =10
+                        Rotation: =Switch(true,Lower("upload") in Custom_Notification.NotificationType,180,Lower("reset") in Custom_Notification.NotificationType,90,Lower("save") in Custom_Notification.NotificationType,0,0)
+                        Width: =50
