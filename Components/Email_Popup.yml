@@ -9,14 +9,7 @@ ComponentDefinitions:
         Description: List of users to be included in the CC field of the email.
         RaiseOnReset: true
         DataType: Table
-        Default: =Table({DisplayName:User().FullName,UserPrincipalName:User().Email})
-      EmailEventFrom:
-        PropertyKind: Input
-        DisplayName: Email Event From
-        Description: Source table or context from which the email event is triggered.
-        RaiseOnReset: true
-        DataType: Text
-        Default: =MUID_ORG_TABLE_NAME
+        Default: =Table({DisplayName:User().FullName,Mail:User().Email})
       OnClose:
         PropertyKind: Event
         DisplayName: OnClose
@@ -42,9 +35,9 @@ ComponentDefinitions:
         RaiseOnReset: true
         DataType: Text
         Default: ="Text"
-      PopupText:
+      EmailPopupText:
         PropertyKind: Input
-        DisplayName: Popup Text
+        DisplayName: Email Popup Text
         Description: The main message displayed in the email confirmation popup.
         RaiseOnReset: true
         DataType: Text
@@ -60,7 +53,7 @@ ComponentDefinitions:
         DisplayName: To_List
         Description: List of users to be included in the To field of the email.
         DataType: Table
-        Default: =Table({DisplayName:User().FullName,UserPrincipalName:User().Email})
+        Default: =Table({DisplayName:User().FullName,Mail:User().Email})
       onResetAll:
         PropertyKind: Action
         DisplayName: on Reset All
@@ -140,13 +133,10 @@ ComponentDefinitions:
                         HoverFill: =RGBA(186, 202, 226, 1)
                         InputTextPlaceholder: ="Find Users"
                         Items: |-
-                          =Filter(
-                              Office365Users.SearchUserV2({
+                          = Office365Users.SearchUserV2({
                                   searchTerm: Self.SearchText,
                                   isSearchTermRequired: true
-                              }).value,
-                              EndsWith(UserPrincipalName, "@mitel.com")
-                          )
+                              }).value
                         MultiValueDelimiter: ="; "
                         PressedColor: =RGBA(255, 255, 255, 1)
                         PressedFill: =RGBA(0, 18, 107, 1)
@@ -181,13 +171,10 @@ ComponentDefinitions:
                         HoverFill: =RGBA(186, 202, 226, 1)
                         InputTextPlaceholder: ="Find Users"
                         Items: |-
-                          =Filter(
-                              Office365Users.SearchUserV2({
+                          =Office365Users.SearchUserV2({
                                   searchTerm: Self.SearchText,
                                   isSearchTermRequired: true
-                              }).value,
-                              EndsWith(UserPrincipalName, "@mitel.com")
-                          )
+                              }).value
                         MultiValueDelimiter: ="; "
                         PressedColor: =RGBA(255, 255, 255, 1)
                         PressedFill: =RGBA(0, 18, 107, 1)
@@ -223,13 +210,10 @@ ComponentDefinitions:
                         HoverFill: =RGBA(186, 202, 226, 1)
                         InputTextPlaceholder: ="Find Users"
                         Items: |-
-                          =Filter(
-                              Office365Users.SearchUserV2({
+                          =Office365Users.SearchUserV2({
                                   searchTerm: Self.SearchText,
                                   isSearchTermRequired: true
-                              }).value,
-                              EndsWith(UserPrincipalName, "@mitel.com")
-                          )
+                              }).value
                         MultiValueDelimiter: ="; "
                         PressedColor: =RGBA(255, 255, 255, 1)
                         PressedFill: =RGBA(0, 18, 107, 1)
@@ -416,7 +400,7 @@ ComponentDefinitions:
                               RadiusBottomRight: =0
                               RadiusTopLeft: =0
                               RadiusTopRight: =0
-                              Visible: =If(Email_Popups.EmailEventFrom = MUID_ORG_TABLE_NAME,false,true)
+                              Visible: =true
                             Children:
                               - SalesforceLabel:
                                   Control: Label@2.5.1
@@ -464,7 +448,7 @@ ComponentDefinitions:
                               RadiusBottomRight: =0
                               RadiusTopLeft: =0
                               RadiusTopRight: =0
-                              Visible: =If(Email_Popups.EmailEventFrom = MUID_ORG_TABLE_NAME,false,true)
+                              Visible: =true
                             Children:
                               - UnifySalesforceLabel:
                                   Control: Label@2.5.1
@@ -614,12 +598,12 @@ ComponentDefinitions:
                         Fill: =App.Theme.Colors.Primary
                         Height: =50
                         Icon: |
-                          =Switch(true,Lower("revert") in Email_Popups.PopupText,Icon.Reload,Lower("reset") in Email_Popups.PopupText,Icon.Reload,Lower("save") in Email_Popups.PopupText,Icon.Save,Icon.Error)
+                          =Switch(true,Lower("revert") in Email_Popups.EmailPopupText,Icon.Reload,Lower("reset") in Email_Popups.EmailPopupText,Icon.Reload,Lower("save") in Email_Popups.EmailPopupText,Icon.Save,Icon.Error)
                         PaddingBottom: =10
                         PaddingLeft: =10
                         PaddingRight: =10
                         PaddingTop: =10
-                        Rotation: =Switch(true,Lower("revert") in Email_Popups.PopupText,90,Lower("reset") in Email_Popups.PopupText,90,Lower("save") in Email_Popups.PopupText,0,0)
+                        Rotation: =Switch(true,Lower("revert") in Email_Popups.EmailPopupText,90,Lower("reset") in Email_Popups.EmailPopupText,90,Lower("save") in Email_Popups.EmailPopupText,0,0)
                         Width: =50
             - SendPopupMessage:
                 Control: Label@2.5.1
@@ -628,7 +612,7 @@ ComponentDefinitions:
                   AutoHeight: =true
                   Font: =Font.Arial
                   Size: =12
-                  Text: =Email_Popups.PopupText
+                  Text: =Email_Popups.EmailPopupText
                   Width: =350
                   X: =(SendConfirmationOverlay.Width-(Self.Width-SendPopupIconContainer.Width))/2
                   Y: =(SendConfirmationOverlay.Height-Self.Height)/2-100
@@ -638,60 +622,106 @@ ComponentDefinitions:
                   Font: =Font.Arial
                   FontSize: =12
                   OnSelect: |
-                    =If(
-                        Power_Apps_Send_an_Email_v1.Run(
-                            Coalesce(
-                                Concat(
-                                    ToComboBox.SelectedItems,
-                                    Mail,
-                                    ";"
-                                ),
-                                "-"
+                    =/*If(
+                      Power_Apps_Send_an_Email_v1.Run(
+                        Coalesce(
+                          Concat(
+                            ToComboBox.SelectedItems,
+                            Mail,
+                            ";"
+                          ),
+                          "-"
+                        ),
+                        Coalesce(
+                          SubjectInput.Text,
+                          "-"
+                        ),
+                        /* To enable advanced email body features, use the toggle_object, and ParameterizedPart for deep linking support. 
+                          If deep linking is not needed, you can hide the ParameterizedLinksContainer. */
+                        Coalesce(EmailBodyEditor.HtmlText,
+                          "-"
+                        ),
+                        Coalesce(
+                          Email_Popups.ParameterizedPart,
+                          ""
+                        ),
+                        Coalesce(
+                          JSON(toggle_object),
+                          "{}"
+                        ),
+                        {
+                          text_1: Coalesce(
+                            Concat(
+                              BCCComboBox.SelectedItems,
+                              Mail,
+                              ";"
                             ),
-                            Coalesce(
-                                SubjectInput.Text,
-                                "-"
+                            "-"
+                          ),
+                          text_2: Coalesce(
+                            Concat(
+                              CCComboBox.SelectedItems,
+                              Mail,
+                              ";"
                             ),
-                            Coalesce(
-                                EmailBodyEditor.HtmlText,
-                                "-"
+                            "-"
+                          )
+                        }
+                      ).email_status = Text(1),
+                      Set(var_NotificationType, "Email_Success");
+                      Set(var_NotificationMessage, $"Email Sent Successfully");
+                      Set(var_NotificationVisible, true),
+                      Set(var_NotificationType, "Email_Failure");
+                      Set(var_NotificationMessage, $"Error in Sending Email");
+                      Set(var_NotificationVisible, true)
+                    );*/
+
+                    IfError(
+                        Office365Outlook.SendEmailV2(
+                          Coalesce(
+                            Concat(
+                              ToComboBox.SelectedItems,
+                              Mail,
+                              ";"
                             ),
-                            Coalesce(
-                                Email_Popups.ParameterizedPart,
-                                ""
+                            Blank()
+                          ),
+                          Coalesce(
+                            SubjectInput.Text,
+                            "-"
+                          ),
+                          Coalesce(
+                            EmailBodyEditor.HtmlText,
+                            "-"
+                          ),
+                          {
+                            Bcc: Coalesce(
+                              Concat(
+                                BCCComboBox.SelectedItems,
+                                Mail,
+                                ";"
+                              ),
+                              Blank()
                             ),
-                            Coalesce(
-                                JSON(toggle_object),
-                                "{}"
-                            ),
-                            {
-                                text_1: Coalesce(
-                                    Concat(
-                                        BCCComboBox.SelectedItems,
-                                        Mail,
-                                        ";"
-                                    ),
-                                    "-"
-                                ),
-                                text_2: Coalesce(
-                                    Concat(
-                                        CCComboBox.SelectedItems,
-                                        Mail,
-                                        ";"
-                                    ),
-                                    "-"
-                                )
-                            }
-                        ).email_status = Text(1),
-                        Set(var_NotificationType,"Email_Success");Set(var_NotificationMessage,$"Email Sent Successfully");Set(var_NotificationVisible,true);
-                        ,
-                        Set(var_NotificationType,"Email_Failure");Set(var_NotificationMessage,$"Error in Sending Email");Set(var_NotificationVisible,true);
+                            Cc: Coalesce(
+                              Concat(
+                                CCComboBox.SelectedItems,
+                                Mail,
+                                ";"
+                              ),
+                              Blank()
+                            )
+                          }
+                        );
+                      Set(var_NotificationType, "Email_Success");
+                      Set(var_NotificationMessage, $"Email Sent Successfully");
+                      Set(var_NotificationVisible, true),
+                      Set(var_NotificationType, "Email_Failure");
+                      Set(var_NotificationMessage, $"Error in Sending Email");
+                      Set(var_NotificationVisible, true)
                     );
                     Email_Popups.OnYes();
-                    Set(
-                        show_send_popup,
-                        false
-                    );
+                    Set(show_send_popup, false);
                     Email_Popups.onResetAll();
                     Email_Popups.OnClose();
                   Text: ="Yes"
@@ -804,7 +834,7 @@ ComponentDefinitions:
                   FontWeight: =FontWeight.Normal
                   Height: =32
                   HoverColor: =RGBA(255, 255, 255, 1)
-                  OnSelect: =Set(var_NotificationVisible, false); Reset(NotificationTimer);
+                  OnSelect: =Set(var_NotificationVisible, false); Reset(EmailNotificationTimer);
                   RadiusBottomLeft: =4
                   RadiusBottomRight: =4
                   RadiusTopLeft: =4
@@ -821,7 +851,7 @@ ComponentDefinitions:
                   Color: =RGBA(255, 255, 255, 1)
                   Duration: =var_NotificationDurationMilliseconds
                   HoverColor: =RGBA(255, 255, 255, 1)
-                  OnTimerEnd: =Select(NotificationOkButton)
+                  OnTimerEnd: =Select(EmailNotificationOkButton)
                   Reset: =true
                   Start: =var_NotificationVisible
                   Visible: =false
@@ -831,12 +861,12 @@ ComponentDefinitions:
                 Control: Classic/Slider@2.1.0
                 Properties:
                   BorderColor: =Self.ValueFill
-                  Default: =NotificationTimer.Value
+                  Default: =EmailNotificationTimer.Value
                   DisplayMode: =DisplayMode.View
                   HandleFill: =RGBA(214, 221, 224, 1)
                   HandleSize: =10
                   Height: =4
-                  Max: =NotificationTimer.Duration
+                  Max: =EmailNotificationTimer.Duration
                   RailFill: =RGBA(0, 0, 0, 0)
                   RailThickness: =4
                   ShowValue: =false
@@ -852,7 +882,7 @@ ComponentDefinitions:
             - EmailDebugTimerValue:
                 Control: Text@0.0.51
                 Properties:
-                  Text: =NotificationProgressBar.Value
+                  Text: =EmailNotificationProgressBar.Value
                   Visible: =false
                   X: =153
                   Y: =140
@@ -862,14 +892,14 @@ ComponentDefinitions:
                 Properties:
                   DropShadow: =DropShadow.Semibold
                   Fill: =RGBA(214, 221, 224, 1)
-                  Height: =NotificationIcon.Height
+                  Height: =EmailNotificationIcon.Height
                   RadiusBottomLeft: =90
                   RadiusBottomRight: =90
                   RadiusTopLeft: =90
                   RadiusTopRight: =90
-                  Width: =NotificationIcon.Width
-                  X: =NotificationHeading.X+NotificationHeading.Width+10
-                  Y: =NotificationHeading.Y-(Self.Height-NotificationHeading.Height)/2
+                  Width: =EmailNotificationIcon.Width
+                  X: =EmailNotificationHeading.X+EmailNotificationHeading.Width+10
+                  Y: =EmailNotificationHeading.Y-(Self.Height-EmailNotificationHeading.Height)/2
                 Children:
                   - EmailNotificationIcon:
                       Control: Classic/Icon@2.5.0
