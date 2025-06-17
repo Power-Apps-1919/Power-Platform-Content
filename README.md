@@ -6,7 +6,7 @@ This repository contains a collection of reusable, well-documented custom compon
 
 - **Card Control**: Displays a card with a customizable title and value, ideal for dashboards and summary views.
 - **Custom Notification**: Flexible notification component for displaying success, error, or informational messages.
-- **Custom Operations**: Utility component for custom logic and operations.
+- **Reusable JSON Parser**: Utility component for custom logic and operations.
 - **Email Popup**: A modal popup for email entry and notifications.
 - **Loading Animation**: Shows a loading spinner and message overlay.
 - **Popup**: General-purpose modal dialog with customizable actions.
