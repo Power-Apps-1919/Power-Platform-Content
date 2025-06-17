@@ -37,7 +37,7 @@ This repository contains a collection of reusable, well-documented custom compon
 ```
 Card_Control.yml
 Custom_Notification.yml
-Custom_Operations.yml
+Reusable_JSON_Parser.yml
 Email_Popup.yml
 Loading_Animation.yml
 Popup.yml
