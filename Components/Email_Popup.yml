@@ -42,6 +42,13 @@ ComponentDefinitions:
         RaiseOnReset: true
         DataType: Text
         Default: ="Text"
+      Show_Parameterised_Section:
+        PropertyKind: Input
+        DisplayName: Show_Parameterised_Section
+        Description: A custom property
+        RaiseOnReset: true
+        DataType: Boolean
+        Default: =true
       Subject:
         PropertyKind: Input
         DisplayName: Subject
@@ -279,6 +286,7 @@ ComponentDefinitions:
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
+                        Visible: =Email_Popups.Show_Parameterised_Section
                       Children:
                         - ParameterizedLinksLabel:
                             Control: Label@2.5.1
