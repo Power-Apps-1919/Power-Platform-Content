@@ -10,6 +10,13 @@ ComponentDefinitions:
         RaiseOnReset: true
         DataType: Table
         Default: =Table({DisplayName:User().FullName,Mail:User().Email})
+      EmailPopupText:
+        PropertyKind: Input
+        DisplayName: Email Popup Text
+        Description: The main message displayed in the email confirmation popup.
+        RaiseOnReset: true
+        DataType: Text
+        Default: ="Are you sure you want to send the mail?"
       OnClose:
         PropertyKind: Event
         DisplayName: OnClose
@@ -35,13 +42,6 @@ ComponentDefinitions:
         RaiseOnReset: true
         DataType: Text
         Default: ="Text"
-      EmailPopupText:
-        PropertyKind: Input
-        DisplayName: Email Popup Text
-        Description: The main message displayed in the email confirmation popup.
-        RaiseOnReset: true
-        DataType: Text
-        Default: ="Are you sure you want to send the mail?"
       Subject:
         PropertyKind: Input
         DisplayName: Subject
@@ -113,7 +113,7 @@ ComponentDefinitions:
                         BorderColor: =RGBA(0, 18, 107, 1)
                         FillPortions: =1
                         Font: =Font.'Open Sans'
-                        Text: |+
+                        Text: |
                           =$"* To ({If(
                               IsBlankOrError(First(ToComboBox.SelectedItems).DisplayName),
                               0,
@@ -140,7 +140,7 @@ ComponentDefinitions:
                         MultiValueDelimiter: ="; "
                         PressedColor: =RGBA(255, 255, 255, 1)
                         PressedFill: =RGBA(0, 18, 107, 1)
-                        SearchFields: =["DisplayName","Mail"]
+                        SearchFields: =[""]
                         SelectionColor: =RGBA(255, 255, 255, 1)
                         SelectionFill: =RGBA(56, 96, 178, 1)
                         Width: =Parent.Width*3/4
@@ -151,7 +151,7 @@ ComponentDefinitions:
                         BorderColor: =RGBA(0, 18, 107, 1)
                         FillPortions: =1
                         Font: =Font.'Open Sans'
-                        Text: |+
+                        Text: |
                           =$"* CC ({If(
                               IsBlankOrError(First(CCComboBox.SelectedItems).DisplayName),
                               0,
@@ -178,7 +178,7 @@ ComponentDefinitions:
                         MultiValueDelimiter: ="; "
                         PressedColor: =RGBA(255, 255, 255, 1)
                         PressedFill: =RGBA(0, 18, 107, 1)
-                        SearchFields: =["DisplayName","Mail"]
+                        SearchFields: =[""]
                         SelectionColor: =RGBA(255, 255, 255, 1)
                         SelectionFill: =RGBA(56, 96, 178, 1)
                         Width: =Parent.Width*3/4
@@ -191,7 +191,7 @@ ComponentDefinitions:
                         BorderColor: =RGBA(0, 18, 107, 1)
                         FillPortions: =1
                         Font: =Font.'Open Sans'
-                        Text: |+
+                        Text: |
                           =$"* BCC ({If(
                               IsBlankOrError(First(BCCComboBox.SelectedItems).DisplayName),
                               0,
@@ -217,7 +217,7 @@ ComponentDefinitions:
                         MultiValueDelimiter: ="; "
                         PressedColor: =RGBA(255, 255, 255, 1)
                         PressedFill: =RGBA(0, 18, 107, 1)
-                        SearchFields: =["DisplayName","Mail"]
+                        SearchFields: =[""]
                         SelectionColor: =RGBA(255, 255, 255, 1)
                         SelectionFill: =RGBA(56, 96, 178, 1)
                         Width: =Parent.Width*3/4
@@ -400,7 +400,6 @@ ComponentDefinitions:
                               RadiusBottomRight: =0
                               RadiusTopLeft: =0
                               RadiusTopRight: =0
-                              Visible: =true
                             Children:
                               - SalesforceLabel:
                                   Control: Label@2.5.1
@@ -448,7 +447,6 @@ ComponentDefinitions:
                               RadiusBottomRight: =0
                               RadiusTopLeft: =0
                               RadiusTopRight: =0
-                              Visible: =true
                             Children:
                               - UnifySalesforceLabel:
                                   Control: Label@2.5.1
@@ -637,7 +635,7 @@ ComponentDefinitions:
                           "-"
                         ),
                         /* To enable advanced email body features, use the toggle_object, and ParameterizedPart for deep linking support. 
-                          If deep linking is not needed, you can hide the ParameterizedLinksContainer. */
+                          If deep linking is not needed, you can hide the ParameterizedLinksContainer. 
                         Coalesce(EmailBodyEditor.HtmlText,
                           "-"
                         ),
@@ -754,7 +752,7 @@ ComponentDefinitions:
       - ResetAllButton:
           Control: Button@0.0.45
           Properties:
-            OnSelect: |+
+            OnSelect: |
               =Set(reset_all,true);
               Set(reset_all,false);
               Set(var_NotificationDurationMilliseconds,5000);
