@@ -79,7 +79,7 @@ Skip variables and constants. Use a tiny Power Automate flow to read the IDs at 
      <figcaption>Figure 5. Expression for Tenant ID.</figcaption>
    </figure>
 
-4. Add **Respond to a PowerApp or flow** that returns `{ appId, environmentId, tenantId }` mapped from the three Compose outputs.
+4. Add **Respond to a PowerApp or flow** that returns `{ App_ID, Environment_ID, Tenant_ID }` mapped from the three Compose outputs.
 
    <figure>
      <img src="./images/get-app-id/06-respondtoapp.png" alt="Respond to a PowerApp or flow returning the IDs" width="1200" />
