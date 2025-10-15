@@ -46,14 +46,14 @@ Skip variables and constants. Use a tiny Power Automate flow to read the IDs at 
 1. Create an **Instant cloud flow** with the trigger **When Power Apps calls a flow (V2)**.
 
    <figure>
-     <img src="./images/get-app-id/01-trigger.png" alt="Power Automate trigger: When Power Apps calls a flow (V2)" width="960" />
+     <img src="./images/get-app-id/01-trigger.png" alt="Power Automate trigger: When Power Apps calls a flow (V2)" width="1200" />
      <figcaption>Figure 1. Trigger: When Power Apps calls a flow (V2).</figcaption>
    </figure>
 
 2. Add three **Compose** actions named `Compose - App ID`, `Compose - Environment ID`, and `Compose - Tenant ID`.
 
    <figure>
-     <img src="./images/get-app-id/02-composeall.png" alt="Three Compose actions for App ID, Environment ID, Tenant ID" width="960" />
+     <img src="./images/get-app-id/02-composeall.png" alt="Three Compose actions for App ID, Environment ID, Tenant ID" width="1200" />
      <figcaption>Figure 2. Three Compose actions to extract the IDs.</figcaption>
    </figure>
 
@@ -66,7 +66,7 @@ Skip variables and constants. Use a tiny Power Automate flow to read the IDs at 
    ```
 
    <figure>
-     <img src="./images/get-app-id/03-compose-appid.png" alt="Expression for App ID in a Compose action" width="960" />
+     <img src="./images/get-app-id/03-compose-appid.png" alt="Expression for App ID in a Compose action" width="1200" />
      <figcaption>Figure 3. Expression for App ID.</figcaption>
    </figure>
 
@@ -77,7 +77,7 @@ Skip variables and constants. Use a tiny Power Automate flow to read the IDs at 
    ```
 
    <figure>
-     <img src="./images/get-app-id/04-compose-env.png" alt="Expression for Environment ID in a Compose action" width="960" />
+     <img src="./images/get-app-id/04-compose-env.png" alt="Expression for Environment ID in a Compose action" width="1200" />
      <figcaption>Figure 4. Expression for Environment ID.</figcaption>
    </figure>
 
@@ -88,14 +88,14 @@ Skip variables and constants. Use a tiny Power Automate flow to read the IDs at 
    ```
 
    <figure>
-     <img src="./images/get-app-id/05-compose-tenant.png" alt="Expression for Tenant ID in a Compose action" width="960" />
+     <img src="./images/get-app-id/05-compose-tenant.png" alt="Expression for Tenant ID in a Compose action" width="1200" />
      <figcaption>Figure 5. Expression for Tenant ID.</figcaption>
    </figure>
 
 4. Add **Respond to a PowerApp or flow** that returns `{ appId, environmentId, tenantId }` mapped from the three Compose outputs.
 
    <figure>
-     <img src="./images/get-app-id/06-respond.png" alt="Respond to a PowerApp or flow returning the IDs" width="960" />
+     <img src="./images/get-app-id/06-respond.png" alt="Respond to a PowerApp or flow returning the IDs" width="1200" />
      <figcaption>Figure 6. Respond action returning the three IDs.</figcaption>
    </figure>
 
