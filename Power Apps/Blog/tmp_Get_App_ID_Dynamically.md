@@ -122,7 +122,7 @@ Display `_deepLink` in a Label or wire it to a Copy button.
 
 ## Explaining the expression
 
-* `trigger()?['Outputs']['headers']['x-ms-client-app-id']` accesses the x-ms-client-app-id header sent by Power Apps. The trigger exposes headers under Outputs → headers, so navigate into that object to retrieve the header value.
+* `trigger()?['Outputs/'headers/'x-ms-client-app-id']` accesses the x-ms-client-app-id header sent by Power Apps. The trigger exposes headers under Outputs → headers, so navigate into that object to retrieve the header value.
 * `split(value, '/')` splits the header string into an array using `/` as the separator (for example, `https://.../apps/12345` becomes `["https:", "", "...", "apps", "12345"]`).
 * `last(array)` returns the final element of that array — the App ID. The Environment ID is extracted the same way; the Tenant ID (`x-ms-client-tenant-id`) is already a single value and does not need splitting.
 
