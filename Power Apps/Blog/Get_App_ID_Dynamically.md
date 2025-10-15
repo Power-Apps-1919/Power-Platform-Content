@@ -1,16 +1,3 @@
----
-
-title: "Deep Linking in Power Apps: zero config using flow headers"
-description: "Build reliable deep links across Dev, Test, and Prod without variables, connectors, or hard-coded IDs."
-tags:
-
-* powerapps
-* power-automate
-* alm
-* deep-linking
-
----
-
 # Deep Linking in Power Apps: zero config using flow headers
 
 Recently I had to implement deep linking in a Canvas app. The plan felt straightforward: use `Param()` to read query strings and jump to the right screen or record. But to build links that work across Dev, Test, and Prod, I also needed the App ID, and ideally the Environment and Tenant IDs, at runtime.
