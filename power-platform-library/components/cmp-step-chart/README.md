@@ -23,3 +23,4 @@ Help users understand where a request, case, onboarding journey, or delivery pro
 
 ## Getting started
 Download `cmp-step-chart.yml`, keep step names action-oriented, and show the current state clearly. Use the surrounding app to explain what the user should do next.
+

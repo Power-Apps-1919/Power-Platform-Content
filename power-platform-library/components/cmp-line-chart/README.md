@@ -23,3 +23,4 @@ Show movement over time so users can identify trends, peaks, drops, and emerging
 
 ## Getting started
 Download `cmp-line-chart.yml`, use consistent time intervals, label the period clearly, and avoid implying precision that the underlying data does not support.
+

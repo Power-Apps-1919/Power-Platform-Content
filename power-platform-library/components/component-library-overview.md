@@ -4,6 +4,11 @@ Use these components to improve consistency, reduce build time, and give users a
 
 Each component includes a downloadable YAML definition and a plain-language guide. You can use the component as provided, or tailor its colours, labels, data, and business rules to your app.
 
+The generated page for each component includes the shared YAML workflow, component
+library guidance, Code view copy-and-paste instructions, and maker best practices.
+That common guidance is maintained once in
+`power-platform-library/shared/component-yaml-guidance.md`.
+
 ## Find the right component
 
 - **Charts** help people understand trends, comparisons, progress, and proportions.

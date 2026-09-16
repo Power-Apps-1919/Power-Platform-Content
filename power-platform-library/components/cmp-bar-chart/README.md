@@ -23,3 +23,4 @@ Make comparisons easy. Use a bar chart when users need to compare teams, product
 
 ## Getting started
 Download `cmp-bar-chart.yml`, add it to Power Apps, connect governed business data, and use plain-language labels. Avoid showing too many categories at once; let users drill into detail where needed.
+

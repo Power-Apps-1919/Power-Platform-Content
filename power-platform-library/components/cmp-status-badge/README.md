@@ -24,3 +24,4 @@ Make the state of a record, request, task, or process visible without requiring 
 
 ## Getting started
 Download `cmp-status-badge.yml`, use a controlled set of status values, and make sure the meaning is still clear without relying only on colour.
+

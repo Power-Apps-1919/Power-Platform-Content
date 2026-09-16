@@ -25,3 +25,4 @@ Validate the response before using it in a business-critical process. Empty or i
 
 ## Getting started
 Download `cmp-reusable-json-parser.yml`, test it with sample and invalid payloads, then connect it to the flow or service that owns the data.
+

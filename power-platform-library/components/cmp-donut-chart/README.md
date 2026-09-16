@@ -23,3 +23,4 @@ Show how a total is divided across categories, such as budget usage, case status
 
 ## Getting started
 Download `cmp-donut-chart.yml`, keep the number of slices manageable, label each category clearly, and provide an accessible alternative such as a table when exact values matter.
+

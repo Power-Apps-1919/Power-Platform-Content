@@ -23,3 +23,4 @@ Create visual structure so users can scan a business process, form, or dashboard
 
 ## Getting started
 Download `cmp-divider.yml` and use it to separate meaningful sections. Avoid using too many lines; headings, whitespace, and clear labels should do most of the organising.
+

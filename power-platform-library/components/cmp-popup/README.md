@@ -23,3 +23,4 @@ Protect important business actions by asking users to confirm before the app cha
 
 ## Getting started
 Download `cmp-popup.yml`, name the action clearly, explain the consequence, and make the safe choice easy to understand. Never rely on colour alone to distinguish actions.
+

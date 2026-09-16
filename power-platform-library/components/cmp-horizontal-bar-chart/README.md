@@ -23,3 +23,4 @@ Make category comparisons readable when labels are long or when users need to ra
 
 ## Getting started
 Download `cmp-horizontal-bar-chart.yml`, connect it to business data, sort the values intentionally, and confirm that labels remain readable on mobile and tablet screens.
+

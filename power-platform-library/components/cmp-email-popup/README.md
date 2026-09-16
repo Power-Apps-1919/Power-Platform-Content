@@ -27,3 +27,4 @@ You may need Office 365 Users and Office 365 Outlook. Confirm connector permissi
 
 ## Getting started
 Download `cmp-email-popup.yml`, use the Person layout for people selectors, and connect the confirmation event to the approved email action. Always test with non-production recipients first.
+

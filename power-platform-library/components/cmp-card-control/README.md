@@ -24,3 +24,4 @@ Give users an immediate answer to an important question: How many? What value? W
 
 ## Getting started
 Download `cmp-card-control.yml`, add it to your component library, connect it to a trusted measure, and keep the label specific enough that users understand the value without extra explanation.
+

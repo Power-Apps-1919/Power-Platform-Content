@@ -28,3 +28,4 @@ Explain how to download, add, configure, test, and adapt the component.
 ## Governance notes
 
 Mention data, permissions, accessibility, licensing, and support considerations.
+`r`n## Shared YAML guidance`r`n`r`nThe generated component page automatically includes the shared YAML workflow, component-library guidance, Code view copy-and-paste instructions, and maker best practices from `power-platform-library/shared/component-yaml-guidance.md`. Keep this template focused on the component-specific purpose, properties, setup, and governance.`r`n

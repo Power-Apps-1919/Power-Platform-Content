@@ -23,3 +23,4 @@ Show how each category contributes to a whole, making it easier to compare mix o
 
 ## Getting started
 Download `cmp-stacked-bar-chart100.yml`, ensure each group totals meaningfully to 100%, and provide exact values elsewhere when users need precision.
+

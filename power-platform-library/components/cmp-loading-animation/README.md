@@ -17,3 +17,4 @@ Set the right expectation while an app saves, searches, calculates, or waits for
 
 ## Getting started
 Download `cmp-loading-animation.yml`, show it only while work is active, and use a message that describes the current operation. Make sure users can still recover if a connector or flow fails.
+

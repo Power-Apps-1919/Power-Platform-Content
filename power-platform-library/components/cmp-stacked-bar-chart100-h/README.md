@@ -23,3 +23,4 @@ Compare the composition of categories while keeping long labels readable. The ho
 
 ## Getting started
 Download `cmp-stacked-bar-chart100-h.yml`, keep the category order meaningful, and pair the chart with accessible labels or a data table for exact values.
+

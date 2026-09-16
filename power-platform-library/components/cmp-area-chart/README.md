@@ -23,3 +23,4 @@ Help people see how performance changes over time, such as revenue, workload, se
 
 ## Getting started
 Download `cmp-area-chart.yml`, add it to your component library, connect it to representative data, and adjust the labels and colours to match your reporting standards. Test readability on the smallest screen your users will use.
+

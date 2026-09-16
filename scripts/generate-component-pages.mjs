@@ -10,6 +10,7 @@ const blogSourceDir = path.join(root, 'power-platform-library', 'blog');
 const blogOutputDir = path.join(root, 'src', 'content', 'docs', 'blog');
 const publicImageDir = path.join(root, 'public', 'images');
 const publicBlogDownloadDir = path.join(root, 'public', 'downloads', 'blog');
+const sharedComponentGuidancePath = path.join(root, 'power-platform-library', 'shared', 'component-yaml-guidance.md');
 
 const categoryByName = {
   'cmp-card-control': 'interface',
@@ -22,6 +23,8 @@ const categoryByName = {
   'cmp-reusable-json-parser': 'input-utility',
   'cmp-email-popup': 'communication',
 };
+
+const sharedComponentGuidance = await readFile(sharedComponentGuidancePath, 'utf8');
 
 const titleFor = (name) => name
   .replaceAll('_', ' ')
@@ -122,8 +125,8 @@ ${metadata.tags.map((tag) => `  - ${tag}`).join('\n')}
 
 # ${metadata.title}
 
-${metadata.description} Download the original
-definition, import it into Power Apps Studio, and customize its properties for your app.
+${metadata.description} Download the original definition and use it with a component
+library or another supported source-code workflow for your app.
 
 <div class="component-actions">
   <a href="/Power-Platform-Content/downloads/components/${file}" download="${file}">Download YAML source</a>
@@ -134,7 +137,9 @@ ${documentation ? `## Component documentation
 
 ${documentation}
 
-` : ''}## Source preview
+` : ''}${sharedComponentGuidance.trim()}
+
+## Source preview
 
 \`\`\`yaml
 ${source.trim()}
