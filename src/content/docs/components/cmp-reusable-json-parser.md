@@ -4,10 +4,10 @@ description: Reusable reusable-json-parser component for Power Apps Canvas Apps.
 date: 2026-09-16
 tags:
   - components
-  - interface
+  - visualization
 ---
 
-<div class="page-kicker">COMPONENT / INTERFACE</div>
+<div class="page-kicker">COMPONENT / VISUALIZATION</div>
 
 # reusable-json-parser
 
@@ -15,7 +15,7 @@ Reusable YAML source for a Power Apps Canvas App component. Download the origina
 definition, import it into Power Apps Studio, and customize its properties for your app.
 
 <div class="component-actions">
-  <a href="/Power-Platform-Content/downloads/components/reusable-json-parser.yml" download="reusable-json-parser.yml">Download YAML source</a>
+  <a href="/Power-Platform-Content/downloads/components/cmp-reusable-json-parser.yml" download="cmp-reusable-json-parser.yml">Download YAML source</a>
   <span>Updated 16 Sep 2026</span>
 </div>
 

@@ -4,10 +4,10 @@ description: Reusable card-control component for Power Apps Canvas Apps.
 date: 2026-09-16
 tags:
   - components
-  - interface
+  - visualization
 ---
 
-<div class="page-kicker">COMPONENT / INTERFACE</div>
+<div class="page-kicker">COMPONENT / VISUALIZATION</div>
 
 # card-control
 
@@ -15,7 +15,7 @@ Reusable YAML source for a Power Apps Canvas App component. Download the origina
 definition, import it into Power Apps Studio, and customize its properties for your app.
 
 <div class="component-actions">
-  <a href="/Power-Platform-Content/downloads/components/card-control.yml" download="card-control.yml">Download YAML source</a>
+  <a href="/Power-Platform-Content/downloads/components/cmp-card-control.yml" download="cmp-card-control.yml">Download YAML source</a>
   <span>Updated 16 Sep 2026</span>
 </div>
 
