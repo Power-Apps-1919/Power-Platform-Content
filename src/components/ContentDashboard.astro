@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 
-const entries = (await getCollection('docs'))
+const allEntries = (await getCollection('docs'))
   .filter(({ id, data }) => id !== 'index' && data.tags.length > 0)
   .map(({ id, data }) => ({
     id,
@@ -11,12 +11,12 @@ const entries = (await getCollection('docs'))
     tags: data.tags ?? [],
     date: data.date ? new Date(data.date).toISOString().slice(0, 10) : '',
   }))
-  .sort((a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title))
-  .slice(0, 20);
+  .sort((a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title));
 
+const entries = allEntries.slice(0, 20);
 const tags = [...new Set(entries.flatMap((entry) => entry.tags))].sort();
-const componentCount = entries.filter((entry) => entry.tags.includes('components')).length;
-const blogCount = entries.filter((entry) => entry.tags.includes('blog')).length;
+const componentCount = allEntries.filter((entry) => entry.tags.includes('components')).length;
+const blogCount = allEntries.filter((entry) => entry.tags.includes('blog')).length;
 ---
 
 <section class="content-dashboard" data-content-dashboard>

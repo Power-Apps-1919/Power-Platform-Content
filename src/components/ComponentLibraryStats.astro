@@ -1,0 +1,15 @@
+---
+import { getCollection } from 'astro:content';
+
+const components = (await getCollection('docs'))
+  .filter(({ data }) => data.tags.includes('components'));
+const tags = [...new Set(components.flatMap(({ data }) => data.tags))]
+  .filter((tag) => tag !== 'components')
+  .sort();
+---
+
+<div class="page-summary">
+  <span><strong>{components.length}</strong> ready-to-import definitions</span>
+  <span><strong>{tags.length}</strong> component categories</span>
+  <span><strong>YAML</strong> portable source format</span>
+</div>
