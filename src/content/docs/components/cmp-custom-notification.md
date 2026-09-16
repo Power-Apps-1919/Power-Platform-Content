@@ -1,17 +1,18 @@
 ---
-title: custom-notification
-description: Reusable custom-notification component for Power Apps Canvas Apps.
-date: 2026-09-16
+title: "Custom Notification"
+description: "Timed success, failure, informational, or upload notification component."
+date: "2026-09-16"
 tags:
   - components
   - interface
+  - notifications
 ---
 
 <div class="page-kicker">COMPONENT / INTERFACE</div>
 
-# custom-notification
+# Custom Notification
 
-Reusable YAML source for a Power Apps Canvas App component. Download the original
+Timed success, failure, informational, or upload notification component. Download the original
 definition, import it into Power Apps Studio, and customize its properties for your app.
 
 <div class="component-actions">
@@ -20,6 +21,8 @@ definition, import it into Power Apps Studio, and customize its properties for y
 </div>
 
 ## Component documentation
+
+# Custom Notification
 
 Notification component for displaying timed success, failure, informational, or upload messages.
 

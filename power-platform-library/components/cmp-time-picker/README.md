@@ -1,3 +1,13 @@
+﻿---
+title: 'Time Picker'
+description: 'Time selection component with configurable boundaries and interval.'
+date: 2026-09-16
+tags:
+  - components
+  - input-utility
+  - time
+---
+
 # Time Picker
 
 Time selection component with configurable default, dependent, start, end, and interval values.
@@ -12,3 +22,4 @@ Time selection component with configurable default, dependent, start, end, and i
 ## Usage
 
 Import `cmp-time-picker.yml`, set the time boundaries and interval, and bind the selected value to the surrounding Canvas App logic.
+

@@ -1,17 +1,18 @@
 ---
-title: reusable-json-parser
-description: Reusable reusable-json-parser component for Power Apps Canvas Apps.
-date: 2026-09-16
+title: "Reusable JSON Parser"
+description: "Action component that parses JSON arrays into Power Apps tables."
+date: "2026-09-16"
 tags:
   - components
   - input-utility
+  - json
 ---
 
 <div class="page-kicker">COMPONENT / INPUT UTILITY</div>
 
-# reusable-json-parser
+# Reusable JSON Parser
 
-Reusable YAML source for a Power Apps Canvas App component. Download the original
+Action component that parses JSON arrays into Power Apps tables. Download the original
 definition, import it into Power Apps Studio, and customize its properties for your app.
 
 <div class="component-actions">
@@ -20,6 +21,8 @@ definition, import it into Power Apps Studio, and customize its properties for y
 </div>
 
 ## Component documentation
+
+# Reusable JSON Parser
 
 Action component that parses a JSON array and returns a table with the columns `COL1` through `COL5`. Empty or invalid input returns a blank fallback row.
 

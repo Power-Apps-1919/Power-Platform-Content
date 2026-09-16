@@ -1,17 +1,18 @@
 ---
-title: bar-chart
-description: Reusable bar-chart component for Power Apps Canvas Apps.
-date: 2026-09-16
+title: "Bar Chart"
+description: "Reusable Power Apps Canvas bar chart component with configurable layout, KPI, axes, colors, and data."
+date: "2026-09-16"
 tags:
   - components
   - visualization
+  - charts
 ---
 
 <div class="page-kicker">COMPONENT / VISUALIZATION</div>
 
-# bar-chart
+# Bar Chart
 
-Reusable YAML source for a Power Apps Canvas App component. Download the original
+Reusable Power Apps Canvas bar chart component with configurable layout, KPI, axes, colors, and data. Download the original
 definition, import it into Power Apps Studio, and customize its properties for your app.
 
 <div class="component-actions">
@@ -20,6 +21,8 @@ definition, import it into Power Apps Studio, and customize its properties for y
 </div>
 
 ## Component documentation
+
+# Bar Chart
 
 Reusable Power Apps Canvas component for displaying vertical bar charts with configurable layout, title, KPI, axes, colors, and data.
 

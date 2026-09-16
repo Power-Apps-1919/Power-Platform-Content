@@ -1,17 +1,18 @@
 ---
-title: donut-chart
-description: Reusable donut-chart component for Power Apps Canvas Apps.
-date: 2026-09-16
+title: "Donut Chart"
+description: "Reusable Power Apps Canvas donut chart with labels, legend, and center content."
+date: "2026-09-16"
 tags:
   - components
   - visualization
+  - charts
 ---
 
 <div class="page-kicker">COMPONENT / VISUALIZATION</div>
 
-# donut-chart
+# Donut Chart
 
-Reusable YAML source for a Power Apps Canvas App component. Download the original
+Reusable Power Apps Canvas donut chart with labels, legend, and center content. Download the original
 definition, import it into Power Apps Studio, and customize its properties for your app.
 
 <div class="component-actions">
@@ -20,6 +21,8 @@ definition, import it into Power Apps Studio, and customize its properties for y
 </div>
 
 ## Component documentation
+
+# Donut Chart
 
 Reusable Power Apps Canvas component for displaying proportional values as a donut chart with labels, legend, and optional center text.
 

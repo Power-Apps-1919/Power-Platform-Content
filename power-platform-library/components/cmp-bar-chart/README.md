@@ -1,3 +1,13 @@
+﻿---
+title: 'Bar Chart'
+description: 'Reusable Power Apps Canvas bar chart component with configurable layout, KPI, axes, colors, and data.'
+date: 2026-09-16
+tags:
+  - components
+  - visualization
+  - charts
+---
+
 # Bar Chart
 
 Reusable Power Apps Canvas component for displaying vertical bar charts with configurable layout, title, KPI, axes, colors, and data.
@@ -10,3 +20,4 @@ Reusable Power Apps Canvas component for displaying vertical bar charts with con
 ## Usage
 
 Import `cmp-bar-chart.yml` into a Canvas App component library and pass a table to `Items`. Adjust `Config` to control chart dimensions and presentation.
+

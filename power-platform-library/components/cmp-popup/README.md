@@ -1,3 +1,13 @@
+﻿---
+title: 'Popup'
+description: 'Confirmation dialog component for important Canvas App actions.'
+date: 2026-09-16
+tags:
+  - components
+  - interface
+  - dialogs
+---
+
 # Popup
 
 Confirmation dialog for prompting users before an update, delete, or other important action.
@@ -12,3 +22,4 @@ Confirmation dialog for prompting users before an update, delete, or other impor
 ## Usage
 
 Import `cmp-popup.yml`, set `PopupText`, and connect the events to the appropriate action or cancellation formulas.
+

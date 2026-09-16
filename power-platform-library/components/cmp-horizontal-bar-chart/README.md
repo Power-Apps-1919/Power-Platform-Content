@@ -1,3 +1,13 @@
+﻿---
+title: 'Horizontal Bar Chart'
+description: 'Reusable Power Apps Canvas horizontal bar chart component.'
+date: 2026-09-16
+tags:
+  - components
+  - visualization
+  - charts
+---
+
 # Horizontal Bar Chart
 
 Reusable Power Apps Canvas component for displaying horizontal bars with configurable layout, title, KPI, axes, colors, and data.
@@ -10,3 +20,4 @@ Reusable Power Apps Canvas component for displaying horizontal bars with configu
 ## Usage
 
 Import `cmp-horizontal-bar-chart.yml`, provide the chart data through `Items`, and adjust `Config` for dimensions, labels, padding, and visual styling.
+

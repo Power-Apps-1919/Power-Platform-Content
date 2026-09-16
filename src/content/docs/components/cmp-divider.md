@@ -1,17 +1,18 @@
 ---
-title: divider
-description: Reusable divider component for Power Apps Canvas Apps.
-date: 2026-09-16
+title: "Divider"
+description: "Horizontal or vertical divider component for Canvas App layouts."
+date: "2026-09-16"
 tags:
   - components
   - interface
+  - layout
 ---
 
 <div class="page-kicker">COMPONENT / INTERFACE</div>
 
-# divider
+# Divider
 
-Reusable YAML source for a Power Apps Canvas App component. Download the original
+Horizontal or vertical divider component for Canvas App layouts. Download the original
 definition, import it into Power Apps Studio, and customize its properties for your app.
 
 <div class="component-actions">
@@ -20,6 +21,8 @@ definition, import it into Power Apps Studio, and customize its properties for y
 </div>
 
 ## Component documentation
+
+# Divider
 
 Simple horizontal or vertical divider for separating sections of a Canvas App layout.
 

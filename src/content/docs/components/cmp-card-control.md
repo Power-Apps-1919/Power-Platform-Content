@@ -1,17 +1,18 @@
 ---
-title: card-control
-description: Reusable card-control component for Power Apps Canvas Apps.
-date: 2026-09-16
+title: "Card Control"
+description: "Reusable summary card component for Power Apps Canvas Apps."
+date: "2026-09-16"
 tags:
   - components
   - interface
+  - cards
 ---
 
 <div class="page-kicker">COMPONENT / INTERFACE</div>
 
-# card-control
+# Card Control
 
-Reusable YAML source for a Power Apps Canvas App component. Download the original
+Reusable summary card component for Power Apps Canvas Apps. Download the original
 definition, import it into Power Apps Studio, and customize its properties for your app.
 
 <div class="component-actions">
@@ -20,6 +21,8 @@ definition, import it into Power Apps Studio, and customize its properties for y
 </div>
 
 ## Component documentation
+
+# Card Control
 
 Reusable summary card component for showing a title, primary value, and configurable text and background colors.
 

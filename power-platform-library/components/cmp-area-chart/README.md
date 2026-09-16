@@ -1,3 +1,13 @@
+﻿---
+title: 'Area Chart'
+description: 'Reusable Power Apps Canvas area chart component with configurable layout, KPI, axes, colors, and data.'
+date: 2026-09-16
+tags:
+  - components
+  - visualization
+  - charts
+---
+
 # Area Chart
 
 Reusable Power Apps Canvas component for rendering an area chart with configurable layout, title, KPI, axes, colors, and data.
@@ -10,3 +20,4 @@ Reusable Power Apps Canvas component for rendering an area chart with configurab
 ## Usage
 
 Add `cmp-area-chart.yml` to a Canvas App component library, then provide the `Items` table and customize the `Config` record for the required dimensions and styling.
+

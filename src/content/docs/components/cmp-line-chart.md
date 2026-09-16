@@ -1,17 +1,18 @@
 ---
-title: line-chart
-description: Reusable line-chart component for Power Apps Canvas Apps.
-date: 2026-09-16
+title: "Line Chart"
+description: "Reusable Power Apps Canvas line chart component for displaying trends."
+date: "2026-09-16"
 tags:
   - components
   - visualization
+  - charts
 ---
 
 <div class="page-kicker">COMPONENT / VISUALIZATION</div>
 
-# line-chart
+# Line Chart
 
-Reusable YAML source for a Power Apps Canvas App component. Download the original
+Reusable Power Apps Canvas line chart component for displaying trends. Download the original
 definition, import it into Power Apps Studio, and customize its properties for your app.
 
 <div class="component-actions">
@@ -20,6 +21,8 @@ definition, import it into Power Apps Studio, and customize its properties for y
 </div>
 
 ## Component documentation
+
+# Line Chart
 
 Reusable Power Apps Canvas component for displaying line trends with configurable layout, title, KPI, axes, colors, and data.
 

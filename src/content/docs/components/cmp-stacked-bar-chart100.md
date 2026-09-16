@@ -1,17 +1,18 @@
 ---
-title: stacked-bar-chart100
-description: Reusable stacked-bar-chart100 component for Power Apps Canvas Apps.
-date: 2026-09-16
+title: "100% Stacked Bar Chart"
+description: "Reusable Power Apps Canvas 100% stacked vertical bar chart."
+date: "2026-09-16"
 tags:
   - components
   - visualization
+  - charts
 ---
 
 <div class="page-kicker">COMPONENT / VISUALIZATION</div>
 
-# stacked-bar-chart100
+# 100% Stacked Bar Chart
 
-Reusable YAML source for a Power Apps Canvas App component. Download the original
+Reusable Power Apps Canvas 100% stacked vertical bar chart. Download the original
 definition, import it into Power Apps Studio, and customize its properties for your app.
 
 <div class="component-actions">
@@ -20,6 +21,8 @@ definition, import it into Power Apps Studio, and customize its properties for y
 </div>
 
 ## Component documentation
+
+# 100% Stacked Bar Chart
 
 Reusable Power Apps Canvas component for comparing category proportions as 100% stacked vertical bars.
 

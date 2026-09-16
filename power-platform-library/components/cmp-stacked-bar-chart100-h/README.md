@@ -1,3 +1,13 @@
+﻿---
+title: '100% Stacked Horizontal Bar Chart'
+description: 'Reusable Power Apps Canvas 100% stacked horizontal bar chart.'
+date: 2026-09-16
+tags:
+  - components
+  - visualization
+  - charts
+---
+
 # 100% Stacked Horizontal Bar Chart
 
 Reusable Power Apps Canvas component for comparing category proportions as 100% stacked horizontal bars.
@@ -10,3 +20,4 @@ Reusable Power Apps Canvas component for comparing category proportions as 100% 
 ## Usage
 
 Import `cmp-stacked-bar-chart100-h.yml`, provide grouped data through `Items`, and configure the horizontal layout with `Config`.
+

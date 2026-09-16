@@ -1,17 +1,18 @@
 ---
-title: loading-animation
-description: Reusable loading-animation component for Power Apps Canvas Apps.
-date: 2026-09-16
+title: "Loading Animation"
+description: "Full-screen loading overlay for Canvas App processing states."
+date: "2026-09-16"
 tags:
   - components
   - interface
+  - loading
 ---
 
 <div class="page-kicker">COMPONENT / INTERFACE</div>
 
-# loading-animation
+# Loading Animation
 
-Reusable YAML source for a Power Apps Canvas App component. Download the original
+Full-screen loading overlay for Canvas App processing states. Download the original
 definition, import it into Power Apps Studio, and customize its properties for your app.
 
 <div class="component-actions">
@@ -20,6 +21,8 @@ definition, import it into Power Apps Studio, and customize its properties for y
 </div>
 
 ## Component documentation
+
+# Loading Animation
 
 Full-screen loading overlay for communicating that an app is processing a request.
 

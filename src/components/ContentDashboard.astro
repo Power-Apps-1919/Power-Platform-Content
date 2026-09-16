@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 
 const entries = (await getCollection('docs'))
-  .filter(({ id }) => id !== 'index')
+  .filter(({ id, data }) => id !== 'index' && data.tags.length > 0)
   .map(({ id, data }) => ({
     id,
     title: data.title,
@@ -72,7 +72,7 @@ const blogCount = entries.filter((entry) => entry.tags.includes('blog')).length;
     let visible = 0;
     cards.forEach((card) => {
       const matchesQuery = card.dataset.search?.toLowerCase().includes(query) ?? false;
-      const matchesTag = activeTag === 'all' || card.dataset.tags?.split(',').includes(activeTag);
+      const matchesTag = activeTag === 'all' || card.dataset.tags?.split(',').map((tag) => tag.trim()).includes(activeTag);
       const show = matchesQuery && matchesTag;
       card.hidden = !show;
       if (show) visible += 1;

@@ -1,17 +1,18 @@
 ---
-title: popup
-description: Reusable popup component for Power Apps Canvas Apps.
-date: 2026-09-16
+title: "Popup"
+description: "Confirmation dialog component for important Canvas App actions."
+date: "2026-09-16"
 tags:
   - components
   - interface
+  - dialogs
 ---
 
 <div class="page-kicker">COMPONENT / INTERFACE</div>
 
-# popup
+# Popup
 
-Reusable YAML source for a Power Apps Canvas App component. Download the original
+Confirmation dialog component for important Canvas App actions. Download the original
 definition, import it into Power Apps Studio, and customize its properties for your app.
 
 <div class="component-actions">
@@ -20,6 +21,8 @@ definition, import it into Power Apps Studio, and customize its properties for y
 </div>
 
 ## Component documentation
+
+# Popup
 
 Confirmation dialog for prompting users before an update, delete, or other important action.
 

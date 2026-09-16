@@ -27,6 +27,21 @@ const titleFor = (name) => name
   .replace(/^cmp[-_]/i, '')
   .replace(/([a-z])([A-Z])/g, '$1 $2');
 
+const metadataFrom = (source, fallbackTitle, fallbackDescription, fallbackDate, fallbackTags) => {
+  const normalizedSource = source.replace(/^\uFEFF/, '');
+  const frontmatter = normalizedSource.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
+  const block = frontmatter?.[1] ?? '';
+  const read = (key, fallback) => block.match(new RegExp(`^${key}:\\s*["']?(.+?)["']?$`, 'm'))?.[1] ?? fallback;
+  const tags = block.match(/^tags:\r?\n((?:\s+-\s+.+\r?\n?)+)/m)?.[1]
+    ?.match(/-\s+(.+)/g)?.map((tag) => tag.replace(/^-\s+/, '').trim()) ?? fallbackTags;
+  return {
+    title: read('title', fallbackTitle),
+    description: read('description', fallbackDescription),
+    date: read('date', fallbackDate),
+    tags,
+  };
+};
+
 await mkdir(outputDir, { recursive: true });
 await mkdir(publicComponentDir, { recursive: true });
 for (const generatedFile of await readdir(outputDir)) {
@@ -57,10 +72,9 @@ for (const folder of componentFolders) {
   }
   currentDownloadFiles.add(file);
   const name = path.basename(file, '.yml');
-  const title = titleFor(name);
+  const defaultTitle = titleFor(name);
   const slugBase = name.toLowerCase().replaceAll('_', '-');
   const slug = slugBase.startsWith('cmp-') ? slugBase : `cmp-${slugBase}`;
-  const category = categoryByName[name] ?? 'visualization';
   const source = await readFile(path.join(folderPath, file), 'utf8');
   const readmePath = path.join(folderPath, 'README.md');
   let readme = '';
@@ -69,25 +83,32 @@ for (const folder of componentFolders) {
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
   }
+  readme = readme.replace(/^\uFEFF/, '');
   const documentation = readme
     .replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '')
     .replace(/^#\s+.+\r?\n?/, '')
     .trim();
+  const metadata = metadataFrom(
+    readme,
+    defaultTitle,
+    `Reusable ${defaultTitle} component for Power Apps Canvas Apps.`,
+    new Date().toISOString().slice(0, 10),
+    ['components', categoryByName[name] ?? 'visualization'],
+  );
   const destination = path.join(outputDir, `${slug}.md`);
   const content = `---
-title: ${title}
-description: Reusable ${title} component for Power Apps Canvas Apps.
-date: 2026-09-16
+title: ${JSON.stringify(metadata.title)}
+description: ${JSON.stringify(metadata.description)}
+date: ${JSON.stringify(metadata.date)}
 tags:
-  - components
-  - ${category}
+${metadata.tags.map((tag) => `  - ${tag}`).join('\n')}
 ---
 
-<div class="page-kicker">COMPONENT / ${category.toUpperCase().replace('-', ' ')}</div>
+<div class="page-kicker">COMPONENT / ${metadata.tags[1]?.toUpperCase().replace('-', ' ') ?? 'LIBRARY'}</div>
 
-# ${title}
+# ${metadata.title}
 
-Reusable YAML source for a Power Apps Canvas App component. Download the original
+${metadata.description} Download the original
 definition, import it into Power Apps Studio, and customize its properties for your app.
 
 <div class="component-actions">
@@ -134,26 +155,25 @@ for (const folder of blogFolders) {
   }
   const slug = folder.name.toLowerCase().replaceAll('_', '-');
   const destination = path.join(blogOutputDir, `${slug}.md`);
-  const source = await readFile(sourcePath, 'utf8');
+  const source = (await readFile(sourcePath, 'utf8')).replace(/^\uFEFF/, '');
   const frontmatter = source.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
-  const title = source.match(/^title:\s*(.+)$/m)?.[1]
-    ?? source.match(/^#\s+(.+)$/m)?.[1]
-    ?? titleFor(folder.name);
-  const description = source.match(/^description:\s*(.+)$/m)?.[1]
-    ?? 'Practical Power Platform implementation guidance.';
-  const date = source.match(/^date:\s*(.+)$/m)?.[1] ?? new Date().toISOString().slice(0, 10);
-  const sourceTags = source.match(/^tags:\r?\n((?:\s+-\s+.+\r?\n?)+)/m)?.[1]
-    ?.match(/-\s+(.+)/g)?.map((tag) => tag.replace(/^-\s+/, '').trim()) ?? ['blog', 'power-platform'];
+  const metadata = metadataFrom(
+    source,
+    source.match(/^#\s+(.+)$/m)?.[1] ?? titleFor(folder.name),
+    'Practical Power Platform implementation guidance.',
+    new Date().toISOString().slice(0, 10),
+    ['blog', 'power-platform'],
+  );
   const body = source
     .replace(frontmatter?.[0] ?? '', '')
     .replace(/^#\s+.+\r?\n?/, '')
     .replaceAll('src="./images/', `src="/Power-Platform-Content/images/${slug}/`);
   await writeFile(destination, `---
-title: ${JSON.stringify(title)}
-description: ${JSON.stringify(description)}
-date: ${JSON.stringify(date)}
+title: ${JSON.stringify(metadata.title)}
+description: ${JSON.stringify(metadata.description)}
+date: ${JSON.stringify(metadata.date)}
 tags:
-${sourceTags.map((tag) => `  - ${tag}`).join('\n')}
+${metadata.tags.map((tag) => `  - ${tag}`).join('\n')}
 ---
 
 ${body.trim()}

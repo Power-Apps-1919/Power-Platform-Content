@@ -1,3 +1,13 @@
+﻿---
+title: 'Email Popup'
+description: 'Email confirmation popup for Power Apps Canvas Apps.'
+date: 2026-09-16
+tags:
+  - components
+  - communication
+  - email
+---
+
 # Email Popup
 
 Confirmation popup for composing or sending email from a Power Apps Canvas App.
@@ -13,3 +23,4 @@ Confirmation popup for composing or sending email from a Power Apps Canvas App.
 ## Usage
 
 Import `cmp-email-popup.yml`, provide the confirmation text and CC table, and connect the events to the email-sending and cancellation logic.
+

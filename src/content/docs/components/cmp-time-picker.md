@@ -1,17 +1,18 @@
 ---
-title: time-picker
-description: Reusable time-picker component for Power Apps Canvas Apps.
-date: 2026-09-16
+title: "Time Picker"
+description: "Time selection component with configurable boundaries and interval."
+date: "2026-09-16"
 tags:
   - components
   - input-utility
+  - time
 ---
 
 <div class="page-kicker">COMPONENT / INPUT UTILITY</div>
 
-# time-picker
+# Time Picker
 
-Reusable YAML source for a Power Apps Canvas App component. Download the original
+Time selection component with configurable boundaries and interval. Download the original
 definition, import it into Power Apps Studio, and customize its properties for your app.
 
 <div class="component-actions">
@@ -20,6 +21,8 @@ definition, import it into Power Apps Studio, and customize its properties for y
 </div>
 
 ## Component documentation
+
+# Time Picker
 
 Time selection component with configurable default, dependent, start, end, and interval values.
 

@@ -1,17 +1,18 @@
 ---
-title: step-chart
-description: Reusable step-chart component for Power Apps Canvas Apps.
-date: 2026-09-16
+title: "Step Chart"
+description: "Reusable Power Apps Canvas chart for ordered steps or states."
+date: "2026-09-16"
 tags:
   - components
   - visualization
+  - charts
 ---
 
 <div class="page-kicker">COMPONENT / VISUALIZATION</div>
 
-# step-chart
+# Step Chart
 
-Reusable YAML source for a Power Apps Canvas App component. Download the original
+Reusable Power Apps Canvas chart for ordered steps or states. Download the original
 definition, import it into Power Apps Studio, and customize its properties for your app.
 
 <div class="component-actions">
@@ -20,6 +21,8 @@ definition, import it into Power Apps Studio, and customize its properties for y
 </div>
 
 ## Component documentation
+
+# Step Chart
 
 Reusable Power Apps Canvas component for showing progression through ordered steps or states.
 

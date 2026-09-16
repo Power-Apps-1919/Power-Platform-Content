@@ -1,17 +1,18 @@
 ---
-title: email-popup
-description: Reusable email-popup component for Power Apps Canvas Apps.
-date: 2026-09-16
+title: "Email Popup"
+description: "Email confirmation popup for Power Apps Canvas Apps."
+date: "2026-09-16"
 tags:
   - components
   - communication
+  - email
 ---
 
 <div class="page-kicker">COMPONENT / COMMUNICATION</div>
 
-# email-popup
+# Email Popup
 
-Reusable YAML source for a Power Apps Canvas App component. Download the original
+Email confirmation popup for Power Apps Canvas Apps. Download the original
 definition, import it into Power Apps Studio, and customize its properties for your app.
 
 <div class="component-actions">
@@ -20,6 +21,8 @@ definition, import it into Power Apps Studio, and customize its properties for y
 </div>
 
 ## Component documentation
+
+# Email Popup
 
 Confirmation popup for composing or sending email from a Power Apps Canvas App.
 

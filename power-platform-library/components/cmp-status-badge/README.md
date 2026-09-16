@@ -1,3 +1,13 @@
+﻿---
+title: 'Status Badge'
+description: 'Compact status badge component with optional label and tooltip.'
+date: 2026-09-16
+tags:
+  - components
+  - interface
+  - status
+---
+
 # Status Badge
 
 Compact badge component for displaying a status with an optional label and tooltip.
@@ -11,3 +21,4 @@ Compact badge component for displaying a status with an optional label and toolt
 ## Usage
 
 Import `cmp-status-badge.yml`, bind `StatusValue` to the current state, and optionally provide a label and tooltip for additional context.
+

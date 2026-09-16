@@ -1,3 +1,14 @@
+﻿---
+title: 'Deep Linking in Power Apps: zero config using flow headers'
+description: 'Read Power Apps app, environment, and tenant IDs dynamically through flow headers.'
+date: 2026-09-16
+tags:
+  - blog
+  - power-apps
+  - power-automate
+  - deep-linking
+---
+
 # Deep Linking in Power Apps: zero config using flow headers
 
 Recently I had to implement deep linking in a Canvas app. The plan felt straightforward: use `Param()` to read query strings and jump to the right screen or record. But to build links that work across Dev, Test, and Prod, I also needed the App ID, and ideally the Environment and Tenant IDs, at runtime.
@@ -109,9 +120,9 @@ Display `_deepLink` in a Label or wire it to a Copy button.
 
 ## Explaining the expression
 
-* `trigger()?['Outputs/headers/x-ms-client-app-id']` accesses the x-ms-client-app-id header sent by Power Apps. The trigger exposes headers under Outputs → headers, so navigate into that object to retrieve the header value.
+* `trigger()?['Outputs/headers/x-ms-client-app-id']` accesses the x-ms-client-app-id header sent by Power Apps. The trigger exposes headers under Outputs â†’ headers, so navigate into that object to retrieve the header value.
 * `split(value, '/')` splits the header string into an array using `/` as the separator (for example, `https://.../apps/12345` becomes `["https:", "", "...", "apps", "12345"]`).
-* `last(array)` returns the final element of that array — the App ID. The Environment ID is extracted the same way; the Tenant ID (`x-ms-client-tenant-id`) is already a single value and does not need splitting.
+* `last(array)` returns the final element of that array â€” the App ID. The Environment ID is extracted the same way; the Tenant ID (`x-ms-client-tenant-id`) is already a single value and does not need splitting.
 
 ---
 
@@ -126,3 +137,4 @@ Display `_deepLink` in a Label or wire it to a Copy button.
 
 
 Happy deep linking.
+

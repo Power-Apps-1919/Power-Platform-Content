@@ -1,17 +1,18 @@
 ---
-title: status-badge
-description: Reusable status-badge component for Power Apps Canvas Apps.
-date: 2026-09-16
+title: "Status Badge"
+description: "Compact status badge component with optional label and tooltip."
+date: "2026-09-16"
 tags:
   - components
   - interface
+  - status
 ---
 
 <div class="page-kicker">COMPONENT / INTERFACE</div>
 
-# status-badge
+# Status Badge
 
-Reusable YAML source for a Power Apps Canvas App component. Download the original
+Compact status badge component with optional label and tooltip. Download the original
 definition, import it into Power Apps Studio, and customize its properties for your app.
 
 <div class="component-actions">
@@ -20,6 +21,8 @@ definition, import it into Power Apps Studio, and customize its properties for y
 </div>
 
 ## Component documentation
+
+# Status Badge
 
 Compact badge component for displaying a status with an optional label and tooltip.
 
