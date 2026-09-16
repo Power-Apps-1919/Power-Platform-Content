@@ -22,5 +22,7 @@ Make category comparisons readable when labels are long or when users need to ra
 - `Config`: layout, title, KPI, axes, colours, and spacing.
 
 ## Getting started
-Download `cmp-horizontal-bar-chart.yml`, connect it to business data, sort the values intentionally, and confirm that labels remain readable on mobile and tablet screens.
+Use `cmp-horizontal-bar-chart.yml` as a reference while creating or maintaining the equivalent component in a component library or approved source workflow; connect it to business data, sort the values intentionally, and confirm that labels remain readable on mobile and tablet screens.
+
+
 

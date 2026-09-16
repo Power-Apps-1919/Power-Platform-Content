@@ -26,5 +26,7 @@ Give users a clear confirmation step before an email is sent. This helps prevent
 You may need Office 365 Users and Office 365 Outlook. Confirm connector permissions, recipient privacy, and your organisation's email policy before moving to production.
 
 ## Getting started
-Download `cmp-email-popup.yml`, use the Person layout for people selectors, and connect the confirmation event to the approved email action. Always test with non-production recipients first.
+Use `cmp-email-popup.yml` as a reference while creating or maintaining the equivalent component in a component library or approved source workflow; use the Person layout for people selectors, and connect the confirmation event to the approved email action. Always test with non-production recipients first.
+
+
 

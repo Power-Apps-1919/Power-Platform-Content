@@ -22,5 +22,7 @@ Help people see how performance changes over time, such as revenue, workload, se
 - `Config`: layout, title, KPI, axis, colour, and spacing choices.
 
 ## Getting started
-Download `cmp-area-chart.yml`, add it to your component library, connect it to representative data, and adjust the labels and colours to match your reporting standards. Test readability on the smallest screen your users will use.
+Use `cmp-area-chart.yml` as a reference while creating or maintaining the equivalent component in a component library or approved source workflow; connect it to representative data, and adjust the labels and colours to match your reporting standards. Test readability on the smallest screen your users will use.
+
+
 

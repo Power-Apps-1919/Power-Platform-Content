@@ -22,5 +22,7 @@ Make comparisons easy. Use a bar chart when users need to compare teams, product
 - `Config`: chart size, title, KPI, axes, colours, and spacing.
 
 ## Getting started
-Download `cmp-bar-chart.yml`, add it to Power Apps, connect governed business data, and use plain-language labels. Avoid showing too many categories at once; let users drill into detail where needed.
+Use `cmp-bar-chart.yml` as a reference while creating or maintaining the equivalent component in a component library or approved source workflow; connect governed business data, and use plain-language labels. Avoid showing too many categories at once; let users drill into detail where needed.
+
+
 

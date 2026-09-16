@@ -24,5 +24,7 @@ Help users select a valid time consistently for appointments, service windows, s
 - `Interval`: the allowed increment.
 
 ## Getting started
-Download `cmp-time-picker.yml`, confirm the time zone and business hours used by your process, and validate the final value before saving it.
+Use `cmp-time-picker.yml` as a reference while creating or maintaining the equivalent component in a component library or approved source workflow; confirm the time zone and business hours used by your process, and validate the final value before saving it.
+
+
 

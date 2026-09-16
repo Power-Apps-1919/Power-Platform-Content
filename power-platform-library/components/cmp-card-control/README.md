@@ -23,5 +23,7 @@ Give users an immediate answer to an important question: How many? What value? W
 - `KeyColor` and `ValueColor`: colours that meet your brand and accessibility standards.
 
 ## Getting started
-Download `cmp-card-control.yml`, add it to your component library, connect it to a trusted measure, and keep the label specific enough that users understand the value without extra explanation.
+Use `cmp-card-control.yml` as a reference while creating or maintaining the equivalent component in a component library or approved source workflow; connect it to a trusted measure, and keep the label specific enough that users understand the value without extra explanation.
+
+
 

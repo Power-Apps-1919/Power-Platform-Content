@@ -22,5 +22,7 @@ Help users understand where a request, case, onboarding journey, or delivery pro
 - `Config`: layout, title, KPI, plot, axes, colours, and spacing.
 
 ## Getting started
-Download `cmp-step-chart.yml`, keep step names action-oriented, and show the current state clearly. Use the surrounding app to explain what the user should do next.
+Use `cmp-step-chart.yml` as a reference while creating or maintaining the equivalent component in a component library or approved source workflow; keep step names action-oriented, and show the current state clearly. Use the surrounding app to explain what the user should do next.
+
+
 

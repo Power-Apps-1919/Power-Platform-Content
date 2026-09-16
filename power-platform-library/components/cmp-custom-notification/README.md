@@ -24,5 +24,7 @@ Help users understand what happened after they save, submit, upload, or complete
 - `OnOK`: what should happen when the user confirms.
 
 ## Getting started
-Download `cmp-custom-notification.yml`, use plain language, and explain the next action when one is required. Do not use a timed notification for a critical error that users must act on.
+Use `cmp-custom-notification.yml` as a reference while creating or maintaining the equivalent component in a component library or approved source workflow; use plain language, and explain the next action when one is required. Do not use a timed notification for a critical error that users must act on.
+
+
 

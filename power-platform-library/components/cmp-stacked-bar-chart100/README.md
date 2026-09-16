@@ -22,5 +22,7 @@ Show how each category contributes to a whole, making it easier to compare mix o
 - `Config`: layout, title, KPI, axes, colours, and spacing.
 
 ## Getting started
-Download `cmp-stacked-bar-chart100.yml`, ensure each group totals meaningfully to 100%, and provide exact values elsewhere when users need precision.
+Use `cmp-stacked-bar-chart100.yml` as a reference while creating or maintaining the equivalent component in a component library or approved source workflow; ensure each group totals meaningfully to 100%, and provide exact values elsewhere when users need precision.
+
+
 

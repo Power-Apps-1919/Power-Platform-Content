@@ -22,5 +22,7 @@ Show how a total is divided across categories, such as budget usage, case status
 - `Config`: geometry, labels, legend, centre text, and layout settings.
 
 ## Getting started
-Download `cmp-donut-chart.yml`, keep the number of slices manageable, label each category clearly, and provide an accessible alternative such as a table when exact values matter.
+Use `cmp-donut-chart.yml` as a reference while creating or maintaining the equivalent component in a component library or approved source workflow; keep the number of slices manageable, label each category clearly, and provide an accessible alternative such as a table when exact values matter.
+
+
 

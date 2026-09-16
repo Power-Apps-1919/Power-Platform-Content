@@ -22,5 +22,7 @@ Protect important business actions by asking users to confirm before the app cha
 - `onYes`, `onNo`, and `onCancel`: the process responses.
 
 ## Getting started
-Download `cmp-popup.yml`, name the action clearly, explain the consequence, and make the safe choice easy to understand. Never rely on colour alone to distinguish actions.
+Use `cmp-popup.yml` as a reference while creating or maintaining the equivalent component in a component library or approved source workflow; name the action clearly, explain the consequence, and make the safe choice easy to understand. Never rely on colour alone to distinguish actions.
+
+
 

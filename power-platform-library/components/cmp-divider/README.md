@@ -22,5 +22,6 @@ Create visual structure so users can scan a business process, form, or dashboard
 - `DividerColor`, `Thickness`, and `Margin`: visual settings that match your design system.
 
 ## Getting started
-Download `cmp-divider.yml` and use it to separate meaningful sections. Avoid using too many lines; headings, whitespace, and clear labels should do most of the organising.
+Use `cmp-divider.yml` as a reference while creating or maintaining the equivalent component in a component library or approved source workflow; use it to separate meaningful sections. Avoid using too many lines; headings, whitespace, and clear labels should do most of the organising.
+
 

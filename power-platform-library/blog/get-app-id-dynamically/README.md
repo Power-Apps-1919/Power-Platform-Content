@@ -11,7 +11,21 @@ tags:
 
 # Deep Linking in Power Apps: zero config using flow headers
 
-## Why this matters`r`n`r`nPower Apps makers often need to create links that work across development, test, and production environments. Hard-coded app and environment IDs make that process harder to maintain and increase the risk of updating the wrong value during a release.`r`n`r`nThis approach lets the app request its own identifiers at runtime, helping makers reduce environment-specific changes and make releases more repeatable.`r`n`r`n## What you will achieve`r`n`r`nYou will build a small Power Automate flow that reads the calling app information and returns the App ID, Environment ID, and Tenant ID for use in a Canvas App.`r`n`r`n## Before you start`r`n`r`nYou need permission to create a Power Automate flow and add it to the Canvas App. Test the pattern in a non-production environment before applying it to a business-critical app.`r`n`r`n## Context
+## Why this matters
+
+Power Apps makers often need to create links that work across development, test, and production environments. Hard-coded app and environment IDs make that process harder to maintain and increase the risk of updating the wrong value during a release.
+
+This approach lets the app request its own identifiers at runtime, helping makers reduce environment-specific changes and make releases more repeatable.
+
+## What you will achieve
+
+You will build a small Power Automate flow that reads the calling app information and returns the App ID, Environment ID, and Tenant ID for use in a Canvas App.
+
+## Before you start
+
+You need permission to create a Power Automate flow and add it to the Canvas App. Test the pattern in a non-production environment before applying it to a business-critical app.
+
+## Context
 
 Deep linking lets you open the app directly to the right screen or record, often with URL parameters like `screen=Details` or `recordId=123`. `Param()` reads those values and passes them to the app runtime.
 
@@ -131,4 +145,5 @@ Display `_deepLink` in a Label or wire it to a Copy button.
 
 
 Happy deep linking.
+
 

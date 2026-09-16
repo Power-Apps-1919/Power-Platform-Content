@@ -23,5 +23,7 @@ Make the state of a record, request, task, or process visible without requiring 
 - `TooltipText`: supporting context.
 
 ## Getting started
-Download `cmp-status-badge.yml`, use a controlled set of status values, and make sure the meaning is still clear without relying only on colour.
+Use `cmp-status-badge.yml` as a reference while creating or maintaining the equivalent component in a component library or approved source workflow; use a controlled set of status values, and make sure the meaning is still clear without relying only on colour.
+
+
 

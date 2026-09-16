@@ -22,5 +22,7 @@ Show movement over time so users can identify trends, peaks, drops, and emerging
 - `Config`: layout, title, KPI, axes, colours, and spacing.
 
 ## Getting started
-Download `cmp-line-chart.yml`, use consistent time intervals, label the period clearly, and avoid implying precision that the underlying data does not support.
+Use `cmp-line-chart.yml` as a reference while creating or maintaining the equivalent component in a component library or approved source workflow; use consistent time intervals, label the period clearly, and avoid implying precision that the underlying data does not support.
+
+
 

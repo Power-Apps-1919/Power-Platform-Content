@@ -24,5 +24,7 @@ Turn structured JSON returned by a flow, connector, or service into a table that
 Validate the response before using it in a business-critical process. Empty or invalid input returns a fallback row; your app should still explain errors and provide a recovery path.
 
 ## Getting started
-Download `cmp-reusable-json-parser.yml`, test it with sample and invalid payloads, then connect it to the flow or service that owns the data.
+Use `cmp-reusable-json-parser.yml` as a reference while creating or maintaining the equivalent component in a component library or approved source workflow; test it with sample and invalid payloads, then connect it to the flow or service that owns the data.
+
+
 

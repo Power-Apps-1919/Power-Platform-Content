@@ -16,5 +16,7 @@ Set the right expectation while an app saves, searches, calculates, or waits for
 - `Loading_Text`: a short message such as “Saving your request…” or “Loading results…”.
 
 ## Getting started
-Download `cmp-loading-animation.yml`, show it only while work is active, and use a message that describes the current operation. Make sure users can still recover if a connector or flow fails.
+Use `cmp-loading-animation.yml` as a reference while creating or maintaining the equivalent component in a component library or approved source workflow; show it only while work is active, and use a message that describes the current operation. Make sure users can still recover if a connector or flow fails.
+
+
 
