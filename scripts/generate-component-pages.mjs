@@ -11,15 +11,15 @@ const blogOutputDir = path.join(root, 'src', 'content', 'docs', 'blog');
 const publicImageDir = path.join(root, 'public', 'images');
 
 const categoryByName = {
-  Card_Control: 'interface',
-  Custom_Notification: 'interface',
-  Divider: 'interface',
-  Loading_Animation: 'interface',
-  Popup: 'interface',
-  StatusBadge: 'interface',
-  TimePicker: 'input-utility',
-  Reusable_JSON_Parser: 'input-utility',
-  Email_Popup: 'communication',
+  'cmp-card-control': 'interface',
+  'cmp-custom-notification': 'interface',
+  'cmp-divider': 'interface',
+  'cmp-loading-animation': 'interface',
+  'cmp-popup': 'interface',
+  'cmp-status-badge': 'interface',
+  'cmp-time-picker': 'input-utility',
+  'cmp-reusable-json-parser': 'input-utility',
+  'cmp-email-popup': 'communication',
 };
 
 const titleFor = (name) => name
@@ -44,14 +44,23 @@ for (const folder of componentFolders) {
   const folderPath = path.join(sourceDir, folder.name);
   const files = (await readdir(folderPath))
     .filter((file) => file.toLowerCase().endsWith('.yml'));
-  if (files.length === 0) continue;
+  if (files.length === 0) {
+    throw new Error(`Component folder "${folder.name}" must contain exactly one .yml file.`);
+  }
+  if (files.length > 1) {
+    throw new Error(`Component folder "${folder.name}" contains multiple .yml files: ${files.join(', ')}`);
+  }
   const file = files[0];
+  const expectedName = `cmp-${folder.name.replace(/^cmp-/, '')}.yml`;
+  if (file !== expectedName) {
+    throw new Error(`Component folder "${folder.name}" must contain "${expectedName}", found "${file}".`);
+  }
   currentDownloadFiles.add(file);
   const name = path.basename(file, '.yml');
   const title = titleFor(name);
   const slugBase = name.toLowerCase().replaceAll('_', '-');
   const slug = slugBase.startsWith('cmp-') ? slugBase : `cmp-${slugBase}`;
-  const category = categoryByName[name] ?? (name.startsWith('cmp-') ? 'visualization' : 'interface');
+  const category = categoryByName[name] ?? 'visualization';
   const source = await readFile(path.join(folderPath, file), 'utf8');
   const readmePath = path.join(folderPath, 'README.md');
   let readme = '';

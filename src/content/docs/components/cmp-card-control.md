@@ -4,10 +4,10 @@ description: Reusable card-control component for Power Apps Canvas Apps.
 date: 2026-09-16
 tags:
   - components
-  - visualization
+  - interface
 ---
 
-<div class="page-kicker">COMPONENT / VISUALIZATION</div>
+<div class="page-kicker">COMPONENT / INTERFACE</div>
 
 # card-control
 

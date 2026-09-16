@@ -4,10 +4,10 @@ description: Reusable reusable-json-parser component for Power Apps Canvas Apps.
 date: 2026-09-16
 tags:
   - components
-  - visualization
+  - input-utility
 ---
 
-<div class="page-kicker">COMPONENT / VISUALIZATION</div>
+<div class="page-kicker">COMPONENT / INPUT UTILITY</div>
 
 # reusable-json-parser
 
