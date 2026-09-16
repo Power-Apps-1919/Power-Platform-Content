@@ -1,4 +1,4 @@
-import { access, copyFile, mkdir, readdir, readFile, unlink, writeFile } from 'node:fs/promises';
+import { access, copyFile, mkdir, readdir, readFile, rm, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -9,6 +9,7 @@ const publicComponentDir = path.join(root, 'public', 'downloads', 'components');
 const blogSourceDir = path.join(root, 'power-platform-library', 'blog');
 const blogOutputDir = path.join(root, 'src', 'content', 'docs', 'blog');
 const publicImageDir = path.join(root, 'public', 'images');
+const publicBlogDownloadDir = path.join(root, 'public', 'downloads', 'blog');
 
 const categoryByName = {
   'cmp-card-control': 'interface',
@@ -40,6 +41,19 @@ const metadataFrom = (source, fallbackTitle, fallbackDescription, fallbackDate, 
     date: read('date', fallbackDate),
     tags,
   };
+};
+
+const copyFiles = async (sourceDir, destinationDir) => {
+  await mkdir(destinationDir, { recursive: true });
+  for (const entry of await readdir(sourceDir, { withFileTypes: true })) {
+    const sourcePath = path.join(sourceDir, entry.name);
+    const destinationPath = path.join(destinationDir, entry.name);
+    if (entry.isDirectory()) {
+      await copyFiles(sourcePath, destinationPath);
+    } else {
+      await copyFile(sourcePath, destinationPath);
+      }
+    }
 };
 
 await mkdir(outputDir, { recursive: true });
@@ -167,7 +181,8 @@ for (const folder of blogFolders) {
   const body = source
     .replace(frontmatter?.[0] ?? '', '')
     .replace(/^#\s+.+\r?\n?/, '')
-    .replaceAll('src="./images/', `src="/Power-Platform-Content/images/${slug}/`);
+    .replaceAll('src="./images/', `src="/Power-Platform-Content/images/${slug}/`)
+    .replaceAll('](./downloads/', `](/Power-Platform-Content/downloads/blog/${slug}/`);
   await writeFile(destination, `---
 title: ${JSON.stringify(metadata.title)}
 description: ${JSON.stringify(metadata.description)}
@@ -200,4 +215,16 @@ try {
   }
 } catch (error) {
   if (error.code !== 'ENOENT') throw error;
+}
+
+await mkdir(publicBlogDownloadDir, { recursive: true });
+for (const folder of blogFolders) {
+  const sourceDownloads = path.join(blogSourceDir, folder.name, 'downloads');
+  const destinationDownloads = path.join(publicBlogDownloadDir, folder.name.toLowerCase().replaceAll('_', '-'));
+  try {
+    await rm(destinationDownloads, { recursive: true, force: true });
+    await copyFiles(sourceDownloads, destinationDownloads);
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+  }
 }
