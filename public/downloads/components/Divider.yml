@@ -1,0 +1,59 @@
+ComponentDefinitions:
+  Divider:
+    DefinitionType: CanvasComponent
+    CustomProperties:
+      Orientation:
+        PropertyKind: Input
+        DisplayName: Orientation
+        Description: "Horizontal or Vertical. Use 'Horizontal' or 'Vertical'."
+        DataType: Text
+        Default: ="Horizontal"
+      DividerColor:
+        PropertyKind: Input
+        DisplayName: Divider Color
+        Description: The color of the divider line. Accepts a hex code (e.g., "#CCCCCC") or a named color (e.g., Color.Gray).
+        DataType: Text
+        Default: ="#CCCCCC"
+      Thickness:
+        PropertyKind: Input
+        DisplayName: Thickness
+        Description: The thickness of the divider line in pixels.
+        DataType: Number
+        Default: =2
+      Margin:
+        PropertyKind: Input
+        DisplayName: Margin
+        Description: The margin before and after the divider line in pixels.
+        DataType: Number
+        Default: =8
+      Label:
+        PropertyKind: Input
+        DisplayName: Label
+        Description: Optional label to display at the center of the divider (for horizontal orientation).
+        DataType: Text
+        Default: =""
+    Properties:
+      Height: =If(Self.Orientation="Horizontal", Self.Thickness + Self.Margin*2, 80)
+      Width: =If(Self.Orientation="Horizontal", 320, Self.Thickness + Self.Margin*2)
+    Children:
+      - DividerLine:
+          Control: Rectangle@1.0.0
+          Properties:
+            Fill: =ColorValue(If(Divider.Orientation="Horizontal", Divider.DividerColor, Divider.DividerColor))
+            Height: =If(Parent.Orientation="Horizontal", Parent.Thickness, Parent.Height-Parent.Margin*2)
+            Width: =If(Parent.Orientation="Horizontal", Parent.Width-Parent.Margin*2, Parent.Thickness)
+            X: =If(Parent.Orientation="Horizontal", Parent.Margin, (Parent.Width-Parent.Thickness)/2)
+            Y: =If(Parent.Orientation="Horizontal", (Parent.Height-Parent.Thickness)/2, Parent.Margin)
+      - DividerLabel:
+          Control: Label@1.0.0
+          Properties:
+            Text: =Parent.Label
+            Visible: =Parent.Orientation="Horizontal" && !IsBlank(Parent.Label)
+            X: =If(Parent.Orientation="Horizontal", Parent.Width/2-60, 0) // Center approx
+            Y: =If(Parent.Orientation="Horizontal", (Parent.Height-20)/2, 0)
+            Height: =20
+            Width: =120 // Fixed width for label
+            Color: =ColorValue(Parent.DividerColor)
+            Font: =Font.'Open Sans'
+            Size: =14
+            Fill: =ColorValue("#FFFFFF")

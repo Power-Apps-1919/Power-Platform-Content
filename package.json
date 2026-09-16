@@ -1,0 +1,30 @@
+{
+  "name": "power-platform-content",
+  "version": "1.0.0",
+  "description": "GitHub Pages documentation site for Power Platform Content",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Power-Apps-1919/Power-Platform-Content.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Power-Apps-1919/Power-Platform-Content/issues"
+  },
+  "homepage": "https://github.com/Power-Apps-1919/Power-Platform-Content#readme",
+  "dependencies": {
+    "@astrojs/starlight": "^0.42.1",
+    "astro": "^7.3.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^6.0.3"
+  }
+}

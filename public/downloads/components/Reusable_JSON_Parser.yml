@@ -1,0 +1,58 @@
+ComponentDefinitions:
+  Reusable_JSON_Parser:
+    DefinitionType: CanvasComponent
+    Description: 'Reusable component to parse a JSON array and output a table with dummy columns (COL1–COL5). Includes fallback for empty/invalid JSON.'
+    AccessAppScope: true
+    CustomProperties:
+      ParseJsonToTable:
+        PropertyKind: Action
+        DisplayName: Parse JSON To Table
+        Description: Parses a JSON array and outputs a table with dummy columns (COL1–COL5). Returns blanks if JSON is empty or invalid.
+        ReturnType: Table
+        Parameters:
+          - Json_Array:
+              Description: JSON array to parse.
+              DataType: Text
+              Default: ="Text"
+    Properties:
+      # Example usage:
+      # Pass a JSON array string like:
+      # '[{"COL1":"A","COL2":"B","COL3":"C","COL4":"D","COL5":"E"},{"COL1":"X","COL2":"Y","COL3":"Z","COL4":"W","COL5":"V"}]'
+      # The output will be a table with columns COL1–COL5.
+      #
+      # If the JSON is empty or invalid, the output will be a single row with all columns as Blank.
+      ParseJsonToTable: |-
+        =IfError(
+            With(
+                {
+                    /* This line converts a JSON array into a Power Apps table using the ParseJSON function.
+                     Note: The JSON input does not necessarily need to be hardcoded; it can also be obtained dynamically,
+                     for example, from a Custom Connector or via Power Automate integration. */
+                    // Parse the JSON array string into a table format
+                    data: Table(ParseJSON(Json_Array))
+                },
+                If(
+                    CountRows(data) > 0,
+                    ForAll(
+                        data,
+                        {
+                            COL1: Text(ThisRecord.Value.COL1),
+                            COL2: Text(ThisRecord.Value.COL2),
+                            COL3: Text(ThisRecord.Value.COL3),
+                            COL4: Text(ThisRecord.Value.COL4),
+                            COL5: Text(ThisRecord.Value.COL5)
+                        }
+                    ),
+                    // Fallback: JSON empty or invalid, return a single blank row
+                    Table({COL1: Blank(), COL2: Blank(), COL3: Blank(), COL4: Blank(), COL5: Blank()})
+                )
+            ),
+            // Fallback: error in parsing JSON, return a single blank row
+            Notify(
+                "Invalid JSON format or empty array.",
+                NotificationType.Error
+            );
+            Table({COL1: Blank(), COL2: Blank(), COL3: Blank(), COL4: Blank(), COL5: Blank()})
+        )
+      Height: =1
+      Width: =1
