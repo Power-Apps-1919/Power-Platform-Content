@@ -225,6 +225,8 @@ header.header {
   padding: 1.2rem;
   text-decoration: none;
   transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  grid-template-columns: auto 1fr;
+  position: relative;
 }
 
 .feature-card:hover {
@@ -238,10 +240,17 @@ header.header {
   font-size: 1.25rem;
 }
 
+.feature-index {
+  color: var(--theme-muted);
+  font-size: var(--type-label);
+  justify-self: end;
+}
+
 .feature-title {
   color: var(--theme-text);
   font-size: var(--type-card);
   font-weight: 750;
+  grid-column: 1 / -1;
 }
 
 .feature-link {
@@ -249,6 +258,108 @@ header.header {
   font-size: var(--type-label);
   font-weight: 700;
   margin-top: 0.35rem;
+  grid-column: 1 / -1;
+}
+
+.section-intro {
+  margin: 3rem 0 1.25rem;
+  max-width: 42rem;
+}
+
+.section-intro h2 {
+  font-size: var(--type-section);
+  letter-spacing: -0.035em;
+  margin: 0.35rem 0 0.5rem;
+}
+
+.section-intro p {
+  color: var(--theme-muted);
+  margin: 0;
+  max-width: 38rem;
+}
+
+.section-label {
+  color: var(--theme-accent);
+  font-size: var(--type-label);
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.capability-grid {
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  background: var(--theme-border);
+  border: 1px solid var(--theme-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.capability-card {
+  background: var(--theme-surface);
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: auto 1fr;
+  padding: 1.1rem;
+}
+
+.capability-number,
+.steps-grid > div > span {
+  color: var(--theme-accent);
+  font-size: var(--type-label);
+  font-weight: 800;
+}
+
+.capability-card div {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.capability-card strong,
+.steps-grid strong {
+  color: var(--theme-text);
+  font-size: var(--type-card);
+}
+
+.capability-card span:last-child,
+.steps-grid p {
+  color: var(--theme-muted);
+  font-size: var(--type-small);
+  margin: 0;
+}
+
+.steps-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.steps-grid > div {
+  border-top: 1px solid var(--theme-border);
+  display: grid;
+  gap: 0.45rem;
+  padding-top: 0.85rem;
+}
+
+.backend-note {
+  border-left: 2px solid var(--theme-accent);
+  margin-top: 2.5rem;
+  padding: 0.2rem 0 0.2rem 1rem;
+}
+
+.backend-note p {
+  color: var(--theme-muted);
+  margin: 0.5rem 0 0;
+}
+
+.download-strip span {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.download-strip small {
+  color: color-mix(in srgb, var(--theme-accent-strong) 75%, transparent);
+  font-size: var(--type-small);
 }
 
 .download-strip {
@@ -271,7 +382,9 @@ header.header {
 
 @media (max-width: 640px) {
   .feature-grid,
-  .stat-grid {
+  .stat-grid,
+  .capability-grid,
+  .steps-grid {
     grid-template-columns: 1fr;
   }
 
