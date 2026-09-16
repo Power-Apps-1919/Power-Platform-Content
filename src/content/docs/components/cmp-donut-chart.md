@@ -19,6 +19,19 @@ definition, import it into Power Apps Studio, and customize its properties for y
   <span>Updated 16 Sep 2026</span>
 </div>
 
+## Component documentation
+
+Reusable Power Apps Canvas component for displaying proportional values as a donut chart with labels, legend, and optional center text.
+
+## Inputs
+
+- `Config` - Record containing donut geometry, labels, legend, center text, and layout settings.
+- `Items` - Table of slices with `lbl`, `val`, and `col` fields.
+
+## Usage
+
+Import `cmp-donut-chart.yml`, pass slice records through `Items`, and customize `Config` for the chart size, colors, labels, and center content.
+
 ## Source preview
 
 ```yaml

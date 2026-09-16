@@ -19,6 +19,21 @@ definition, import it into Power Apps Studio, and customize its properties for y
   <span>Updated 16 Sep 2026</span>
 </div>
 
+## Component documentation
+
+Confirmation dialog for prompting users before an update, delete, or other important action.
+
+## Inputs and events
+
+- `PopupText` - Message shown in the dialog.
+- `onYes` - Event raised when the user confirms.
+- `onNo` - Event raised when the user declines.
+- `onCancel` - Event raised when the user cancels.
+
+## Usage
+
+Import `cmp-popup.yml`, set `PopupText`, and connect the events to the appropriate action or cancellation formulas.
+
 ## Source preview
 
 ```yaml

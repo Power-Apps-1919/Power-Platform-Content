@@ -19,6 +19,19 @@ definition, import it into Power Apps Studio, and customize its properties for y
   <span>Updated 16 Sep 2026</span>
 </div>
 
+## Component documentation
+
+Reusable Power Apps Canvas component for comparing category proportions as 100% stacked horizontal bars.
+
+## Inputs
+
+- `Config` - Record containing layout, title, KPI, plot, axis, and styling settings.
+- `Items` - Table containing the stacked category values and labels.
+
+## Usage
+
+Import `cmp-stacked-bar-chart100-h.yml`, provide grouped data through `Items`, and configure the horizontal layout with `Config`.
+
 ## Source preview
 
 ```yaml

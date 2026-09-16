@@ -19,6 +19,21 @@ definition, import it into Power Apps Studio, and customize its properties for y
   <span>Updated 16 Sep 2026</span>
 </div>
 
+## Component documentation
+
+Simple horizontal or vertical divider for separating sections of a Canvas App layout.
+
+## Inputs
+
+- `Orientation` - Use `Horizontal` or `Vertical`.
+- `DividerColor` - Divider line color.
+- `Thickness` - Line thickness in pixels.
+- `Margin` - Spacing before and after the line in pixels.
+
+## Usage
+
+Import `cmp-divider.yml` and set the orientation, color, thickness, and margin to match the surrounding layout.
+
 ## Source preview
 
 ```yaml
