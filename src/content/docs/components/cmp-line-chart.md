@@ -22,18 +22,20 @@ definition, import it into Power Apps Studio, and customize its properties for y
 
 ## Component documentation
 
-# Line Chart
+## Business value
+Show movement over time so users can identify trends, peaks, drops, and emerging risks before they become larger problems.
 
-Reusable Power Apps Canvas component for displaying line trends with configurable layout, title, KPI, axes, colors, and data.
+## Best for
+- Sales, service, and delivery trends.
+- Performance against time-based targets.
+- Operational monitoring and management reporting.
 
-## Inputs
+## What to provide
+- `Items`: time-based values and labels.
+- `Config`: layout, title, KPI, axes, colours, and spacing.
 
-- `Config` - Record containing layout, title, KPI, plot, axis, and styling settings.
-- `Items` - Table containing the values and labels to display.
-
-## Usage
-
-Import `cmp-line-chart.yml`, pass the trend data to `Items`, and customize `Config` for the required chart dimensions and presentation.
+## Getting started
+Download `cmp-line-chart.yml`, use consistent time intervals, label the period clearly, and avoid implying precision that the underlying data does not support.
 
 ## Source preview
 

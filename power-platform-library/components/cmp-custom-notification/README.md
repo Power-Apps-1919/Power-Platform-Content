@@ -7,19 +7,21 @@ tags:
   - interface
   - notifications
 ---
-
 # Custom Notification
 
-Notification component for displaying timed success, failure, informational, or upload messages.
+## Business value
+Help users understand what happened after they save, submit, upload, or complete an action. Clear feedback reduces repeat clicks and support questions.
 
-## Inputs and events
+## Best for
+- Save and submission confirmations.
+- Validation and business-rule messages.
+- Short-lived status updates that do not require a full page change.
 
-- `NotificationMessage` - Message shown to the user.
-- `NotificationType` - Notification variant used for icon and color.
-- `NotificationDurationMilliseconds` - Time the notification remains visible.
-- `OnOK` - Event raised when the user confirms the notification.
+## What to provide
+- `NotificationMessage`: concise, user-friendly message.
+- `NotificationType`: success, failure, information, or another supported state.
+- `NotificationDurationMilliseconds`: how long the message remains visible.
+- `OnOK`: what should happen when the user confirms.
 
-## Usage
-
-Import `cmp-custom-notification.yml`, set the message and notification type, and control visibility using the component properties and event.
-
+## Getting started
+Download `cmp-custom-notification.yml`, use plain language, and explain the next action when one is required. Do not use a timed notification for a critical error that users must act on.

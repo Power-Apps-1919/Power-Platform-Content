@@ -7,17 +7,19 @@ tags:
   - visualization
   - charts
 ---
-
 # Horizontal Bar Chart
 
-Reusable Power Apps Canvas component for displaying horizontal bars with configurable layout, title, KPI, axes, colors, and data.
+## Business value
+Make category comparisons readable when labels are long or when users need to rank items, teams, or work queues.
 
-## Inputs
+## Best for
+- Department or regional rankings.
+- Long category names.
+- Operational dashboards where the order of items drives action.
 
-- `Config` - Record containing layout, title, KPI, plot, axis, and styling settings.
-- `Items` - Table containing the values and labels to display.
+## What to provide
+- `Items`: labels and values.
+- `Config`: layout, title, KPI, axes, colours, and spacing.
 
-## Usage
-
-Import `cmp-horizontal-bar-chart.yml`, provide the chart data through `Items`, and adjust `Config` for dimensions, labels, padding, and visual styling.
-
+## Getting started
+Download `cmp-horizontal-bar-chart.yml`, connect it to business data, sort the values intentionally, and confirm that labels remain readable on mobile and tablet screens.

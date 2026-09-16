@@ -22,18 +22,20 @@ definition, import it into Power Apps Studio, and customize its properties for y
 
 ## Component documentation
 
-# 100% Stacked Bar Chart
+## Business value
+Show how each category contributes to a whole, making it easier to compare mix or proportion across teams, periods, products, or regions.
 
-Reusable Power Apps Canvas component for comparing category proportions as 100% stacked vertical bars.
+## Best for
+- Portfolio and workload mix.
+- Percentage-based status reporting.
+- Comparing composition rather than absolute volume.
 
-## Inputs
+## What to provide
+- `Items`: grouped category values.
+- `Config`: layout, title, KPI, axes, colours, and spacing.
 
-- `Config` - Record containing layout, title, KPI, plot, axis, and styling settings.
-- `Items` - Table containing the stacked category values and labels.
-
-## Usage
-
-Import `cmp-stacked-bar-chart100.yml`, pass the grouped data through `Items`, and configure the chart appearance with `Config`.
+## Getting started
+Download `cmp-stacked-bar-chart100.yml`, ensure each group totals meaningfully to 100%, and provide exact values elsewhere when users need precision.
 
 ## Source preview
 

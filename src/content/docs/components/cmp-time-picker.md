@@ -22,20 +22,22 @@ definition, import it into Power Apps Studio, and customize its properties for y
 
 ## Component documentation
 
-# Time Picker
+## Business value
+Help users select a valid time consistently for appointments, service windows, shifts, bookings, or scheduled work.
 
-Time selection component with configurable default, dependent, start, end, and interval values.
+## Best for
+- Appointment and reservation forms.
+- Operational schedules and service slots.
+- Processes with start, end, and interval rules.
 
-## Inputs
+## What to provide
+- `DefaultTime`: the initial value.
+- `DependentControlTime`: a related time that affects availability.
+- `EndTime`: the latest selectable time.
+- `Interval`: the allowed increment.
 
-- `DefaultTime` - Time initially shown when the picker loads.
-- `DependentControlTime` - Time from a dependent control used to adjust available options.
-- `EndTime` - Latest selectable time.
-- `Interval` - Increment between selectable times.
-
-## Usage
-
-Import `cmp-time-picker.yml`, set the time boundaries and interval, and bind the selected value to the surrounding Canvas App logic.
+## Getting started
+Download `cmp-time-picker.yml`, confirm the time zone and business hours used by your process, and validate the final value before saving it.
 
 ## Source preview
 

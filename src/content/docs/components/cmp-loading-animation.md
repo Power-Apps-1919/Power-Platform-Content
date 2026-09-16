@@ -22,17 +22,14 @@ definition, import it into Power Apps Studio, and customize its properties for y
 
 ## Component documentation
 
-# Loading Animation
+## Business value
+Set the right expectation while an app saves, searches, calculates, or waits for a connector. Users are less likely to repeat an action when the app clearly shows that work is in progress.
 
-Full-screen loading overlay for communicating that an app is processing a request.
+## What to provide
+- `Loading_Text`: a short message such as “Saving your request…” or “Loading results…”.
 
-## Inputs
-
-- `Loading_Text` - Message shown while the app is loading.
-
-## Usage
-
-Import `cmp-loading-animation.yml` into the component library and display it while a load, save, or processing operation is active. Set `Loading_Text` to provide contextual feedback.
+## Getting started
+Download `cmp-loading-animation.yml`, show it only while work is active, and use a message that describes the current operation. Make sure users can still recover if a connector or flow fails.
 
 ## Source preview
 

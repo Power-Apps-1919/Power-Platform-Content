@@ -22,21 +22,24 @@ definition, import it into Power Apps Studio, and customize its properties for y
 
 ## Component documentation
 
-# Email Popup
+## Business value
+Give users a clear confirmation step before an email is sent. This helps prevent accidental messages and makes the communication process easier to understand.
 
-Confirmation popup for composing or sending email from a Power Apps Canvas App.
+## Best for
+- Approval and notification workflows.
+- Customer or colleague communications initiated from an app.
+- Processes where recipients and message context should be reviewed first.
 
-## Inputs and events
+## What to provide
+- `EmailPopupText`: confirmation message.
+- `CC_List`: people to include in copy.
+- Confirmation, decline, and close events for your process logic.
 
-- `EmailPopupText` - Confirmation message shown in the popup.
-- `CC_List` - Table of users to include in the CC field.
-- `OnYes` - Event raised when the user confirms.
-- `OnNo` - Event raised when the user declines.
-- `OnClose` - Event raised when the popup closes.
+## Before you use it
+You may need Office 365 Users and Office 365 Outlook. Confirm connector permissions, recipient privacy, and your organisation's email policy before moving to production.
 
-## Usage
-
-Import `cmp-email-popup.yml`, provide the confirmation text and CC table, and connect the events to the email-sending and cancellation logic.
+## Getting started
+Download `cmp-email-popup.yml`, use the Person layout for people selectors, and connect the confirmation event to the approved email action. Always test with non-production recipients first.
 
 ## Source preview
 

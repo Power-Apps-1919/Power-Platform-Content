@@ -22,18 +22,20 @@ definition, import it into Power Apps Studio, and customize its properties for y
 
 ## Component documentation
 
-# Step Chart
+## Business value
+Help users understand where a request, case, onboarding journey, or delivery process currently stands.
 
-Reusable Power Apps Canvas component for showing progression through ordered steps or states.
+## Best for
+- Multi-stage business processes.
+- Case and request tracking.
+- Showing progress toward completion.
 
-## Inputs
+## What to provide
+- `Items`: ordered steps or states.
+- `Config`: layout, title, KPI, plot, axes, colours, and spacing.
 
-- `Config` - Record containing layout, title, KPI, plot, axis, and styling settings.
-- `Items` - Table containing the ordered step or state values.
-
-## Usage
-
-Import `cmp-step-chart.yml`, pass the ordered state data through `Items`, and use `Config` to control the chart layout and current-state display.
+## Getting started
+Download `cmp-step-chart.yml`, keep step names action-oriented, and show the current state clearly. Use the surrounding app to explain what the user should do next.
 
 ## Source preview
 

@@ -7,19 +7,19 @@ tags:
   - interface
   - layout
 ---
-
 # Divider
 
-Simple horizontal or vertical divider for separating sections of a Canvas App layout.
+## Business value
+Create visual structure so users can scan a business process, form, or dashboard with less effort.
 
-## Inputs
+## Best for
+- Separating sections of a form.
+- Grouping related dashboard measures.
+- Making long mobile screens easier to navigate.
 
-- `Orientation` - Use `Horizontal` or `Vertical`.
-- `DividerColor` - Divider line color.
-- `Thickness` - Line thickness in pixels.
-- `Margin` - Spacing before and after the line in pixels.
+## What to provide
+- `Orientation`: horizontal or vertical.
+- `DividerColor`, `Thickness`, and `Margin`: visual settings that match your design system.
 
-## Usage
-
-Import `cmp-divider.yml` and set the orientation, color, thickness, and margin to match the surrounding layout.
-
+## Getting started
+Download `cmp-divider.yml` and use it to separate meaningful sections. Avoid using too many lines; headings, whitespace, and clear labels should do most of the organising.

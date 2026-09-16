@@ -7,17 +7,19 @@ tags:
   - visualization
   - charts
 ---
-
 # Area Chart
 
-Reusable Power Apps Canvas component for rendering an area chart with configurable layout, title, KPI, axes, colors, and data.
+## Business value
+Help people see how performance changes over time, such as revenue, workload, service volume, or completion trends. Area charts are useful when the size and direction of change matter as much as the individual values.
 
-## Inputs
+## Best for
+- Management dashboards and operational reviews.
+- Trend reporting where a filled visual makes movement easier to notice.
+- Apps where users need a quick view before opening detailed records.
 
-- `Config` - Record containing size, padding, title, KPI, plot, axis, and visual settings.
-- `Items` - Table of chart points used by the component.
+## What to provide
+- `Items`: the business values to plot.
+- `Config`: layout, title, KPI, axis, colour, and spacing choices.
 
-## Usage
-
-Add `cmp-area-chart.yml` to a Canvas App component library, then provide the `Items` table and customize the `Config` record for the required dimensions and styling.
-
+## Getting started
+Download `cmp-area-chart.yml`, add it to your component library, connect it to representative data, and adjust the labels and colours to match your reporting standards. Test readability on the smallest screen your users will use.

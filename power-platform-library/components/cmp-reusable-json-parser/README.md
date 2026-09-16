@@ -7,16 +7,21 @@ tags:
   - input-utility
   - json
 ---
-
 # Reusable JSON Parser
 
-Action component that parses a JSON array and returns a table with the columns `COL1` through `COL5`. Empty or invalid input returns a blank fallback row.
+## Business value
+Turn structured JSON returned by a flow, connector, or service into a table that a Canvas App can use. This can reduce repetitive transformation work in apps that integrate with other systems.
 
-## Action
+## Best for
+- Power Automate responses.
+- Small, predictable JSON payloads.
+- Reusable integrations with a known response shape.
 
-- `ParseJsonToTable(Json_Array)` - Accepts a JSON array string and returns a table.
+## What to provide
+- `ParseJsonToTable(Json_Array)`: a JSON array using the documented `COL1` through `COL5` structure.
 
-## Usage
+## Important limitation
+Validate the response before using it in a business-critical process. Empty or invalid input returns a fallback row; your app should still explain errors and provide a recovery path.
 
-Import `cmp-reusable-json-parser.yml` and call `ParseJsonToTable` with a JSON array string. Ensure the source objects use the expected `COL1` through `COL5` fields.
-
+## Getting started
+Download `cmp-reusable-json-parser.yml`, test it with sample and invalid payloads, then connect it to the flow or service that owns the data.

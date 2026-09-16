@@ -7,18 +7,20 @@ tags:
   - interface
   - status
 ---
-
 # Status Badge
 
-Compact badge component for displaying a status with an optional label and tooltip.
+## Business value
+Make the state of a record, request, task, or process visible without requiring users to open it.
 
-## Inputs
+## Best for
+- Approval and delivery stages.
+- Active, inactive, pending, or error states.
+- Lists and dashboards where space is limited.
 
-- `StatusValue` - Status to display, such as `Active`, `Inactive`, `Pending`, or `Error`.
-- `StatusLabel` - Optional label displayed instead of the status value.
-- `TooltipText` - Additional information shown in the tooltip.
+## What to provide
+- `StatusValue`: the current state.
+- `StatusLabel`: an optional user-friendly label.
+- `TooltipText`: supporting context.
 
-## Usage
-
-Import `cmp-status-badge.yml`, bind `StatusValue` to the current state, and optionally provide a label and tooltip for additional context.
-
+## Getting started
+Download `cmp-status-badge.yml`, use a controlled set of status values, and make sure the meaning is still clear without relying only on colour.

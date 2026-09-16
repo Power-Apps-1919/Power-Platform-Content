@@ -22,20 +22,21 @@ definition, import it into Power Apps Studio, and customize its properties for y
 
 ## Component documentation
 
-# Card Control
+## Business value
+Give users an immediate answer to an important question: How many? What value? What is the current target? A card keeps a key measure visible without making users search through a screen.
 
-Reusable summary card component for showing a title, primary value, and configurable text and background colors.
+## Best for
+- Executive and team dashboards.
+- Record summaries and approval screens.
+- Highlighting a target, balance, count, or service level.
 
-## Inputs
+## What to provide
+- `HTML_CARD_KEY`: the business label.
+- `HTML_CARD_VALUE`: the primary value.
+- `KeyColor` and `ValueColor`: colours that meet your brand and accessibility standards.
 
-- `HTML_CARD_KEY` - Card title or key label.
-- `HTML_CARD_VALUE` - Primary card value.
-- `KeyColor` - Color for the title text.
-- `ValueColor` - Color for the primary value.
-
-## Usage
-
-Import `cmp-card-control.yml`, then bind the card inputs to the values you want to highlight. Colors accept Power Apps color values or hex strings.
+## Getting started
+Download `cmp-card-control.yml`, add it to your component library, connect it to a trusted measure, and keep the label specific enough that users understand the value without extra explanation.
 
 ## Source preview
 

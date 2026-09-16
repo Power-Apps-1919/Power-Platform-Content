@@ -1,55 +1,26 @@
-# Power Apps Custom Components Library
+﻿# Power Platform Content Library
 
-This repository contains a collection of reusable, well-documented custom components for Microsoft Power Apps Canvas Apps. Each component is designed for clarity, maintainability, and ease of integration into your own Power Apps projects.
+Build useful business apps faster with ready-to-use Power Apps components and practical Power Platform guidance.
 
-## Components Included
+This library is for app makers, business analysts, citizen developers, and delivery teams who want to turn common business needs into working solutions without starting from a blank canvas.
 
-- **Card Control**: Displays a card with a customizable title and value, ideal for dashboards and summary views.
-- **Custom Notification**: Flexible notification component for displaying success, error, or informational messages.
-- **Reusable JSON Parser**: Utility component for custom logic and operations.
-- **Email Popup**: A modal popup for email entry and notifications.
-- **Loading Animation**: Shows a loading spinner and message overlay.
-- **Popup**: General-purpose modal dialog with customizable actions.
-- **StatusBadge**: Displays a colored badge with status text and icon (e.g., Active, Inactive, Pending, Error).
-- **TimePicker**: User-friendly time selection component with interval and range controls.
+## What you can find here
 
-## Features
+- **Reusable components** for dashboards, forms, notifications, dialogs, status indicators, loading states, charts, and time selection.
+- **Business-focused articles** explaining practical Power Apps and Power Automate patterns.
+- **Downloadable resources** such as YAML definitions, solution packages, templates, and supporting files.
+- **Clear usage guidance** so you can evaluate an idea quickly, try it safely, and adapt it to your process.
 
-- All properties and children are clearly named and described for easy understanding.
-- Consistent naming conventions and event logic across all components.
-- Designed for maintainability and extensibility.
-- Ready to import into Power Apps as YAML component definitions.
+## A simple way to use the library
 
-## Usage
+1. **Choose a business need** such as showing a KPI, confirming an action, or guiding a user through a process.
+2. **Open the matching component or article** and review the expected inputs, dependencies, and usage notes.
+3. **Download or copy the resource** into your Power Apps environment.
+4. **Adapt the branding and business rules** to fit your organisation.
+5. **Test with representative users and data** before sharing the app more widely.
 
-1. **Import a Component**
-   - In Power Apps Studio, go to the Components section.
-   - Open the desired YAML file from this repository, copy its contents, and paste them into Power Apps Studio.
+## Designed for responsible delivery
 
-2. **Configure Properties**
-   - Set the custom properties (e.g., titles, values, event handlers) as needed in your app.
+These resources are starting points, not a replacement for your organisation's security, accessibility, data protection, licensing, and approval processes. Review connectors, permissions, formulas, and downloaded files before using them in production.
 
-3. **Customize as Needed**
-   - All components are designed to be easily extended or styled to fit your app's requirements.
-
-## File Structure
-
-```
-components/cmp-card-control/cmp-card-control.yml
-components/cmp-custom-notification/cmp-custom-notification.yml
-components/cmp-reusable-json-parser/cmp-reusable-json-parser.yml
-components/cmp-email-popup/cmp-email-popup.yml
-components/cmp-loading-animation/cmp-loading-animation.yml
-components/cmp-popup/cmp-popup.yml
-components/cmp-status-badge/cmp-status-badge.yml
-components/cmp-time-picker/cmp-time-picker.yml
-```
-
-## Contributing
-
-Contributions are welcome! Please:
-- Use clear, descriptive names for all properties and children.
-- Add meaningful descriptions to all custom properties.
-- Ensure new components follow the established structure and naming conventions.
-
-> Built and maintained by Hemanth Sai. For questions or suggestions, please open an issue or pull request.
+The library is updated through the source content folders and published automatically as a searchable website.

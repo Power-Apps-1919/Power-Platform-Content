@@ -7,17 +7,19 @@ tags:
   - visualization
   - charts
 ---
-
 # Bar Chart
 
-Reusable Power Apps Canvas component for displaying vertical bar charts with configurable layout, title, KPI, axes, colors, and data.
+## Business value
+Make comparisons easy. Use a bar chart when users need to compare teams, products, regions, priorities, or other categories at a glance.
 
-## Inputs
+## Best for
+- Sales and service comparisons.
+- Work queues and workload reporting.
+- KPI dashboards where category differences drive decisions.
 
-- `Config` - Record containing layout, title, KPI, plot, axis, and styling settings.
-- `Items` - Table containing the values and labels to display.
+## What to provide
+- `Items`: labels and values for each category.
+- `Config`: chart size, title, KPI, axes, colours, and spacing.
 
-## Usage
-
-Import `cmp-bar-chart.yml` into a Canvas App component library and pass a table to `Items`. Adjust `Config` to control chart dimensions and presentation.
-
+## Getting started
+Download `cmp-bar-chart.yml`, add it to Power Apps, connect governed business data, and use plain-language labels. Avoid showing too many categories at once; let users drill into detail where needed.

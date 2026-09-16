@@ -7,19 +7,21 @@ tags:
   - input-utility
   - time
 ---
-
 # Time Picker
 
-Time selection component with configurable default, dependent, start, end, and interval values.
+## Business value
+Help users select a valid time consistently for appointments, service windows, shifts, bookings, or scheduled work.
 
-## Inputs
+## Best for
+- Appointment and reservation forms.
+- Operational schedules and service slots.
+- Processes with start, end, and interval rules.
 
-- `DefaultTime` - Time initially shown when the picker loads.
-- `DependentControlTime` - Time from a dependent control used to adjust available options.
-- `EndTime` - Latest selectable time.
-- `Interval` - Increment between selectable times.
+## What to provide
+- `DefaultTime`: the initial value.
+- `DependentControlTime`: a related time that affects availability.
+- `EndTime`: the latest selectable time.
+- `Interval`: the allowed increment.
 
-## Usage
-
-Import `cmp-time-picker.yml`, set the time boundaries and interval, and bind the selected value to the surrounding Canvas App logic.
-
+## Getting started
+Download `cmp-time-picker.yml`, confirm the time zone and business hours used by your process, and validate the final value before saving it.

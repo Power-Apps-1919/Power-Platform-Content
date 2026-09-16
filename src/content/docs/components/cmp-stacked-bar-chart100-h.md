@@ -22,18 +22,20 @@ definition, import it into Power Apps Studio, and customize its properties for y
 
 ## Component documentation
 
-# 100% Stacked Horizontal Bar Chart
+## Business value
+Compare the composition of categories while keeping long labels readable. The horizontal layout works well for teams, processes, and business areas with descriptive names.
 
-Reusable Power Apps Canvas component for comparing category proportions as 100% stacked horizontal bars.
+## Best for
+- Department or process mix comparisons.
+- Long category labels.
+- Percentage-based operational reporting.
 
-## Inputs
+## What to provide
+- `Items`: grouped category values.
+- `Config`: layout, title, KPI, axes, colours, and spacing.
 
-- `Config` - Record containing layout, title, KPI, plot, axis, and styling settings.
-- `Items` - Table containing the stacked category values and labels.
-
-## Usage
-
-Import `cmp-stacked-bar-chart100-h.yml`, provide grouped data through `Items`, and configure the horizontal layout with `Config`.
+## Getting started
+Download `cmp-stacked-bar-chart100-h.yml`, keep the category order meaningful, and pair the chart with accessible labels or a data table for exact values.
 
 ## Source preview
 

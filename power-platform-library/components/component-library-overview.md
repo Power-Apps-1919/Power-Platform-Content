@@ -1,47 +1,33 @@
-# Power Apps Custom Components
+﻿# Reusable Power Apps Components
 
-## Pre-requisites
+Use these components to improve consistency, reduce build time, and give users a more familiar experience across your Canvas Apps.
 
-### For `cmp-email-popup` Component
-- **Office365Users Connector**:  
-  The `Office365Users` connector must be added to your app before using this component.  
-  - In Power Apps Studio, go to **Data** > **Add data** > search for `Office 365 Users` and add it.
-- **Office365Outlook Connector**:  
-  The `Office365Outlook` connector is required for sending emails directly from the popup.  
-  - In Power Apps Studio, go to **Data** > **Add data** > search for `Office 365 Outlook` and add it.
-- **Power Automate Flows** (optional):  
-  If you use Power Automate flows to send emails, you can integrate them within the logic for the SendYesButton.
+Each component includes a downloadable YAML definition and a plain-language guide. You can use the component as provided, or tailor its colours, labels, data, and business rules to your app.
 
-**Note:**  
-For `cmp-email-popup`, always adjust the ComboBox fields (To, CC, BCC) to use the "Person" data layout for the best user experience.  
-If the ComboBoxes are not working as expected, remove them and add them again with the "Person" data layout.
+## Find the right component
 
-### For `cmp-reusable-json-parser` Component
-- No special connectors required.
-- Input JSON must match the expected dummy column structure (COL1–COL5) for best results.
+- **Charts** help people understand trends, comparisons, progress, and proportions.
+- **Cards and badges** make important values and statuses visible at a glance.
+- **Popups and notifications** help users confirm actions and understand outcomes.
+- **Loading and divider controls** improve clarity while an app is working or presenting information.
+- **Time and JSON utilities** support common operational and data-entry scenarios.
 
----
+## Before you start
 
-## Usage
+Make sure you have access to Power Apps Studio and permission to add components to your app. Some components may also use Microsoft 365 connectors or Power Automate. Their individual guides identify those requirements.
 
-- Import the component(s) into your app.
-- For `cmp-email-popup`, ensure all dependencies above are satisfied.
-- For `cmp-reusable-json-parser`, simply call the `ParseJsonToTable` action with your JSON array.
+## Recommended adoption approach
 
-## Folder structure
+1. Try the component in a development or test app.
+2. Connect it to sample data first.
+3. Confirm the labels, colours, keyboard experience, and mobile layout meet your standards.
+4. Replace sample values with governed business data.
+5. Document any changes before promoting the app to users.
 
-Each component lives in its own folder. Create a new folder using the component name,
-then add the YAML file and an optional `README.md`:
+## Email popup prerequisites
 
-```
-components/
-  cmp-area-chart/
-    cmp-area-chart.yml
-    README.md
-```
+The email popup may require Office 365 Users and Office 365 Outlook. Add only the connectors your business process needs, and confirm that users have the appropriate permissions to send messages.
 
-The build automatically includes the README content on the published component page,
-copies the YAML to the downloads area, and adds the page to search and the welcome
-screen. Use `templates/component/` as a starting point for new components.
+## JSON parser expectations
 
----
+The reusable JSON parser is intended for predictable JSON arrays using the documented column structure. Validate incoming data and handle errors before relying on the output in a business-critical process.

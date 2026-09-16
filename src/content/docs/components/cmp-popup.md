@@ -22,20 +22,20 @@ definition, import it into Power Apps Studio, and customize its properties for y
 
 ## Component documentation
 
-# Popup
+## Business value
+Protect important business actions by asking users to confirm before the app changes or removes information.
 
-Confirmation dialog for prompting users before an update, delete, or other important action.
+## Best for
+- Delete, submit, approve, reject, or reset actions.
+- Changes that cannot easily be undone.
+- Processes where a final review reduces mistakes.
 
-## Inputs and events
+## What to provide
+- `PopupText`: the action and its consequence in plain language.
+- `onYes`, `onNo`, and `onCancel`: the process responses.
 
-- `PopupText` - Message shown in the dialog.
-- `onYes` - Event raised when the user confirms.
-- `onNo` - Event raised when the user declines.
-- `onCancel` - Event raised when the user cancels.
-
-## Usage
-
-Import `cmp-popup.yml`, set `PopupText`, and connect the events to the appropriate action or cancellation formulas.
+## Getting started
+Download `cmp-popup.yml`, name the action clearly, explain the consequence, and make the safe choice easy to understand. Never rely on colour alone to distinguish actions.
 
 ## Source preview
 
