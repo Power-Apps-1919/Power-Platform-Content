@@ -8,6 +8,12 @@ export default defineConfig({
     starlight({
       title: 'Power Platform Content',
       description: 'Reusable Power Apps components, patterns, and implementation notes.',
+      customCss: ['./src/styles/custom.css'],
+      editLink: {
+        baseUrl: 'https://github.com/Power-Apps-1919/Power-Platform-Content/edit/main/',
+      },
+      lastUpdated: true,
+      pagination: true,
       social: [
         {
           icon: 'github',
