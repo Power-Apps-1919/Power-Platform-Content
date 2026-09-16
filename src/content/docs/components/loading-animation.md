@@ -15,7 +15,7 @@ Reusable YAML source for a Power Apps Canvas App component. Download the origina
 definition, import it into Power Apps Studio, and customize its properties for your app.
 
 <div class="component-actions">
-  <a href="/Power-Platform-Content/downloads/components/Loading_Animation.yml">Download YAML source</a>
+  <a href="/Power-Platform-Content/downloads/components/Loading_Animation.yml" download="Loading_Animation.yml">Download YAML source</a>
   <span>Updated 16 Sep 2026</span>
 </div>
 
