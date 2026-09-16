@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const sourceDir = path.join(root, 'Power Apps', 'Components');
 const outputDir = path.join(root, 'src', 'content', 'docs', 'components');
+const publicComponentDir = path.join(root, 'public', 'downloads', 'components');
 const blogSourceDir = path.join(root, 'Power Apps', 'Blog');
 const blogOutputDir = path.join(root, 'src', 'content', 'docs', 'blog');
 const blogImageSourceDir = path.join(blogSourceDir, 'images');
@@ -27,6 +28,7 @@ const titleFor = (name) => name
   .replace(/([a-z])([A-Z])/g, '$1 $2');
 
 await mkdir(outputDir, { recursive: true });
+await mkdir(publicComponentDir, { recursive: true });
 
 const files = (await readdir(sourceDir))
   .filter((file) => file.toLowerCase().endsWith('.yml'))
@@ -67,6 +69,7 @@ ${source.trim()}
 \`\`\`
 `;
   await writeFile(destination, content);
+  await copyFile(path.join(sourceDir, file), path.join(publicComponentDir, file));
 }
 
 console.log(`Generated ${files.length} component pages.`);
