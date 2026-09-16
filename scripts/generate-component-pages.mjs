@@ -40,6 +40,17 @@ for (const file of files) {
   const slug = name.toLowerCase().replaceAll('_', '-');
   const category = categoryByName[name] ?? 'interface';
   const source = await readFile(path.join(sourceDir, file), 'utf8');
+  const readmePath = path.join(sourceDir, `${name}.md`);
+  let readme = '';
+  try {
+    readme = await readFile(readmePath, 'utf8');
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+  }
+  const documentation = readme
+    .replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '')
+    .replace(/^#\s+.+\r?\n?/, '')
+    .trim();
   const destination = path.join(outputDir, `${slug}.md`);
   const content = `---
 title: ${title}
@@ -62,7 +73,11 @@ definition, import it into Power Apps Studio, and customize its properties for y
   <span>Updated 16 Sep 2026</span>
 </div>
 
-## Source preview
+${documentation ? `## Component documentation
+
+${documentation}
+
+` : ''}## Source preview
 
 \`\`\`yaml
 ${source.trim()}
