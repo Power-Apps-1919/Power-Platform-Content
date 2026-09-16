@@ -109,7 +109,7 @@ Skip variables and constants. Use a tiny Power Automate flow to read the IDs at 
 
 ## Use it in Power Apps
 
-```powerfx
+```text
 // Call the flow and capture IDs
 Set(App_Details, GetAppdetails.Run()); // Sample flow name
 
@@ -145,5 +145,4 @@ Display `_deepLink` in a Label or wire it to a Copy button.
 
 
 Happy deep linking.
-
 
