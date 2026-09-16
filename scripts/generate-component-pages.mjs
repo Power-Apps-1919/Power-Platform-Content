@@ -3,10 +3,10 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const sourceDir = path.join(root, 'power-platform-library', 'Components');
+const sourceDir = path.join(root, 'power-platform-library', 'components');
 const outputDir = path.join(root, 'src', 'content', 'docs', 'components');
 const publicComponentDir = path.join(root, 'public', 'downloads', 'components');
-const blogSourceDir = path.join(root, 'power-platform-library', 'Blog');
+const blogSourceDir = path.join(root, 'power-platform-library', 'blog');
 const blogOutputDir = path.join(root, 'src', 'content', 'docs', 'blog');
 const publicImageDir = path.join(root, 'public', 'images');
 
@@ -39,15 +39,18 @@ const componentFolders = (await readdir(sourceDir, { withFileTypes: true }))
   .filter((entry) => entry.isDirectory() && !entry.name.startsWith('_'))
   .sort((a, b) => a.name.localeCompare(b.name));
 
+const currentDownloadFiles = new Set();
 for (const folder of componentFolders) {
   const folderPath = path.join(sourceDir, folder.name);
   const files = (await readdir(folderPath))
     .filter((file) => file.toLowerCase().endsWith('.yml'));
   if (files.length === 0) continue;
   const file = files[0];
+  currentDownloadFiles.add(file);
   const name = path.basename(file, '.yml');
   const title = titleFor(name);
-  const slug = name.toLowerCase().replaceAll('_', '-');
+  const slugBase = name.toLowerCase().replaceAll('_', '-');
+  const slug = slugBase.startsWith('cmp-') ? slugBase : `cmp-${slugBase}`;
   const category = categoryByName[name] ?? (name.startsWith('cmp-') ? 'visualization' : 'interface');
   const source = await readFile(path.join(folderPath, file), 'utf8');
   const readmePath = path.join(folderPath, 'README.md');
@@ -95,6 +98,12 @@ ${source.trim()}
 `;
   await writeFile(destination, content);
   await copyFile(path.join(folderPath, file), path.join(publicComponentDir, file));
+}
+
+for (const downloadFile of await readdir(publicComponentDir)) {
+  if (downloadFile.toLowerCase().endsWith('.yml') && !currentDownloadFiles.has(downloadFile)) {
+    await unlink(path.join(publicComponentDir, downloadFile));
+  }
 }
 
 console.log(`Generated ${componentFolders.length} component pages.`);

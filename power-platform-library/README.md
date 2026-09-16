@@ -35,14 +35,14 @@ This repository contains a collection of reusable, well-documented custom compon
 ## File Structure
 
 ```
-Card_Control.yml
-Custom_Notification.yml
-Reusable_JSON_Parser.yml
-Email_Popup.yml
-Loading_Animation.yml
-Popup.yml
-StatusBadge.yml
-TimePicker.yml
+components/card-control/card-control.yml
+components/custom-notification/custom-notification.yml
+components/reusable-json-parser/reusable-json-parser.yml
+components/email-popup/email-popup.yml
+components/loading-animation/loading-animation.yml
+components/popup/popup.yml
+components/status-badge/status-badge.yml
+components/time-picker/time-picker.yml
 ```
 
 ## Contributing

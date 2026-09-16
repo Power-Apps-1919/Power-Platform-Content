@@ -42,6 +42,6 @@ components/
 
 The build automatically includes the README content on the published component page,
 copies the YAML to the downloads area, and adds the page to search and the welcome
-screen. Use `_Templates/Component/` as a starting point for new components.
+screen. Use `templates/component/` as a starting point for new components.
 
 ---
