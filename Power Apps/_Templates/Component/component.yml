@@ -1,0 +1,6 @@
+﻿Component:
+  Name: ComponentName
+  Properties:
+    - Name: ExampleProperty
+      Type: Text
+      Default: "Example"

@@ -8,7 +8,6 @@ const outputDir = path.join(root, 'src', 'content', 'docs', 'components');
 const publicComponentDir = path.join(root, 'public', 'downloads', 'components');
 const blogSourceDir = path.join(root, 'Power Apps', 'Blog');
 const blogOutputDir = path.join(root, 'src', 'content', 'docs', 'blog');
-const blogImageSourceDir = path.join(blogSourceDir, 'images');
 const publicImageDir = path.join(root, 'public', 'images');
 
 const categoryByName = {
@@ -30,17 +29,22 @@ const titleFor = (name) => name
 await mkdir(outputDir, { recursive: true });
 await mkdir(publicComponentDir, { recursive: true });
 
-const files = (await readdir(sourceDir))
-  .filter((file) => file.toLowerCase().endsWith('.yml'))
-  .sort((a, b) => a.localeCompare(b));
+const componentFolders = (await readdir(sourceDir, { withFileTypes: true }))
+  .filter((entry) => entry.isDirectory() && !entry.name.startsWith('_'))
+  .sort((a, b) => a.name.localeCompare(b.name));
 
-for (const file of files) {
+for (const folder of componentFolders) {
+  const folderPath = path.join(sourceDir, folder.name);
+  const files = (await readdir(folderPath))
+    .filter((file) => file.toLowerCase().endsWith('.yml'));
+  if (files.length === 0) continue;
+  const file = files[0];
   const name = path.basename(file, '.yml');
   const title = titleFor(name);
   const slug = name.toLowerCase().replaceAll('_', '-');
   const category = categoryByName[name] ?? 'interface';
-  const source = await readFile(path.join(sourceDir, file), 'utf8');
-  const readmePath = path.join(sourceDir, `${name}.md`);
+  const source = await readFile(path.join(folderPath, file), 'utf8');
+  const readmePath = path.join(folderPath, 'README.md');
   let readme = '';
   try {
     readme = await readFile(readmePath, 'utf8');
@@ -84,35 +88,48 @@ ${source.trim()}
 \`\`\`
 `;
   await writeFile(destination, content);
-  await copyFile(path.join(sourceDir, file), path.join(publicComponentDir, file));
+  await copyFile(path.join(folderPath, file), path.join(publicComponentDir, file));
 }
 
-console.log(`Generated ${files.length} component pages.`);
+console.log(`Generated ${componentFolders.length} component pages.`);
 
-const blogFiles = (await readdir(blogSourceDir))
-  .filter((file) => file.toLowerCase().endsWith('.md') && !file.toLowerCase().startsWith('tmp_'));
+const blogFolders = (await readdir(blogSourceDir, { withFileTypes: true }))
+  .filter((entry) => entry.isDirectory() && !entry.name.startsWith('_'))
+  .sort((a, b) => a.name.localeCompare(b.name));
 
 await mkdir(blogOutputDir, { recursive: true });
-for (const file of blogFiles) {
-  const slug = path.basename(file, '.md').toLowerCase().replaceAll('_', '-');
-  const destination = path.join(blogOutputDir, `${slug}.md`);
+for (const folder of blogFolders) {
+  const folderPath = path.join(blogSourceDir, folder.name);
+  const file = 'README.md';
+  const sourcePath = path.join(folderPath, file);
   try {
-    await access(destination);
-    continue;
+    await access(sourcePath);
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
+    continue;
   }
-
-  const source = await readFile(path.join(blogSourceDir, file), 'utf8');
-  const title = source.match(/^#\s+(.+)$/m)?.[1] ?? titleFor(path.basename(file, '.md'));
-  const body = source.replace(/^#\s+.+\r?\n/, '').replaceAll('src="./images/', 'src="/Power-Platform-Content/images/');
+  const slug = folder.name.toLowerCase().replaceAll('_', '-');
+  const destination = path.join(blogOutputDir, `${slug}.md`);
+  const source = await readFile(sourcePath, 'utf8');
+  const frontmatter = source.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
+  const title = source.match(/^title:\s*(.+)$/m)?.[1]
+    ?? source.match(/^#\s+(.+)$/m)?.[1]
+    ?? titleFor(folder.name);
+  const description = source.match(/^description:\s*(.+)$/m)?.[1]
+    ?? 'Practical Power Platform implementation guidance.';
+  const date = source.match(/^date:\s*(.+)$/m)?.[1] ?? new Date().toISOString().slice(0, 10);
+  const sourceTags = source.match(/^tags:\r?\n((?:\s+-\s+.+\r?\n?)+)/m)?.[1]
+    ?.match(/-\s+(.+)/g)?.map((tag) => tag.replace(/^-\s+/, '').trim()) ?? ['blog', 'power-platform'];
+  const body = source
+    .replace(frontmatter?.[0] ?? '', '')
+    .replace(/^#\s+.+\r?\n?/, '')
+    .replaceAll('src="./images/', `src="/Power-Platform-Content/images/${slug}/`);
   await writeFile(destination, `---
-title: ${title}
-description: Practical Power Platform implementation guidance.
-date: ${new Date().toISOString().slice(0, 10)}
+title: ${JSON.stringify(title)}
+description: ${JSON.stringify(description)}
+date: ${JSON.stringify(date)}
 tags:
-  - blog
-  - power-platform
+${sourceTags.map((tag) => `  - ${tag}`).join('\n')}
 ---
 
 ${body.trim()}
@@ -120,14 +137,21 @@ ${body.trim()}
 }
 
 try {
-  const imageDirs = await readdir(blogImageSourceDir, { withFileTypes: true });
+  const imageDirs = await readdir(blogSourceDir, { withFileTypes: true });
   await mkdir(publicImageDir, { recursive: true });
-  for (const directory of imageDirs.filter((entry) => entry.isDirectory())) {
-    const targetDir = path.join(publicImageDir, directory.name);
+  for (const directory of imageDirs.filter((entry) => entry.isDirectory() && !entry.name.startsWith('_'))) {
+    const sourceImages = path.join(blogSourceDir, directory.name, 'images');
+    let images;
+    try {
+      images = await readdir(sourceImages);
+    } catch (error) {
+      if (error.code === 'ENOENT') continue;
+      throw error;
+    }
+    const targetDir = path.join(publicImageDir, directory.name.toLowerCase().replaceAll('_', '-'));
     await mkdir(targetDir, { recursive: true });
-    const images = await readdir(path.join(blogImageSourceDir, directory.name));
-    for (const image of images) {
-      await copyFile(path.join(blogImageSourceDir, directory.name, image), path.join(targetDir, image));
+    for (const image of images.filter((file) => file.toLowerCase().match(/\.(png|jpg|jpeg|gif|webp|svg)$/))) {
+      await copyFile(path.join(sourceImages, image), path.join(targetDir, image));
     }
   }
 } catch (error) {

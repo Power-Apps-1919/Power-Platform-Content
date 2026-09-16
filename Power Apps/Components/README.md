@@ -28,18 +28,20 @@ If the ComboBoxes are not working as expected, remove them and add them again wi
 - For `Email_Popup`, ensure all dependencies above are satisfied.
 - For `Reusable_JSON_Parser`, simply call the `ParseJsonToTable` action with your JSON array.
 
-## Component-specific documentation
+## Folder structure
 
-To document one component, create a Markdown file with the same base name as its YAML:
+Each component lives in its own folder. Create a new folder using the component name,
+then add the YAML file and an optional `README.md`:
 
 ```
-cmp_AreaChart.yml
-cmp_AreaChart.md
+Components/
+  cmp_AreaChart/
+    cmp_AreaChart.yml
+    README.md
 ```
 
-The build automatically includes the matching Markdown content on the component's
-published page. An optional frontmatter block and the first Markdown heading are
-removed as wrappers; the remaining Markdown is preserved. Edit these source files
-in this folder rather than generated pages under `src/content/docs/components`.
+The build automatically includes the README content on the published component page,
+copies the YAML to the downloads area, and adds the page to search and the welcome
+screen. Use `_Templates/Component/` as a starting point for new components.
 
 ---

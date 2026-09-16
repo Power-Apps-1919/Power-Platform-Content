@@ -1,20 +1,11 @@
 ---
-title: Get Power Apps app IDs dynamically
-description: Build environment-safe deep links with Power Automate request headers.
-date: 2026-09-16
+title: "Deep Linking in Power Apps: zero config using flow headers"
+description: "Practical Power Platform implementation guidance."
+date: "2026-09-16"
 tags:
   - blog
-  - power-apps
-  - power-automate
-  - deep-linking
+  - power-platform
 ---
-
-<div class="page-kicker">FIELD NOTE / POWER AUTOMATE</div>
-
-# Deep Linking in Power Apps: zero config using flow headers
-
-An environment-safe pattern for generating app links without maintaining IDs across
-Dev, Test, and Prod.
 
 Recently I had to implement deep linking in a Canvas app. The plan felt straightforward: use `Param()` to read query strings and jump to the right screen or record. But to build links that work across Dev, Test, and Prod, I also needed the App ID, and ideally the Environment and Tenant IDs, at runtime.
 
@@ -49,14 +40,14 @@ Skip variables and constants. Use a tiny Power Automate flow to read the IDs at 
 1. Create an **Instant cloud flow** with the trigger **When Power Apps calls a flow (V2)**.
 
    <figure>
-     <img src="/Power-Platform-Content/images/get-app-id/01-trigger.png" alt="Power Automate trigger: When Power Apps calls a flow (V2)" width="1200" />
+     <img src="/Power-Platform-Content/images/get-app-id-dynamically/01-trigger.png" alt="Power Automate trigger: When Power Apps calls a flow (V2)" width="1200" />
      <figcaption>Figure 1. Trigger: When Power Apps calls a flow (V2).</figcaption>
    </figure>
 
 2. Add three **Compose** actions named `Compose - App ID`, `Compose - Environment ID`, and `Compose - Tenant ID`.
 
    <figure>
-     <img src="/Power-Platform-Content/images/get-app-id/02-composeall.png" alt="Three Compose actions for App ID, Environment ID, Tenant ID" width="1200" />
+     <img src="/Power-Platform-Content/images/get-app-id-dynamically/02-composeall.png" alt="Three Compose actions for App ID, Environment ID, Tenant ID" width="1200" />
      <figcaption>Figure 2. Three Compose actions to extract the IDs.</figcaption>
    </figure>
 
@@ -69,7 +60,7 @@ Skip variables and constants. Use a tiny Power Automate flow to read the IDs at 
    ```
 
    <figure>
-     <img src="/Power-Platform-Content/images/get-app-id/03-compose-appid.png" alt="Expression for App ID in a Compose action" width="1200" />
+     <img src="/Power-Platform-Content/images/get-app-id-dynamically/03-compose-appid.png" alt="Expression for App ID in a Compose action" width="1200" />
      <figcaption>Figure 3. Expression for App ID.</figcaption>
    </figure>
 
@@ -80,7 +71,7 @@ Skip variables and constants. Use a tiny Power Automate flow to read the IDs at 
    ```
 
    <figure>
-     <img src="/Power-Platform-Content/images/get-app-id/04-compose-env.png" alt="Expression for Environment ID in a Compose action" width="1200" />
+     <img src="/Power-Platform-Content/images/get-app-id-dynamically/04-compose-env.png" alt="Expression for Environment ID in a Compose action" width="1200" />
      <figcaption>Figure 4. Expression for Environment ID.</figcaption>
    </figure>
 
@@ -91,14 +82,14 @@ Skip variables and constants. Use a tiny Power Automate flow to read the IDs at 
    ```
 
    <figure>
-     <img src="/Power-Platform-Content/images/get-app-id/05-compose-tenant.png" alt="Expression for Tenant ID in a Compose action" width="960" />
+     <img src="/Power-Platform-Content/images/get-app-id-dynamically/05-compose-tenant.png" alt="Expression for Tenant ID in a Compose action" width="960" />
      <figcaption>Figure 5. Expression for Tenant ID.</figcaption>
    </figure>
 
 4. Add **Respond to a PowerApp or flow** that returns `{ App_ID, Environment_ID, Tenant_ID }` mapped from the three Compose outputs.
 
    <figure>
-     <img src="/Power-Platform-Content/images/get-app-id/06-respondtoapp.png" alt="Respond to a PowerApp or flow returning the IDs" width="1200" />
+     <img src="/Power-Platform-Content/images/get-app-id-dynamically/06-respondtoapp.png" alt="Respond to a PowerApp or flow returning the IDs" width="1200" />
      <figcaption>Figure 6. Respond action returning the three IDs.</figcaption>
    </figure>
 
