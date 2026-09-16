@@ -3,7 +3,12 @@ title: Get Power Apps app IDs dynamically
 description: Build environment-safe deep links with Power Automate request headers.
 ---
 
+<div class="page-kicker">FIELD NOTE / POWER AUTOMATE</div>
+
 # Deep Linking in Power Apps: zero config using flow headers
+
+An environment-safe pattern for generating app links without maintaining IDs across
+Dev, Test, and Prod.
 
 Recently I had to implement deep linking in a Canvas app. The plan felt straightforward: use `Param()` to read query strings and jump to the right screen or record. But to build links that work across Dev, Test, and Prod, I also needed the App ID, and ideally the Environment and Tenant IDs, at runtime.
 

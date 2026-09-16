@@ -47,6 +47,63 @@ header.header {
   font-size: 1.15rem;
 }
 
+.sl-markdown-content {
+  --sl-content-width: 52rem;
+}
+
+.sl-markdown-content > h1 {
+  border-top: 3px solid var(--sl-color-accent);
+  letter-spacing: -0.045em;
+  padding-top: 1.5rem;
+}
+
+.sl-markdown-content > h2 {
+  letter-spacing: -0.025em;
+  margin-top: 3rem;
+}
+
+.sl-markdown-content > p:first-of-type {
+  color: var(--sl-color-gray-2);
+  font-size: 1.08rem;
+  line-height: 1.8;
+  max-width: 44rem;
+}
+
+.sl-markdown-content img {
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.8rem;
+  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.12);
+}
+
+.page-kicker {
+  color: var(--sl-color-accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  margin-bottom: 1rem;
+}
+
+.page-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 1.75rem 0 2.5rem;
+}
+
+.page-summary span {
+  background: var(--sl-color-gray-6);
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 999px;
+  color: var(--sl-color-gray-2);
+  font-size: 0.82rem;
+  padding: 0.65rem 0.9rem;
+}
+
+.page-summary strong {
+  color: var(--sl-color-accent);
+  margin-right: 0.3rem;
+}
+
 .hero-kicker {
   color: var(--sl-color-accent);
   font-size: 0.72rem;

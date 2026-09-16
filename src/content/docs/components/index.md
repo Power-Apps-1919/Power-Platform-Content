@@ -3,7 +3,19 @@ title: Power Apps Custom Components
 description: Reusable, documented custom components for Power Apps Canvas Apps.
 ---
 
+<div class="page-kicker">COMPONENT LIBRARY / CANVAS APPS</div>
+
 # Power Apps Custom Components
+
+Build a consistent app experience faster with a focused set of reusable controls.
+Each definition is designed to be copied into Power Apps Studio, then tuned to your
+app's brand and behavior.
+
+<div class="page-summary">
+  <span><strong>08</strong> ready-to-import definitions</span>
+  <span><strong>YAML</strong> portable source format</span>
+  <span><strong>∞</strong> ways to compose</span>
+</div>
 
 ## Pre-requisites
 
