@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "generate:content": "node scripts/generate-component-pages.mjs",
+    "build": "npm run generate:content && astro check && astro build",
     "preview": "astro preview"
   },
   "repository": {

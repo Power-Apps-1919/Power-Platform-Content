@@ -15,41 +15,15 @@ hero:
       variant: minimal
 ---
 
+import ContentDashboard from '../../components/ContentDashboard.astro';
+
 <div class="hero-kicker">POWER PLATFORM / BUILD SYSTEM</div>
 
 Welcome to a living library of practical patterns, reusable Canvas App components,
 and notes from the field. Everything is versioned, downloadable, and ready to adapt.
 
-<div class="stat-grid">
-  <div><strong>08</strong><span>Reusable components</span></div>
-  <div><strong>01</strong><span>Deep-linking guide</span></div>
-  <div><strong>100%</strong><span>Open source</span></div>
-</div>
-
 <div class="section-intro">
-  <span class="section-label">01 / EXPLORE</span>
-  <h2>Everything you need to ship a better app</h2>
-  <p>Start with a reusable building block, follow a practical implementation guide,
-  or download the source and make it your own.</p>
-</div>
-
-<div class="feature-grid">
-  <a class="feature-card" href="/Power-Platform-Content/components/">
-    <span class="feature-icon">✦</span><span class="feature-index">01</span>
-    <span class="feature-title">Component library</span>
-    <span class="feature-copy">Drop-in YAML definitions for polished Canvas App experiences.</span>
-    <span class="feature-link">View components →</span>
-  </a>
-  <a class="feature-card" href="/Power-Platform-Content/blog/get-app-id-dynamically/">
-    <span class="feature-icon">↗</span><span class="feature-index">02</span>
-    <span class="feature-title">Deep linking without config</span>
-    <span class="feature-copy">Build environment-safe app links with Power Automate headers.</span>
-    <span class="feature-link">Read the guide →</span>
-  </a>
-</div>
-
-<div class="section-intro">
-  <span class="section-label">02 / WHAT'S INSIDE</span>
+  <span class="section-label">01 / WHAT'S INSIDE</span>
   <h2>A practical library, organised by how you build</h2>
 </div>
 
@@ -103,3 +77,5 @@ Every component is available as a raw YAML file for importing into Power Apps St
   remains the versioned content backend; each push rebuilds and publishes the latest
   Markdown, images, and component definitions.</p>
 </div>
+
+<ContentDashboard />

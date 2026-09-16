@@ -1,6 +1,12 @@
 ---
 title: Get Power Apps app IDs dynamically
 description: Build environment-safe deep links with Power Automate request headers.
+date: 2026-09-16
+tags:
+  - blog
+  - power-apps
+  - power-automate
+  - deep-linking
 ---
 
 <div class="page-kicker">FIELD NOTE / POWER AUTOMATE</div>

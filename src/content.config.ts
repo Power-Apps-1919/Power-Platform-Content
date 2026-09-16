@@ -4,11 +4,17 @@ import {
   i18nLoader,
 } from '@astrojs/starlight/loaders';
 import { docsSchema, i18nSchema } from '@astrojs/starlight/schema';
+import { z } from 'astro/zod';
 
 export const collections = {
   docs: defineCollection({
     loader: docsLoader(),
-    schema: docsSchema(),
+    schema: docsSchema({
+      extend: z.object({
+        date: z.coerce.date().optional(),
+        tags: z.array(z.string()).default([]),
+      }),
+    }),
   }),
   i18n: defineCollection({
     loader: i18nLoader(),

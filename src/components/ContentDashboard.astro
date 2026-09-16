@@ -1,0 +1,95 @@
+---
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('docs'))
+  .filter(({ id }) => id !== 'index')
+  .map(({ id, data }) => ({
+    id,
+    title: data.title,
+    description: data.description ?? 'Explore this Power Platform resource.',
+    href: `/Power-Platform-Content/${id}/`,
+    tags: data.tags ?? [],
+    date: data.date ? new Date(data.date).toISOString().slice(0, 10) : '',
+  }))
+  .sort((a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title))
+  .slice(0, 20);
+
+const tags = [...new Set(entries.flatMap((entry) => entry.tags))].sort();
+const componentCount = entries.filter((entry) => entry.tags.includes('components')).length;
+const blogCount = entries.filter((entry) => entry.tags.includes('blog')).length;
+---
+
+<section class="content-dashboard" data-content-dashboard>
+  <div class="dashboard-metrics">
+    <span><strong>{componentCount}</strong> components</span>
+    <span><strong>{blogCount}</strong> blog posts</span>
+    <span><strong>{entries.length}</strong> resources shown</span>
+  </div>
+  <div class="dashboard-heading">
+    <div>
+      <span class="section-label">LIBRARY INDEX / LIVE CONTENT</span>
+      <h2>Browse the latest resources</h2>
+      <p>Search blogs and components by title, description, or tag. New content is picked up automatically on the next build.</p>
+    </div>
+    <label class="content-search">
+      <span class="sr-only">Search content</span>
+      <input type="search" placeholder="Search blogs and components..." data-content-search />
+      <kbd>⌘ K</kbd>
+    </label>
+  </div>
+
+  <div class="tag-filter" data-tag-filter>
+    <button class="tag-button is-active" type="button" data-tag="all">All</button>
+    {tags.map((tag) => <button class="tag-button" type="button" data-tag={tag}>{tag}</button>)}
+  </div>
+
+  <div class="content-results" data-content-results>
+    {entries.map((entry) => (
+      <a class="content-card" href={entry.href} data-content-card data-search={`${entry.title} ${entry.description} ${entry.tags.join(' ')}`} data-tags={entry.tags.join(',')}>
+        <div class="content-card-top">
+          <span class="content-type">{entry.tags.includes('components') ? 'COMPONENT' : 'BLOG'}</span>
+          {entry.date && <time datetime={entry.date}>{new Date(`${entry.date}T00:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</time>}
+        </div>
+        <strong>{entry.title}</strong>
+        <span>{entry.description}</span>
+        <div class="content-card-tags">{entry.tags.map((tag) => <small>{tag}</small>)}</div>
+      </a>
+    ))}
+  </div>
+  <p class="empty-results" data-empty-results hidden>No resources match that search.</p>
+</section>
+
+<script>
+  const dashboard = document.querySelector('[data-content-dashboard]');
+  const search = dashboard?.querySelector<HTMLInputElement>('[data-content-search]');
+  const cards = [...(dashboard?.querySelectorAll<HTMLElement>('[data-content-card]') ?? [])];
+  const buttons = [...(dashboard?.querySelectorAll<HTMLButtonElement>('[data-tag]') ?? [])];
+  const empty = dashboard?.querySelector<HTMLElement>('[data-empty-results]');
+  let activeTag = 'all';
+
+  const filter = () => {
+    const query = search?.value.toLowerCase().trim() ?? '';
+    let visible = 0;
+    cards.forEach((card) => {
+      const matchesQuery = card.dataset.search?.toLowerCase().includes(query) ?? false;
+      const matchesTag = activeTag === 'all' || card.dataset.tags?.split(',').includes(activeTag);
+      const show = matchesQuery && matchesTag;
+      card.hidden = !show;
+      if (show) visible += 1;
+    });
+    if (empty) empty.hidden = visible > 0;
+  };
+
+  search?.addEventListener('input', filter);
+  buttons.forEach((button) => button.addEventListener('click', () => {
+    activeTag = button.dataset.tag ?? 'all';
+    buttons.forEach((item) => item.classList.toggle('is-active', item === button));
+    filter();
+  }));
+  document.addEventListener('keydown', (event) => {
+    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+      event.preventDefault();
+      search?.focus();
+    }
+  });
+</script>
