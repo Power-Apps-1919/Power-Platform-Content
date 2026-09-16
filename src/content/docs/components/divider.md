@@ -1,6 +1,6 @@
 ---
-title: Divider
-description: Reusable Divider component for Power Apps Canvas Apps.
+title: divider
+description: Reusable divider component for Power Apps Canvas Apps.
 date: 2026-09-16
 tags:
   - components
@@ -9,13 +9,13 @@ tags:
 
 <div class="page-kicker">COMPONENT / INTERFACE</div>
 
-# Divider
+# divider
 
 Reusable YAML source for a Power Apps Canvas App component. Download the original
 definition, import it into Power Apps Studio, and customize its properties for your app.
 
 <div class="component-actions">
-  <a href="/Power-Platform-Content/downloads/components/Divider.yml" download="Divider.yml">Download YAML source</a>
+  <a href="/Power-Platform-Content/downloads/components/divider.yml" download="divider.yml">Download YAML source</a>
   <span>Updated 16 Sep 2026</span>
 </div>
 

@@ -1,0 +1,539 @@
+---
+title: step-chart
+description: Reusable step-chart component for Power Apps Canvas Apps.
+date: 2026-09-16
+tags:
+  - components
+  - visualization
+---
+
+<div class="page-kicker">COMPONENT / VISUALIZATION</div>
+
+# step-chart
+
+Reusable YAML source for a Power Apps Canvas App component. Download the original
+definition, import it into Power Apps Studio, and customize its properties for your app.
+
+<div class="component-actions">
+  <a href="/Power-Platform-Content/downloads/components/cmp-step-chart.yml" download="cmp-step-chart.yml">Download YAML source</a>
+  <span>Updated 16 Sep 2026</span>
+</div>
+
+## Source preview
+
+```yaml
+ComponentDefinitions:
+  cmp_StepChart:
+    DefinitionType: CanvasComponent
+    CustomProperties:
+      Config:
+        PropertyKind: Input
+        DisplayName: Config
+        Description: 'Layout + behavior config record '
+        RaiseOnReset: true
+        DataType: Record
+        Default: |-
+          ={
+            Size:{ Width:700 },
+            Padding:{ L:60, R:30, T:18 },
+
+            Title:{ Text:"Step chart", H:26, Gap:12 },
+
+            KPI:{
+              Value:Blank(),        /* if Blank(), uses last point (state . val) */
+              SubText:Blank(),      /* if Blank(), "Current state" */
+              H:56,
+              Gap:18,
+              W:260,
+              Rx:10,
+              PadX:12
+            },
+
+            Plot:{ H:220 },
+
+            XLabels:{ H:38 },
+
+            Axes:{ PadT:6, StrokeW:2.5 },
+
+            Grid:{ Lines:5 },
+
+            Legend:{
+              Box:12,
+              BoxGap:8,
+              Gap:40,
+              CharPx:7,
+              RowH:20,
+              PadTop:12,
+              PadBottom:10,
+              Margin:20
+            },
+
+            Step:{ StrokeW:3 },
+
+            Points:{ DotR:4 }
+          }
+      Items:
+        PropertyKind: Input
+        DisplayName: Items
+        Description: 'Table. lbl, val, col, state '
+        RaiseOnReset: true
+        DataType: Table
+        Default: |-
+          =[
+            { lbl: "09:00", val: 1, col: "#616161", state: "New" },
+            { lbl: "10:15", val: 2, col: "#0D47A1", state: "In Progress" },
+            { lbl: "11:05", val: 3, col: "#B71C1C", state: "Blocked" },
+            { lbl: "12:30", val: 2, col: "#0D47A1", state: "In Progress" },
+            { lbl: "14:10", val: 4, col: "#1B5E20", state: "Done" }
+          ]
+      Theme:
+        PropertyKind: Input
+        DisplayName: Theme
+        Description: 'Theme record '
+        RaiseOnReset: true
+        DataType: Record
+        Default: |-
+          ={
+            Colors:{
+              Background:"#FFFFFF",
+              Title:"#222222",
+              Axis:"#333333",
+              Grid:"#E6E6E6",
+              Label:"#333333",
+              ValueBg:"#F2F2F2",
+
+              Step:"#333333",
+
+              KpiFill:"#F6F6F6",
+              KpiStroke:"#DADADA",
+              KpiSub:"#666666",
+              KpiText:"#111111",
+
+              LegendText:"#111111"
+            },
+            Font:{
+              Family:"Segoe UI",
+
+              TitleSize:14,
+              TitleWeight:"600",
+
+              LabelSize:13,
+              LabelWeight:"600",
+
+              ValueSize:12,
+              ValueWeight:"700",
+
+              YLabelSize:12,
+              YLabelWeight:"600",
+
+              LegendSize:12,
+              LegendWeight:"600",
+
+              KpiSubSize:12,
+              KpiTextSize:16,
+              KpiTextWeight:"700"
+            }
+          }
+      fnModel:
+        PropertyKind: OutputFunction
+        DisplayName: Model
+        Description: 'Returns base data + computed layout '
+        DataType: Record
+    Properties:
+      fnModel: |-
+        =With(
+          { it: Self.Items, t: Self.Theme, cfg: Self.Config },
+          With(
+            {
+              // ---- config resolved ----
+              w: Coalesce(cfg.Size.Width, 700),
+
+              padL: Coalesce(cfg.Padding.L, 60),
+              padR: Coalesce(cfg.Padding.R, 30),
+              padT: Coalesce(cfg.Padding.T, 18),
+
+              titleText: Coalesce(cfg.Title.Text, "Step chart"),
+              titleH: Coalesce(cfg.Title.H, 26),
+              titleGap: Coalesce(cfg.Title.Gap, 12),
+
+              kpiValOverride: cfg.KPI.Value,
+              kpiSubOverride: cfg.KPI.SubText,
+              kpiH: Coalesce(cfg.KPI.H, 56),
+              kpiGap: Coalesce(cfg.KPI.Gap, 18),
+              kpiW: Coalesce(cfg.KPI.W, 260),
+              kpiRx: Coalesce(cfg.KPI.Rx, 10),
+              kpiPadX: Coalesce(cfg.KPI.PadX, 12),
+
+              plotH: Coalesce(cfg.Plot.H, 220),
+              xLabelH: Coalesce(cfg.XLabels.H, 38),
+
+              axisPadT: Coalesce(cfg.Axes.PadT, 6),
+              axisStrokeW: Coalesce(cfg.Axes.StrokeW, 2.5),
+
+              gridLines: Coalesce(cfg.Grid.Lines, 5),
+
+              // legend
+              box: Coalesce(cfg.Legend.Box, 12),
+              boxGap: Coalesce(cfg.Legend.BoxGap, 8),
+              gap: Coalesce(cfg.Legend.Gap, 40),
+              charPx: Coalesce(cfg.Legend.CharPx, 7),
+              rowH: Coalesce(cfg.Legend.RowH, 20),
+              legendPadTop: Coalesce(cfg.Legend.PadTop, 12),
+              legendPadBottom: Coalesce(cfg.Legend.PadBottom, 10),
+              legendMargin: Coalesce(cfg.Legend.Margin, 20),
+
+              stepStrokeW: Coalesce(cfg.Step.StrokeW, 3),
+              dotR: Coalesce(cfg.Points.DotR, 4),
+
+              // ---- theme resolved ----
+              cBg: Coalesce(t.Colors.Background, "#FFFFFF"),
+              cTitle: Coalesce(t.Colors.Title, "#222222"),
+              cAxis: Coalesce(t.Colors.Axis, "#333333"),
+              cGrid: Coalesce(t.Colors.Grid, "#E6E6E6"),
+              cLabel: Coalesce(t.Colors.Label, "#333333"),
+              cValBg: Coalesce(t.Colors.ValueBg, "#F2F2F2"),
+              cStep: Coalesce(t.Colors.Step, "#333333"),
+
+              cKpiFill: Coalesce(t.Colors.KpiFill, "#F6F6F6"),
+              cKpiStroke: Coalesce(t.Colors.KpiStroke, "#DADADA"),
+              cKpiSub: Coalesce(t.Colors.KpiSub, "#666666"),
+              cKpiText: Coalesce(t.Colors.KpiText, "#111111"),
+              cLegend: Coalesce(t.Colors.LegendText, "#111111"),
+
+              fontFam: Coalesce(t.Font.Family, "Segoe UI"),
+
+              fsTitle: Coalesce(t.Font.TitleSize, 14),
+              fwTitle: Coalesce(t.Font.TitleWeight, "600"),
+
+              fsLabel: Coalesce(t.Font.LabelSize, 13),
+              fwLabel: Coalesce(t.Font.LabelWeight, "600"),
+
+              fsVal: Coalesce(t.Font.ValueSize, 12),
+              fwVal: Coalesce(t.Font.ValueWeight, "700"),
+
+              fsY: Coalesce(t.Font.YLabelSize, 12),
+              fwY: Coalesce(t.Font.YLabelWeight, "600"),
+
+              fsLeg: Coalesce(t.Font.LegendSize, 12),
+              fwLeg: Coalesce(t.Font.LegendWeight, "600"),
+
+              fsKpiSub: Coalesce(t.Font.KpiSubSize, 12),
+              fsKpiText: Coalesce(t.Font.KpiTextSize, 16),
+              fwKpiText: Coalesce(t.Font.KpiTextWeight, "700"),
+
+              // ---- normalize items ----
+              base:
+                ForAll(
+                  Table(ParseJSON(JSON(it, JSONFormat.Compact))) As j,
+                  {
+                    lbl: Coalesce(Text(j.Value.lbl), ""),
+                    val: Value(Coalesce(Text(j.Value.val), "0")),
+                    col: Coalesce(Text(j.Value.col), "#616161"),
+                    state: Coalesce(Text(j.Value.state), "")
+                  }
+                )
+            },
+            With(
+              {
+                n: CountRows(base),
+                maxV: Max(base, val),
+                hasData: CountRows(base) > 0,
+                lastRec: If(CountRows(base) > 0, Last(base), { lbl:"", val:0, col:"#616161", state:"" })
+              },
+              With(
+                {
+                  // KPI text rules
+                  kpiOn: hasData,
+                  kpiValueText:
+                    If(
+                      !IsBlank(kpiValOverride),
+                      Text(kpiValOverride, "[$-en-US]#,##0"),
+                      If(
+                        hasData,
+                        Coalesce(lastRec.state, "") &
+                        If(IsBlank(lastRec.state), "", " . ") &
+                        Text(lastRec.val, "[$-en-US]0.##"),
+                        ""
+                      )
+                    ),
+                  kpiSubText:
+                    If(
+                      !IsBlank(kpiSubOverride),
+                      kpiSubOverride,
+                      "Current state"
+                    )
+                },
+                With(
+                  {
+                    // ---- legend (dedup by state) ----
+                    legendBase:
+                      AddColumns(
+                        Distinct(Filter(base, !IsBlank(state)), state) As d,
+                        lstate, d.Value,
+                        lcol, Coalesce(First(Filter(base, state = d.Value)).col, "#616161")
+                      )
+                  },
+                  With(
+                    {
+                      ln: CountRows(legendBase),
+                      avgLen: Sum(legendBase, Len(lstate)) / Max(1, CountRows(legendBase))
+                    },
+                    With(
+                      {
+                        itemW: box + boxGap + (avgLen * charPx) + gap,
+                        perRow: Max(1, RoundDown((w - legendMargin) / (box + boxGap + (avgLen * charPx) + gap), 0)),
+                        legendRows: If(ln > 0, RoundUp(ln / Max(1, Max(1, RoundDown((w - legendMargin) / (box + boxGap + (avgLen * charPx) + gap), 0))), 0), 0)
+                      },
+                      With(
+                        {
+                          // layout
+                          titleY: padT,
+                          kpiY: padT + titleH + titleGap,
+
+                          chartY: padT + titleH + titleGap + If(kpiOn, kpiH + kpiGap, 0),
+                          axisY:  padT + titleH + titleGap + If(kpiOn, kpiH + kpiGap, 0) + plotH,
+
+                          plotX: padL,
+                          plotW: w - padL - padR,
+
+                          xLabelY: padT + titleH + titleGap + If(kpiOn, kpiH + kpiGap, 0) + plotH + 28,
+                          legendY: padT + titleH + titleGap + If(kpiOn, kpiH + kpiGap, 0) + plotH + xLabelH + legendPadTop,
+
+                          h:
+                            padT + titleH + titleGap +
+                            If(kpiOn, kpiH + kpiGap, 0) +
+                            plotH + xLabelH + legendPadTop +
+                            (legendRows * rowH) + legendPadBottom,
+
+                          stepX: If(n > 1, (w - padL - padR) / (n - 1), 0)
+                        },
+                        {
+                          W:w, H:h,
+                          PadL:padL, PadR:padR, PadT:padT,
+
+                          TitleText:titleText, TitleY:titleY,
+
+                          ChartY:chartY, AxisY:axisY, AxisPadT:axisPadT, AxisStrokeW:axisStrokeW,
+                          PlotX:plotX, PlotW:plotW, PlotH:plotH,
+                          StepX:stepX,
+
+                          XLabelY:xLabelY,
+
+                          GridLines:gridLines,
+
+                          LegendY:legendY,
+                          RowH:rowH, Box:box, BoxGap:boxGap, Gap:gap, ItemW:itemW, PerRow:perRow,
+                          Ln:ln, LegendBase:legendBase,
+
+                          N:n, MaxV:maxV, Base:base,
+
+                          Bg:cBg, Axis:cAxis, Grid:cGrid, Title:cTitle, Label:cLabel, ValueBg:cValBg,
+                          StepClr:cStep,
+                          LegendText:cLegend,
+
+                          FontFam:fontFam,
+                          FsTitle:fsTitle, FwTitle:fwTitle,
+                          FsLabel:fsLabel, FwLabel:fwLabel,
+                          FsVal:fsVal, FwVal:fwVal,
+                          FsY:fsY, FwY:fwY,
+                          FsLeg:fsLeg, FwLeg:fwLeg,
+
+                          KpiOn:kpiOn, KpiY:kpiY, KpiW:kpiW, KpiH:kpiH, KpiRx:kpiRx, KpiPadX:kpiPadX,
+                          KpiFill:cKpiFill, KpiStroke:cKpiStroke, KpiSubClr:cKpiSub, KpiTextClr:cKpiText,
+                          KpiSub:kpiSubText, KpiText:kpiValueText,
+                          FsKpiSub:fsKpiSub, FsKpiText:fsKpiText, FwKpiText:fwKpiText,
+
+                          StepStrokeW:stepStrokeW,
+                          DotR:dotR
+                        }
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+    Children:
+      - img_StepChartSvg:
+          Control: Image@2.2.3
+          Properties:
+            Height: =Parent.Height
+            Image: |
+              =With(
+                { M: Parent.fnModel() },
+                With(
+                  { B: M.Base, n: M.N, LB: M.LegendBase, ln: M.Ln },
+                  "data:image/svg+xml;utf8," &
+                  EncodeUrl(
+                    $"
+                    <svg xmlns='http://www.w3.org/2000/svg' width='{M.W}' height='{M.H}' viewBox='0 0 {M.W} {M.H}'>
+                      <rect width='{M.W}' height='{M.H}' fill='{M.Bg}'/>
+
+                      <!-- TITLE -->
+                      <text x='{M.PadL}' y='{M.TitleY + 18}'
+                            font-family='{M.FontFam}' font-size='{M.FsTitle}' font-weight='{M.FwTitle}' fill='{M.Title}'>
+                        {M.TitleText}
+                      </text>
+
+                      <!-- KPI -->
+                      {
+                        If(
+                          M.KpiOn,
+                          $"
+                            <rect x='{M.PadL}' y='{M.KpiY}' width='{M.KpiW}' height='{M.KpiH}'
+                                  rx='{M.KpiRx}' ry='{M.KpiRx}' fill='{M.KpiFill}' stroke='{M.KpiStroke}'/>
+                            <text x='{M.PadL + M.KpiPadX}' y='{M.KpiY + 22}'
+                                  font-family='{M.FontFam}' font-size='{M.FsKpiSub}' fill='{M.KpiSubClr}'>{M.KpiSub}</text>
+                            <text x='{M.PadL + M.KpiPadX}' y='{M.KpiY + 44}'
+                                  font-family='{M.FontFam}' font-size='{M.FsKpiText}' font-weight='{M.FwKpiText}' fill='{M.KpiTextClr}'>{M.KpiText}</text>
+                                ",
+                          ""
+                        )
+                      }
+
+                      <!-- GRIDLINES -->
+                      {
+                        Concat(
+                          Sequence(M.GridLines + 1) As g,
+                          With(
+                            { t: (g.Value - 1) / M.GridLines },
+                            With(
+                              { gy: M.ChartY + (M.PlotH * (1 - t)) },
+                              $"
+                              <line x1='{Text(M.PlotX,"[$-en-US]0.0")}' y1='{Text(gy,"[$-en-US]0.0")}'
+                                  x2='{Text(M.PlotX + M.PlotW,"[$-en-US]0.0")}' y2='{Text(gy,"[$-en-US]0.0")}'
+                                  stroke='{M.Grid}' stroke-width='1'/>"
+                            )
+                          )
+                        )
+                      }
+
+                      <!-- AXES -->
+                      <line x1='{Text(M.PlotX,"[$-en-US]0.0")}' y1='{Text(M.AxisY,"[$-en-US]0.0")}'
+                            x2='{Text(M.PlotX + M.PlotW,"[$-en-US]0.0")}' y2='{Text(M.AxisY,"[$-en-US]0.0")}'
+                            stroke='{M.Axis}' stroke-width='{M.AxisStrokeW}' stroke-linecap='round'/>
+                      <line x1='{Text(M.PlotX,"[$-en-US]0.0")}' y1='{Text(M.ChartY - M.AxisPadT,"[$-en-US]0.0")}'
+                            x2='{Text(M.PlotX,"[$-en-US]0.0")}' y2='{Text(M.AxisY,"[$-en-US]0.0")}'
+                            stroke='{M.Axis}' stroke-width='{M.AxisStrokeW}' stroke-linecap='round'/>
+
+                      <!-- Y LABELS -->
+                      <text x='{Text(M.PlotX - 10,"[$-en-US]0.0")}' y='{Text(M.AxisY,"[$-en-US]0.0")}'
+                            font-family='{M.FontFam}' font-size='{M.FsY}' font-weight='{M.FwY}' fill='{M.Axis}' text-anchor='end'>0</text>
+                      <text x='{Text(M.PlotX - 10,"[$-en-US]0.0")}' y='{Text(M.ChartY - M.AxisPadT + 12,"[$-en-US]0.0")}'
+                            font-family='{M.FontFam}' font-size='{M.FsY}' font-weight='{M.FwY}' fill='{M.Axis}' text-anchor='end'>
+                        {Text(M.MaxV,"[$-en-US]0.##")}
+                      </text>
+
+                      <!-- STEP PATH -->
+                      <!-- MULTI-COLOR STEP (segments) -->
+                      {
+                      If(
+                          n > 0,
+                          Concat(
+                          Sequence(n) As i,
+                          With(
+                              { r: Last(FirstN(B, i.Value)), idx: i.Value - 1 },
+                              With(
+                              {
+                                  x1: M.PlotX + (idx * M.StepX),
+                                  y1: M.AxisY - If(M.MaxV > 0, (r.val / M.MaxV) * M.PlotH, 0),
+
+                                  // next point (if any)
+                                  hasNext: i.Value < n,
+                                  r2: If(i.Value < n, Last(FirstN(B, i.Value + 1)), r),
+                                  x2: M.PlotX + ((idx + 1) * M.StepX),
+                                  y2: M.AxisY - If(M.MaxV > 0, (If(i.Value < n, If(i.Value < n, Last(FirstN(B, i.Value + 1)), r).val, r.val) / M.MaxV) * M.PlotH, 0),
+
+                                  segClr: r.col
+                              },
+                              If(
+                                  hasNext,
+                                  $"
+                                  <!-- horizontal -->
+                                  <line x1='{Text(x1,"[$-en-US]0.0")}' y1='{Text(y1,"[$-en-US]0.0")}'
+                                          x2='{Text(x2,"[$-en-US]0.0")}' y2='{Text(y1,"[$-en-US]0.0")}'
+                                          stroke='{segClr}' stroke-width='{M.StepStrokeW}' stroke-linecap='round' stroke-linejoin='round'/>
+
+                                  <!-- vertical -->
+                                  <line x1='{Text(x2,"[$-en-US]0.0")}' y1='{Text(y1,"[$-en-US]0.0")}'
+                                          x2='{Text(x2,"[$-en-US]0.0")}' y2='{Text(y2,"[$-en-US]0.0")}'
+                                          stroke='{segClr}' stroke-width='{M.StepStrokeW}' stroke-linecap='round' stroke-linejoin='round'/>
+                                  ",
+                                  ""
+                              )
+                              )
+                          )
+                          ),
+                          ""
+                      )
+                      }
+
+
+                      <!-- POINTS + PILLS + X LABELS -->
+                      {
+                        Concat(
+                          Sequence(n) As i,
+                          With(
+                            { r: Last(FirstN(B, i.Value)), idx: i.Value - 1 },
+                            With(
+                              {
+                                px: M.PlotX + (idx * M.StepX),
+                                py: M.AxisY - If(M.MaxV > 0, (r.val / M.MaxV) * M.PlotH, 0),
+                                pill: Coalesce(r.state,"") & If(IsBlank(r.state), ", " , "") & Text(r.val, "[$-en-US]0.##")
+                              },
+                              $"
+                                <circle cx='{Text(px,"[$-en-US]0.0")}' cy='{Text(py,"[$-en-US]0.0")}' r='{M.DotR}' fill='{r.col}'/>
+
+                                <rect x='{Text(px - ((Len(pill)*7 + 14)/2), "[$-en-US]0.0")}' y='{Text(Max(M.ChartY + 4, py - 24), "[$-en-US]0.0")}'
+                                      width='{Len(pill)*7 + 14}' height='18' rx='6' ry='6' fill='{M.ValueBg}'/>
+
+                                <text x='{Text(px,"[$-en-US]0.0")}' y='{Text(Max(M.ChartY + 18, py - 11), "[$-en-US]0.0")}'
+                                      font-family='{M.FontFam}' font-size='{M.FsVal}' font-weight='{M.FwVal}' fill='{M.Label}' text-anchor='middle'>
+                                  {pill}
+                                </text>
+
+                                <text x='{Text(px,"[$-en-US]0.0")}' y='{Text(M.XLabelY,"[$-en-US]0.0")}'
+                                      font-family='{M.FontFam}' font-size='{M.FsLabel}' font-weight='{M.FwLabel}' fill='{M.Label}' text-anchor='middle'>
+                                  {Substitute(r.lbl, "&", "and")}
+                                </text>
+                              "
+                            )
+                          )
+                        )
+                      }
+
+                      <!-- LEGEND (unique states) -->
+                      {
+                        Concat(
+                          Sequence(ln) As i,
+                          With(
+                            { r: Last(FirstN(LB, i.Value)), idx: i.Value - 1 },
+                            With(
+                              { row: RoundDown(idx / M.PerRow, 0), colI: Mod(idx, M.PerRow) },
+                              With(
+                                { rowCnt: Min(M.PerRow, ln - (row * M.PerRow)) },
+                                With(
+                                  { startX: (M.W - (rowCnt * M.ItemW - M.Gap)) / 2 },
+                                  With(
+                                    { lx: startX + (colI * M.ItemW), ly: M.LegendY + (row * M.RowH) },
+                                    $"
+                                      <rect x='{Text(lx,"[$-en-US]0.0")}' y='{Text(ly - 10,"[$-en-US]0.0")}' width='{M.Box}' height='{M.Box}' fill='{r.lcol}'/>
+                                      <text x='{Text(lx + M.Box + M.BoxGap,"[$-en-US]0.0")}' y='{Text(ly,"[$-en-US]0.0")}'
+                                            font-family='{M.FontFam}' font-size='{M.FsLeg}' font-weight='{M.FwLeg}' fill='{M.LegendText}'>
+                                        {Substitute(r.lstate, "&", "and")}
+                                      </text>
+                                    "
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      }
+                    </svg>"
+                  )
+                )
+              )
+            Width: =Parent.Width
+```

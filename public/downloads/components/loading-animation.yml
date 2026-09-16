@@ -1,27 +1,3 @@
----
-title: loading-animation
-description: Reusable loading-animation component for Power Apps Canvas Apps.
-date: 2026-09-16
-tags:
-  - components
-  - interface
----
-
-<div class="page-kicker">COMPONENT / INTERFACE</div>
-
-# loading-animation
-
-Reusable YAML source for a Power Apps Canvas App component. Download the original
-definition, import it into Power Apps Studio, and customize its properties for your app.
-
-<div class="component-actions">
-  <a href="/Power-Platform-Content/downloads/components/loading-animation.yml" download="loading-animation.yml">Download YAML source</a>
-  <span>Updated 16 Sep 2026</span>
-</div>
-
-## Source preview
-
-```yaml
 ComponentDefinitions:
   Loading_Animation:
     DefinitionType: CanvasComponent
@@ -88,4 +64,3 @@ ComponentDefinitions:
             Width: =700
             X: =332
             Y: =126
-```

@@ -1,27 +1,3 @@
----
-title: email-popup
-description: Reusable email-popup component for Power Apps Canvas Apps.
-date: 2026-09-16
-tags:
-  - components
-  - interface
----
-
-<div class="page-kicker">COMPONENT / INTERFACE</div>
-
-# email-popup
-
-Reusable YAML source for a Power Apps Canvas App component. Download the original
-definition, import it into Power Apps Studio, and customize its properties for your app.
-
-<div class="component-actions">
-  <a href="/Power-Platform-Content/downloads/components/email-popup.yml" download="email-popup.yml">Download YAML source</a>
-  <span>Updated 16 Sep 2026</span>
-</div>
-
-## Source preview
-
-```yaml
 ComponentDefinitions:
   Email_Popups:
     DefinitionType: CanvasComponent
@@ -1009,4 +985,3 @@ ComponentDefinitions:
                         PaddingTop: =10
                         Rotation: =Switch(true,Lower("revert") in var_NotificationType,90,Lower("reset") in var_NotificationType,90,Lower("save") in var_NotificationType,0,0)
                         Width: =50
-```

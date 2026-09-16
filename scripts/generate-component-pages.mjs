@@ -1,12 +1,12 @@
-import { access, copyFile, mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
+import { access, copyFile, mkdir, readdir, readFile, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const sourceDir = path.join(root, 'Power Apps', 'Components');
+const sourceDir = path.join(root, 'power-platform-library', 'Components');
 const outputDir = path.join(root, 'src', 'content', 'docs', 'components');
 const publicComponentDir = path.join(root, 'public', 'downloads', 'components');
-const blogSourceDir = path.join(root, 'Power Apps', 'Blog');
+const blogSourceDir = path.join(root, 'power-platform-library', 'Blog');
 const blogOutputDir = path.join(root, 'src', 'content', 'docs', 'blog');
 const publicImageDir = path.join(root, 'public', 'images');
 
@@ -24,10 +24,16 @@ const categoryByName = {
 
 const titleFor = (name) => name
   .replaceAll('_', ' ')
+  .replace(/^cmp[-_]/i, '')
   .replace(/([a-z])([A-Z])/g, '$1 $2');
 
 await mkdir(outputDir, { recursive: true });
 await mkdir(publicComponentDir, { recursive: true });
+for (const generatedFile of await readdir(outputDir)) {
+  if (generatedFile !== 'index.md' && generatedFile.toLowerCase().endsWith('.md')) {
+    await unlink(path.join(outputDir, generatedFile));
+  }
+}
 
 const componentFolders = (await readdir(sourceDir, { withFileTypes: true }))
   .filter((entry) => entry.isDirectory() && !entry.name.startsWith('_'))
@@ -42,7 +48,7 @@ for (const folder of componentFolders) {
   const name = path.basename(file, '.yml');
   const title = titleFor(name);
   const slug = name.toLowerCase().replaceAll('_', '-');
-  const category = categoryByName[name] ?? 'interface';
+  const category = categoryByName[name] ?? (name.startsWith('cmp-') ? 'visualization' : 'interface');
   const source = await readFile(path.join(folderPath, file), 'utf8');
   const readmePath = path.join(folderPath, 'README.md');
   let readme = '';

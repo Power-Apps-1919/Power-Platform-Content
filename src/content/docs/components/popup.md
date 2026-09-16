@@ -1,6 +1,6 @@
 ---
-title: Popup
-description: Reusable Popup component for Power Apps Canvas Apps.
+title: popup
+description: Reusable popup component for Power Apps Canvas Apps.
 date: 2026-09-16
 tags:
   - components
@@ -9,13 +9,13 @@ tags:
 
 <div class="page-kicker">COMPONENT / INTERFACE</div>
 
-# Popup
+# popup
 
 Reusable YAML source for a Power Apps Canvas App component. Download the original
 definition, import it into Power Apps Studio, and customize its properties for your app.
 
 <div class="component-actions">
-  <a href="/Power-Platform-Content/downloads/components/Popup.yml" download="Popup.yml">Download YAML source</a>
+  <a href="/Power-Platform-Content/downloads/components/popup.yml" download="popup.yml">Download YAML source</a>
   <span>Updated 16 Sep 2026</span>
 </div>
 
